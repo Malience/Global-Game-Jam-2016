@@ -1,5 +1,6 @@
 package com.base.game;
 
+import game.AccessItems;
 import game.flashLight;
 
 import com.base.engine.components.*;
@@ -92,6 +93,9 @@ public class TestGame extends Game
 		Camera camera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		GameComponent freelook = new FreeLook(0.5f);
 		GameComponent freeMove = new FreeMove(10);
+		
+		GameComponent accessItems = new AccessItems();
+		cameraObject.addComponent(accessItems);
 		
 		RenderingEngine.mainCamera = camera;
 		

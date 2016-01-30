@@ -1,13 +1,8 @@
 package game;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-
 import com.base.engine.components.GameComponent;
 import com.base.engine.components.attachments.Updatable;
 import com.base.engine.rendering.RenderingEngine;
-import com.base.engine.rendering.Shader;
-import com.base.engine.rendering.UI.UIElement;
 import com.base.engine.rendering.UI.UIText;
 
 public class flashLight extends GameComponent implements Updatable

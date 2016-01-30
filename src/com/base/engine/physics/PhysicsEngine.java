@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import com.base.engine.components.attachments.Collidable;
 import com.base.engine.components.attachments.Physical;
 import com.base.engine.core.World;
+import com.base.engine.physics.collision.CollisionDetector;
 
 public class PhysicsEngine 
 {
 	World world;
 	ArrayList<Physical> physicalComponents;
 	ArrayList<Collidable> collidableComponents;
+	CollisionDetector detector;
 	
 	public PhysicsEngine()
 	{

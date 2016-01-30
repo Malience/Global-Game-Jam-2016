@@ -328,4 +328,8 @@ public class Matrix4f
 	public float get(int x, int y){return m[x][y];}
 	public void setM(float[][] m){this.m = m;}
 	public void set(int x, int y, float value){m[x][y] = value;}
+
+	public Vector3f getAxisVector(int index) {
+		return new Vector3f(m[0][index], m[1][index], m[2][index]);
+	}
 }

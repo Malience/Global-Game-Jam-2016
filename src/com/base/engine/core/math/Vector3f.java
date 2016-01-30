@@ -3,15 +3,16 @@ import java.util.Random;
 
 public class Vector3f 
 {
-	protected float x;
-	protected float y;
-	protected float z;
+	public float x;
+	public float y;
+	public float z;
 	//Constructor
 	public Vector3f(float x, float y, float z){this.x = x; this.y = y; this.z = z;}
 	public Vector3f(Vector3f r) {x = r.x; y = r.y; z = r.z;}
 
 	//Basic Vector Functions
 	public Vector3f normal(){float length = length();return new Vector3f(x / length, y / length, z / length);}
+	public void normalize(){float length = length();set(x / length, y / length, z / length);}
 	public float distance(Vector3f r){return (float) Math.sqrt(Math.pow(x - r.x, 2) + Math.pow(y - r.y, 2) + Math.pow(z - r.z, 2));}
 	public float length(){return (float)Math.sqrt(x * x + y * y + z * z);} //Also known as the magnitude
 	public float magnitude(){return (float)Math.sqrt(x * x + y * y + z * z);} //Also known as the length
@@ -80,6 +81,35 @@ public class Vector3f
 	public void setZ(float z) {this.z = z;}
 	public Vector3f set(float x, float y, float z) { this.x = x; this.y = y; this.z = z; return this; }
 	public Vector3f set(Vector3f r) { set(r.getX(), r.getY(), r.getZ()); return this; }
+	
+	public void set(int i, float value)
+	{
+		switch(i)
+		{
+		case 0:
+			this.x = value;
+			break;
+		case 1:
+			this.y = value;
+			break;
+		case 2:
+			this.z = value;
+			break;
+		}
+	}
+	
+	public float get(int i) {
+		switch(i)
+		{
+		case 0:
+			return this.x;
+		case 1:
+			return this.y;
+		case 2:
+			return this.z;
+		}
+		return 0;
+	}
 	
 	//Randomizer
 	public static Vector3f randomVector(Vector3f minv, Vector3f maxv)

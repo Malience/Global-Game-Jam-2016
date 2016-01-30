@@ -16,4 +16,9 @@ public class MonkeyHead extends Gear
 		Mesh n = new Mesh("monkey3.obj");
 		
 	}
+	
+	public String toString()
+	{
+		return "Artifact";
+	}
 }

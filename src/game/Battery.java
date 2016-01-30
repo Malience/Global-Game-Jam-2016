@@ -21,4 +21,9 @@ public class Battery extends Gear
 		
 		wrd.add(this);
 	}
+	
+	public String toString()
+	{
+		return "Battery";
+	}
 }

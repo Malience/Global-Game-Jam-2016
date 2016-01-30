@@ -20,4 +20,9 @@ public class PowerUp extends Gear
 		Mesh n = new Mesh("");
 
 	}
+	
+	public String toString()
+	{
+		return "Power-Up";
+	}
 }

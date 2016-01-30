@@ -15,4 +15,9 @@ public class Arrow extends Gear
 		
 		Mesh n = new Mesh("");
 	}
+	
+	public String toString()
+	{
+		return "Arrow";
+	}
 }

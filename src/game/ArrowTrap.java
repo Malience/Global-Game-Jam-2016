@@ -16,4 +16,9 @@ public class ArrowTrap extends Gear
 		Mesh n = new Mesh("");
 
 	}
+	
+	public String toString()
+	{
+		return "Arrow Trap";
+	}
 }

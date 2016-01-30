@@ -16,4 +16,9 @@ public class PressurePlate extends Gear
 		Mesh n = new Mesh("");
 
 	}
+	
+	public String toString()
+	{
+		return "Pressure Plate";
+	}
 }

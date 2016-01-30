@@ -1,6 +1,7 @@
 package game;
 
 import com.base.engine.components.MeshRenderer;
+import com.base.engine.core.math.Vector2f;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.World;
@@ -12,7 +13,7 @@ import com.base.engine.rendering.Vertex;
 
 public class Room extends GameObject
 {
-	public static Vector3f roomSize = new Vector3f(10,10,10); //TODO: check room size
+	public static Vector3f roomSize = new Vector3f(100,100,100); //TODO: check room size
 	
 	private MeshRenderer meshRenderer;
 	private Mesh mesh;
@@ -23,20 +24,19 @@ public class Room extends GameObject
 	private int yPos;
 	
 	public Room(Vector3f position)
+	{		
+		this(position, 0, 0);
+	}
+	
+	public Room(Vector3f position, int xPos, int yPos)
 	{
+		
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
 		getTransform().setPos(position);
 		
 		recalculate();
-		
-		World.world.add(this);
-	}
-	
-	public Room(Vector3f position, int xPos, int yPos)
-	{
-		this(position);
 		
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -48,16 +48,16 @@ public class Room extends GameObject
 		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();
 		
 		
-		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ));
-		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ));
-		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ));
-		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ));
-		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ));
-		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ));
-		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ));
-		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ));
+		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ), new Vector2f(0,0));
+		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ), new Vector2f(0,1));
+		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ), new Vector2f(1,0));
+		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ), new Vector2f(1,1));
+		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ), new Vector2f(0,0));
+		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ), new Vector2f(0,1));
+		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ), new Vector2f(1,0));
+		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ), new Vector2f(1,1));
 		
-		
+		/*
 		for(int i = 0; i < 8; i += 2)
 		{	
 			
@@ -70,12 +70,17 @@ public class Room extends GameObject
 			indices[start + 4] = i + 3;
 			indices[start + 5] = i + 1;
 					
-		}	
+		}
+		*/
+		
+		indices[0] = 0;
+		indices[1] = 3;
+		indices[2] = 2;
 		
 		mesh = new Mesh(vertices, indices);
 		
 		Material mat = new Material();
-		mat.addTexture("Test", new Texture("test2.png"));
+		mat.addTexture("diffuse", new Texture("red.png"));
 		
 		if(meshRenderer == null)
 		{

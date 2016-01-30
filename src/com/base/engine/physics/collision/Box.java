@@ -1,8 +1,9 @@
 package com.base.engine.physics.collision;
 
+import com.base.engine.components.attachments.Collidable;
 import com.base.engine.core.math.Vector3f;
 
-public class Box extends Primitive
+public class Box extends Primitive implements Collidable
 {
-	Vector3f halfSize;
+	public Vector3f halfSize;
 }

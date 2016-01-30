@@ -3,10 +3,10 @@ package com.base.engine.core.math;
 public class Quaternion
 {
 	//Fields
-	private float x;
-	private float y;
-	private float z;
-	private float w;
+	public float x;
+	public float y;
+	public float z;
+	public float w;
 
 	//Constructors
 	public Quaternion(float x, float y, float z, float w)

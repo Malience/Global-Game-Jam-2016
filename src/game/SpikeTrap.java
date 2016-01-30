@@ -16,4 +16,9 @@ public class SpikeTrap extends Gear
 		Mesh n = new Mesh("");
 
 	}
+	
+	public String toString()
+	{
+		return "Spike Trap";
+	}
 }

@@ -1,5 +1,10 @@
 package com.base.game;
 
+import game.AccessItems;
+import game.Listener;
+import game.Room;
+import game.flashLight;
+
 import com.base.engine.components.*;
 import com.base.engine.core.*;
 import com.base.engine.core.math.Quaternion;
@@ -94,6 +99,9 @@ public class TestGame extends Game
 		GameComponent freelook = new FreeLook(0.5f);
 		GameComponent freeMove = new FreeMove(10);
 		
+		GameComponent accessItems = new AccessItems();
+		cameraObject.addComponent(accessItems);
+		
 		RenderingEngine.mainCamera = camera;
 		
 		cameraObject.addComponent(freelook).addComponent(freeMove).addComponent(camera);
@@ -168,6 +176,16 @@ public class TestGame extends Game
 		
 		world.add(physics2);
 		world.add(physics1);
+		
+		GameObject object = new GameObject();
+		flashLight fl = new flashLight();
+		object.addComponent(fl);
+		world.add(object);
+		
+		Listener l = new Listener();
+		cameraObject.addComponent(l);
+		new Room(new Vector3f(0,10,0));
+		
 		//addObject(new TestObject(0,0,0).convert());
 	}
 }

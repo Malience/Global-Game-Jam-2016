@@ -30,4 +30,10 @@ public class MeshRenderer extends GameComponent implements Renderable
 		mesh.draw();
 		return 1;
 	}
+
+	public void set(Mesh mesh, Material mat) 
+	{
+		this.mesh = mesh;
+		this.material = mat;		
+	}
 }

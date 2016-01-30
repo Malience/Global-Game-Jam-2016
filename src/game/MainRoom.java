@@ -9,6 +9,8 @@ public class MainRoom extends Room
 	{
 		super(position);
 		// TODO Auto-generated constructor stub
+		
+		setConnection(1,1,1,1);
 	}
 
 }

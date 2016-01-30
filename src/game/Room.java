@@ -11,16 +11,17 @@ public class Room extends GameObject
 	
 	private Vertex[] vertices;
 	private int[] indices;
+	private int[] connectors;
 	
 	public Room(Vector3f position)
 	{
 		indices = new int[48];
 		vertices = new Vertex[8];		
+		connectors = new int[4];
 		getTransform().setPos(position);
 		
 		recalculate();
 	}
-	
 	
 	public void recalculate()
 	{
@@ -47,9 +48,26 @@ public class Room extends GameObject
 			indices[start + 3] = i + 2;
 			indices[start + 4] = i + 3;
 			indices[start + 5] = i + 1;
-		}
-		
+		}	
+	}	
+	
+	public void setConnection(int left, int top, int right, int down)
+	{
+		connectors[0] = left;
+		connectors[1] = top;
+		connectors[2] = right;
+		connectors[3] = down;
 	}
 	
-	
+	public void roomRotate()
+	{
+		int hold0 = connectors[0] , hold1 = connectors[1], hold2 = connectors[2];
+		
+		connectors[0] = connectors[3];
+		connectors[1] = hold0;
+		connectors[2] = hold1;
+		connectors[3] = hold2;
+		
+		getTransform().rotate(new Vector3f(0,1,0), 90);
+	}
 }

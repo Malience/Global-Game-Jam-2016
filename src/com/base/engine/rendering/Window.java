@@ -123,4 +123,17 @@ public class Window
 	{
 		return new Vector2f(width/2, height/2);
 	}
+	
+	/*
+	public static Vector2f getScreenResolution()
+	{
+		ByteBuffer w = BufferUtils.createByteBuffer(4);
+		ByteBuffer h = BufferUtils.createByteBuffer(4);
+		glfwGetMonitorSize((int)glfwGetMonitors(0), w, h);
+		width = (int)w.getInt(0);
+		height = (int)h.getInt(0);
+		
+		return new Vector2f(width,height);
+	}
+	*/
 }

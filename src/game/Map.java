@@ -123,6 +123,10 @@ public class Map
 					rooms[room.getxPos()][room.getyPos()+1].conPeek(1);
 				}
 			}
+			else
+			{
+				
+			}
 		}
 		catch(Exception e) 
 		{ 

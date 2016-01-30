@@ -45,6 +45,8 @@ public class Room extends GameObject
 			indices[start + 1] = i + 2;
 			indices[start + 2] = i + 1;
 			indices[start + 3] = i + 2;
+			indices[start + 4] = i + 3;
+			indices[start + 5] = i + 1;
 		}
 		
 	}

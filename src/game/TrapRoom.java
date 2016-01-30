@@ -16,7 +16,6 @@ public class TrapRoom extends Room
 	public TrapRoom(Vector3f position, int index) 
 	{
 		super(position,index);
-		// TODO Auto-generated constructor stub
 		
 		roomIterator += 1;
 	}

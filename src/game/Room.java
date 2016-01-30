@@ -13,12 +13,16 @@ public class Room extends GameObject
 	private int[] indices;
 	private int[] connectors;
 	
+	protected int index;
+	
 	public Room(Vector3f position, int index)
 	{
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
 		getTransform().setPos(position);
+		
+		this.index = index;
 		
 		recalculate();
 	}

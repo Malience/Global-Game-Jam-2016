@@ -53,7 +53,7 @@ public class Map
 	private void setEssentialRooms()
 	{
 		//TODO: Set vector3f location correctly
-		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0)); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0),width/2,height/2); //MainRoom is always in the middle!
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -65,7 +65,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0));			
+			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);			
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -78,7 +78,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0));
+			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
 		}
 	}
 	
@@ -104,24 +104,24 @@ public class Map
 	{
 		try
 		{	
-			if(room.conPeek(0) == 1)
+			if(room.conSum() == 1)
 			{
-				rooms[room.x-1][room.y].conPeek(2);
-			}
-				
-			if(room.conPeek(1) == 1)
-			{
-				rooms[room.x][room.y-1].conPeek(3);
-			}
-				
-			if(room.conPeek(2) == 1)
-			{
-				rooms[room.x+1][room.y].conPeek(0);
-			}
-				
-			if(room.conPeek(3) == 1)
-			{
-				rooms[room.x][room.y+1].conPeek(1);
+				if(room.conPeek(0) == 1)
+				{
+					rooms[room.getxPos()-1][room.getyPos()].conPeek(2);
+				}
+				else if(room.conPeek(1) == 1)
+				{
+					rooms[room.getxPos()][room.getyPos()-1].conPeek(3);
+				}
+				else if(room.conPeek(2) == 1)
+				{
+					rooms[room.getxPos()+1][room.getyPos()].conPeek(0);
+				}
+				else if(room.conPeek(3) == 1)
+				{
+					rooms[room.getxPos()][room.getyPos()+1].conPeek(1);
+				}
 			}
 		}
 		catch(Exception e) 

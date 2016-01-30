@@ -12,16 +12,16 @@ public class Room extends GameObject
 	private Vertex[] vertices;
 	private int[] indices;
 	private int[] connectors;
+	private int xPos;
+	private int yPos;
 	
-<<<<<<< HEAD
-	public Room(Vector3f position, int index)
-=======
-	public Room(Vector3f position)
->>>>>>> 8741a499ed69a089c930f56d9f3540d2bfad6b6b
+	public Room(Vector3f position, int xPos, int yPos)
 	{
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
+		this.xPos = xPos;
+		this.yPos = yPos;
 		getTransform().setPos(position);
 		
 		recalculate();
@@ -81,5 +81,20 @@ public class Room extends GameObject
 	public int conPeek(int index)
 	{
 		return index >= 0 && index <= 3 ? connectors[index] : -1;
+	}
+	
+	public int conSum()
+	{
+		return connectors[0] + connectors[1] + connectors[2] + connectors[3];
+	}
+	
+	public int getxPos()
+	{
+		return xPos;
+	}
+	
+	public int getyPos()
+	{
+		return yPos;
 	}
 }

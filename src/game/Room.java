@@ -13,7 +13,11 @@ public class Room extends GameObject
 	private int[] indices;
 	private int[] connectors;
 	
+<<<<<<< HEAD
 	public Room(Vector3f position, int index)
+=======
+	public Room(Vector3f position)
+>>>>>>> 8741a499ed69a089c930f56d9f3540d2bfad6b6b
 	{
 		indices = new int[48];
 		vertices = new Vertex[8];		

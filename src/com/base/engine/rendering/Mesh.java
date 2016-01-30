@@ -21,6 +21,10 @@ public class Mesh
 	private MeshResource resource;
 	private String fileName;
 	
+	/**
+	 * Loads in a mesh file in .obj format
+	 * @param fileName Name of the file (full path) containing a mesh. Only accepts .obj files
+	 */
 	public Mesh(String fileName)
 	{
 		this.fileName = fileName;
@@ -38,6 +42,11 @@ public class Mesh
 		}
 	}
 	
+	/**
+	 * Creates Mesh using vertices and indices. The indices decide the direction in which an object is drawn
+	 * @param vertices The vertices of the mesh
+	 * @param indices An array of indices in reference to the vertices array
+	 */
 	public Mesh(Vertex[] vertices, int[] indices)
 	{
 		this(vertices, indices, false);

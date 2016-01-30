@@ -124,7 +124,7 @@ public class TestGame extends Game
 		
 		Listener l = new Listener();
 		cameraObject.addComponent(l);
-		new Room(new Vector3f(0,10,0));
+		Room room = new Room(new Vector3f(0,20,0));
 		
 		//addObject(new TestObject(0,0,0).convert());
 	}

@@ -13,10 +13,12 @@ public class TrapRoom extends Room
 	
 	private final int ENUMSIZE = TrapRoomTypes.values().length;
 	
-	public TrapRoom(Vector3f position) 
+	public TrapRoom(Vector3f position, int index) 
 	{
-		super(position);
+		super(position,index);
 		// TODO Auto-generated constructor stub
+		
+		roomIterator += 1;
 	}
 	
 	public void handleConnectors()
@@ -36,6 +38,7 @@ public class TrapRoom extends Room
 		else if(roomIterator == 3)
 		{
 			setConnection(1,0,0,0);
+			roomIterator = -1;
 		}
 	}
 

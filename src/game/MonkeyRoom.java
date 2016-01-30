@@ -13,9 +13,9 @@ public class MonkeyRoom extends Room
 	
 	private final int ENUMSIZE = MonkeyRoomTypes.values().length;
 	
-	public MonkeyRoom(Vector3f position) 
+	public MonkeyRoom(Vector3f position, int index) 
 	{
-		super(position);
+		super(position, index);
 		// TODO Auto-generated constructor stub
 		
 		roomIterator += 1;

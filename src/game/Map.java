@@ -53,7 +53,7 @@ public class Map
 	private void setEssentialRooms()
 	{
 		//TODO: Set vector3f location correctly
-		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0)); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0),((width*height) + width)); //MainRoom is always in the middle!
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -65,7 +65,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0));			
+			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),12);			
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -78,7 +78,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0));
+			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),12);
 		}
 	}
 	
@@ -100,12 +100,12 @@ public class Map
 				(x == midX + 1 && y == midY);
 	}
 	
-	public int width()
+	public int getWidth()
 	{
 		return width;
 	}
 	
-	public int height()
+	public int getHeight()
 	{
 		return height;
 	}

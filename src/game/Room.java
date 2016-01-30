@@ -13,7 +13,7 @@ public class Room extends GameObject
 	private int[] indices;
 	private int[] connectors;
 	
-	public Room(Vector3f position)
+	public Room(Vector3f position, int index)
 	{
 		indices = new int[48];
 		vertices = new Vertex[8];		
@@ -69,5 +69,50 @@ public class Room extends GameObject
 		connectors[3] = hold2;
 		
 		getTransform().rotate(new Vector3f(0,1,0), 90);
+	}
+	
+	public void edgeHandle()
+	{
+		int connectorSum = 0;
+		
+		for(int i=0;i<4;i++)
+			connectorSum+=connectors[i];
+		
+		if(connectorSum == 1)
+		{
+			try
+			{
+				if(connectors[0] == 1)
+				{
+					
+				}
+				else if(connectors[1] == 1)
+				{
+					
+				}
+				else if(connectors[2] == 1)
+				{
+					
+				}
+				else if(connectors[3] == 1)
+				{
+					
+				}
+			} 
+			catch(Exception e ) 
+			{
+				System.out.print("Dont do that.");
+			}
+		}
+		
+		if(connectorSum == 2)
+		{
+			
+		}
+	}
+	
+	public void getMapPos()
+	{
+		
 	}
 }

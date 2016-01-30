@@ -37,7 +37,6 @@ public class Room extends GameObject
 	public Room(Vector3f position, int xPos, int yPos)
 	{
 		this(position);
-		
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
@@ -45,8 +44,7 @@ public class Room extends GameObject
 	public void recalculate()
 	{
 		float x = getTransform().getPos().getX(), y = getTransform().getPos().getY(), z = getTransform().getPos().getZ();
-		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();
-		
+		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();	
 		
 		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ));
 		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ));
@@ -56,20 +54,16 @@ public class Room extends GameObject
 		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ));
 		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ));
 		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ));
-		
-		
+			
 		for(int i = 0; i < 8; i += 2)
 		{	
-			
-			
 			int start = i * 3;
 			indices[start] = i;
 			indices[start + 1] = i + 2;
 			indices[start + 2] = i + 1;
 			indices[start + 3] = i + 2;
 			indices[start + 4] = i + 3;
-			indices[start + 5] = i + 1;
-					
+			indices[start + 5] = i + 1;		
 		}	
 		
 		mesh = new Mesh(vertices, indices);
@@ -86,11 +80,7 @@ public class Room extends GameObject
 		{
 			meshRenderer.set(mesh, mat);
 		}
-		
-		
 	}
-	
-	
 	
 	public void setConnection(int left, int top, int right, int down)
 	{

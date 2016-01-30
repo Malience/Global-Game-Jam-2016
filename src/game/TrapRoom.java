@@ -4,6 +4,8 @@ import com.base.engine.core.math.Vector3f;
 
 public class TrapRoom extends Room 
 {
+	private static int roomIterator = -1;
+	
 	private enum TrapRoomTypes
 	{
 		PRESSUREPLATES, PARANOIA, FAKEPOWER, MAZE
@@ -15,6 +17,26 @@ public class TrapRoom extends Room
 	{
 		super(position);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void handleConnectors()
+	{
+		if(roomIterator == 0)
+		{
+			setConnection(1,0,0,0);
+		}
+		else if(roomIterator == 1)
+		{
+			setConnection(1,1,1,1);
+		}
+		else if(roomIterator == 2)
+		{
+			setConnection(1,1,1,1);
+		}			
+		else if(roomIterator == 3)
+		{
+			setConnection(1,0,0,0);
+		}
 	}
 
 }

@@ -121,8 +121,10 @@ public class TestGame extends Game
 		object.addComponent(fl);
 		world.add(object);
 		
-		//Listener l = new Listener();
-		//l.startListening();
+		Listener l = new Listener();
+		cameraObject.addComponent(l);
+		
+		
 		//addObject(new TestObject(0,0,0).convert());
 	}
 }

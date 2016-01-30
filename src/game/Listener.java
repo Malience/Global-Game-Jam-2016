@@ -1,21 +1,44 @@
 package game;
 
 import java.io.*;
+
 import javax.sound.sampled.*;
 
-public class Listener 
+import com.base.engine.components.GameComponent;
+import com.base.engine.components.attachments.Controlable;
+import com.base.engine.core.Input;
+
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
+
+public class Listener extends GameComponent implements Controlable
 {
+	private int micKey = GLFW_KEY_TAB;
+	
+	// Silence Range ~ 1990 - 2250
+	// Voice Range < 1800
+	
 	public Listener()
 	{
 		
 	}
 	
+	public int input(float delta)
+	{
+		if(Input.getKey(micKey))
+		{
+			startListening();
+		}
+		
+		return 1;
+	}
+	
 	public void startListening()
 	{
+		System.out.println("LISTENING");
+		
 		ByteArrayOutputStream byteArrayOutputStream;
         TargetDataLine targetDataLine;
         int count;
-        boolean stopCapture = false;
         byte tempBuffer[] = new byte[8000];
         int countzero;
    
@@ -25,10 +48,9 @@ public class Listener
  
         try {
             byteArrayOutputStream = new ByteArrayOutputStream();
-            stopCapture = false;
 
-            while (!stopCapture) 
-            {
+            //while (!stopCapture) 
+            //{
                 AudioFormat audioFormat = new AudioFormat(8000.0F, 16, 1, true, false);
                 DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
                 targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
@@ -57,10 +79,12 @@ public class Listener
                 }
                 Thread.sleep(0);
                 targetDataLine.close();
-            } //end while
+            //} //end while
         } catch (Exception e) 
         {
             System.out.println(e);
-        } //end outer try
+        } //end outer try 
+		
+		
 	}
 }

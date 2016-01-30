@@ -1,6 +1,7 @@
 package com.base.game;
 
 import game.AccessItems;
+import game.Listener;
 import game.flashLight;
 
 import com.base.engine.components.*;
@@ -119,6 +120,9 @@ public class TestGame extends Game
 		flashLight fl = new flashLight();
 		object.addComponent(fl);
 		world.add(object);
+		
+		Listener l = new Listener();
+		l.startListening();
 		//addObject(new TestObject(0,0,0).convert());
 	}
 }

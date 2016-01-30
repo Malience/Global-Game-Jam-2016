@@ -5,6 +5,10 @@ import com.base.engine.components.attachments.Controlable;
 import com.base.engine.core.Input;
 
 
+import com.base.engine.rendering.RenderingEngine;
+import com.base.engine.rendering.Window;
+import com.base.engine.rendering.UI.UIText;
+
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_I;
 
 
@@ -14,9 +18,13 @@ public class AccessItems extends GameComponent implements Controlable
 	private int invKey = GLFW_KEY_I;
 	int timer = 0;
 	
+	UIText items = new UIText(Window.height/2,Window.width/2,"timesNewRoman.png",  " ", 40);
+	
+	Inventory stuff = new Inventory();
+	
 	public AccessItems()
 	{
-		
+		RenderingEngine.UI.add(items);
 	}
 	
 	public int input(float delta)
@@ -50,11 +58,19 @@ public class AccessItems extends GameComponent implements Controlable
 	
 	public void openInv()
 	{
-		System.out.println("INVENTORY OPENED");
+		//System.out.println("INVENTORY OPENED");
+		
+		//stuff.getItems();
+		
+		items.text =  stuff.getItems();
+		items.generate();
 	}
 	
 	public void closeInv()
 	{
-		System.out.println("INVENTORY CLOSED");
+		//System.out.println("INVENTORY CLOSED");
+		
+		items.text = " ";
+		items.generate();		
 	}
 }

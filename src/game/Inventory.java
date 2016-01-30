@@ -11,6 +11,7 @@ public class Inventory
 	// 3 : 
 	// 4 : 
 	private GameObject[] backpack = new GameObject[14];
+	private String list = "Inventory:\n";
 	
 	public Inventory()
 	{
@@ -45,5 +46,17 @@ public class Inventory
 				break;
 			}
 		}
+	}
+	
+	public String getItems()
+	{
+		for (int i = 0; i < 14; i++)
+		{
+			if (backpack[i] != null)
+			{
+				list += "\n" + backpack[i];
+			}
+		}
+		return list;
 	}
 }

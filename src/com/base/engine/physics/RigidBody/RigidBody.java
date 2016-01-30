@@ -1,6 +1,7 @@
 package com.base.engine.physics.RigidBody;
 
 import com.base.engine.components.PhysicsComponent;
+import com.base.engine.components.attachments.Physical;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.math.Matrix3f;
 import com.base.engine.core.math.Matrix4f;
@@ -8,7 +9,7 @@ import com.base.engine.core.math.Quaternion;
 import com.base.engine.core.math.Transform;
 import com.base.engine.core.math.Vector3f;
 
-public class RigidBody extends PhysicsComponent
+public class RigidBody extends PhysicsComponent implements Physical
 {
 	float inverseMass;
 	float linearDamping;
@@ -18,6 +19,7 @@ public class RigidBody extends PhysicsComponent
 	Vector3f velocity;
 	Vector3f rotationVelocity;
 	Vector3f acceleration;
+	Vector3f lastFrameAcceleration;
 	
 	Matrix4f transformMatrix;
 	Matrix3f inverseInertiaTensor;
@@ -25,6 +27,10 @@ public class RigidBody extends PhysicsComponent
 	
 	Vector3f forceAccum;
 	Vector3f torqueAccum;
+	
+	float motion;
+	boolean isAwake;
+	boolean canSleep;
 	
 	
 	public RigidBody(float mass, float ldamping, float adamping)
@@ -95,32 +101,32 @@ public class RigidBody extends PhysicsComponent
 	public static void transformInertiaTensor(Matrix3f iitWorld, Quaternion q, Matrix3f iitBody, Matrix4f rotmat)
 	{
 		float t4 = rotmat.m[0][0]*iitBody.m[0][0]+
-				rotmat.m[0][1]*iitBody.m[0][3]+
+				rotmat.m[0][1]*iitBody.m[0][2]+
 				rotmat.m[0][2]*iitBody.m[1][2];
 		float t9 = rotmat.m[0][0]*iitBody.m[0][1]+
 				rotmat.m[0][1]*iitBody.m[1][0]+
-				rotmat.m[0][2]*iitBody.m[1][3];
+				rotmat.m[0][2]*iitBody.m[2][1];
 		float t14 = rotmat.m[0][0]*iitBody.m[0][2]+
 				rotmat.m[0][1]*iitBody.m[1][1]+
-				rotmat.m[0][2]*iitBody.m[2][0];
+				rotmat.m[0][2]*iitBody.m[2][2];
 		float t28 = rotmat.m[1][0]*iitBody.m[0][0]+
-				rotmat.m[1][1]*iitBody.m[0][3]+
+				rotmat.m[1][1]*iitBody.m[0][2]+
 				rotmat.m[1][2]*iitBody.m[1][2];
 		float t33 = rotmat.m[1][0]*iitBody.m[0][1]+
 				rotmat.m[1][1]*iitBody.m[1][0]+
-				rotmat.m[1][2]*iitBody.m[1][3];
+				rotmat.m[1][2]*iitBody.m[2][1];
 		float t38 = rotmat.m[1][0]*iitBody.m[0][2]+
 				rotmat.m[1][1]*iitBody.m[1][1]+
-				rotmat.m[1][2]*iitBody.m[2][0];
+				rotmat.m[1][2]*iitBody.m[2][2];
 		float t52 = rotmat.m[2][0]*iitBody.m[0][0]+
-				rotmat.m[2][1]*iitBody.m[0][3]+
+				rotmat.m[2][1]*iitBody.m[0][2]+
 				rotmat.m[2][2]*iitBody.m[1][2];
 		float t57 = rotmat.m[2][0]*iitBody.m[0][1]+
 				rotmat.m[2][1]*iitBody.m[1][0]+
-				rotmat.m[2][2]*iitBody.m[1][3];
+				rotmat.m[2][2]*iitBody.m[1][2];
 		float t62 = rotmat.m[2][0]*iitBody.m[0][2]+
 				rotmat.m[2][1]*iitBody.m[1][1]+
-				rotmat.m[2][2]*iitBody.m[2][0];
+				rotmat.m[2][2]*iitBody.m[2][2];
 		
 		iitWorld.m[0][0] = t4*rotmat.m[0][0]+
 				t9*rotmat.m[0][1]+
@@ -131,7 +137,7 @@ public class RigidBody extends PhysicsComponent
 		iitWorld.m[0][2] = t4*rotmat.m[2][0]+
 				t9*rotmat.m[2][1]+
 				t14*rotmat.m[2][2];
-		iitWorld.m[0][3] = t28*rotmat.m[0][0]+
+		iitWorld.m[0][2] = t28*rotmat.m[0][0]+
 				t33*rotmat.m[0][1]+
 				t38*rotmat.m[0][2];
 		iitWorld.m[1][0] = t28*rotmat.m[1][0]+
@@ -143,16 +149,19 @@ public class RigidBody extends PhysicsComponent
 		iitWorld.m[1][2] = t52*rotmat.m[0][0]+
 				t57*rotmat.m[0][1]+
 				t62*rotmat.m[0][2];
-		iitWorld.m[1][3] = t52*rotmat.m[1][0]+
+		iitWorld.m[2][1] = t52*rotmat.m[1][0]+
 				t57*rotmat.m[1][1]+
 				t62*rotmat.m[1][2];
-		iitWorld.m[2][0] = t52*rotmat.m[2][0]+
+		iitWorld.m[2][2] = t52*rotmat.m[2][0]+
 				t57*rotmat.m[2][1]+
 				t62*rotmat.m[2][2];
 	}
 	
 	public void setPosition(Vector3f v){parentTransform.setPos(v);}
 	public Vector3f getPosition(){return parentTransform.getPos();}
+	
+	public void setOrientation(Quaternion q){parentTransform.setRot(q);}
+	public Quaternion getOrientation(){return parentTransform.getRot();}
 	
 	public Vector3f getVelocity() {return velocity;}
 	public void setVelocity(Vector3f velocity) {this.velocity = velocity;}
@@ -166,6 +175,9 @@ public class RigidBody extends PhysicsComponent
 	
 	public void addForce(Vector3f v){forceAccum = forceAccum.add(v);}
 	public void addTorque(Vector3f v){torqueAccum = torqueAccum.add(v);}
+	public void addVelocity(Vector3f v){velocity = velocity.add(v);}
+	public void addRotation(Vector3f v){rotationVelocity = rotationVelocity.add(v);}
+	
 	
 	public void addForceAtBodyPoint(Vector3f force, Vector3f point)
 	{
@@ -194,7 +206,7 @@ public class RigidBody extends PhysicsComponent
 	
 	public int integrate(float delta)
 	{
-		Vector3f lastFrameAcceleration = acceleration.add(forceAccum.mul(inverseMass));
+		lastFrameAcceleration = acceleration.add(forceAccum.mul(inverseMass));
 		
 		Vector3f angularAcceleration = inverseInertiaTensorWorld.transform(torqueAccum);
 		
@@ -205,7 +217,7 @@ public class RigidBody extends PhysicsComponent
 		
 	public int simulate(float delta)
 	{
-		parentTransform.getPos().add(velocity.mul(delta));
+		parentTransform.setPos(parentTransform.getPos().add(velocity.mul(delta)));
 		
 		parentTransform.getRot().addScaledVector(rotationVelocity, delta);
 		
@@ -217,5 +229,70 @@ public class RigidBody extends PhysicsComponent
 		clearAccumulators();
 		return 1;
 	}
+	
+	public void getInverseInertiaTensorWorld(Matrix3f inverseInertiaTensor)
+	{
+		
+	}
+	
+	public Matrix3f getInverseInertiaTensorWorld()
+	{
+		return null;
+	}
+	
+	public boolean getAwake()
+	{
+		return isAwake;
+	}
+	
+	public void setAwake()
+	{
+		setAwake(true);
+	}
+	
+	public void setAwake(boolean awake)
+	{
+		if(awake)
+		{
+			isAwake = true;
+			
+			motion = 2*2.0f;
+		}
+		else
+		{
+			isAwake = false;
+			velocity = new Vector3f(0,0,0);
+			rotationVelocity = new Vector3f(0,0,0);
+		}
+	}
+	
+	public boolean getCanSleep()
+	{
+		return canSleep;
+	}
+	
+	public void setCanSleep()
+	{
+		setCanSleep(true);
+	}
+	
+	public void setCanSleep(boolean canSleep)
+	{
+		this.canSleep = canSleep;
+	}
+	
+	public Vector3f getRotation()
+	{
+		return rotationVelocity;
+	}
 
+	public Vector3f getLastFrameAcceleration() {
+		return lastFrameAcceleration;
+	}
+	
+	@Override
+	public RigidBody getBody()
+	{
+		return this;
+	}
 }

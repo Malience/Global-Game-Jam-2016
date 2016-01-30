@@ -65,7 +65,8 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);			
+			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -79,6 +80,7 @@ public class Map
 			
 			//TODO: Set Vector3f location correctly
 			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 	}
 	
@@ -123,9 +125,24 @@ public class Map
 					rooms[room.getxPos()][room.getyPos()+1].conPeek(1);
 				}
 			}
-			else
+			else if(room.conSum() == 2)
 			{
-				
+				if(room.conPeek(0) == 1 && room.conPeek(1) == 1)
+				{
+					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+				}
+				if(room.conPeek(1) == 1 && room.conPeek(2) == 1)
+				{
+					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+				}
+				if(room.conPeek(2) == 1 && room.conPeek(3) == 1)
+				{
+					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+				}
+				if(room.conPeek(3) == 1 && room.conPeek(0) == 1)
+				{
+					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+				}
 			}
 		}
 		catch(Exception e) 

@@ -1,5 +1,7 @@
 package com.base.game;
 
+import game.flashLight;
+
 import com.base.engine.components.*;
 import com.base.engine.core.*;
 import com.base.engine.core.math.Quaternion;
@@ -109,6 +111,10 @@ public class TestGame extends Game
 		
 		directionalLight.getTransform().setRot(new Quaternion(new Vector3f(1,0,0), (float)Math.toRadians(-45)));
 		
+		GameObject object = new GameObject();
+		flashLight fl = new flashLight();
+		object.addComponent(fl);
+		world.add(object);
 		//addObject(new TestObject(0,0,0).convert());
 	}
 }

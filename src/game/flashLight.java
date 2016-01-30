@@ -1,32 +1,34 @@
 package game;
 
-import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.PaintEvent;
+import java.util.ArrayList;
 
+import com.base.engine.components.GameComponent;
 import com.base.engine.components.attachments.Updatable;
+import com.base.engine.rendering.RenderingEngine;
+import com.base.engine.rendering.Shader;
+import com.base.engine.rendering.UI.UIElement;
+import com.base.engine.rendering.UI.UIText;
 
-public class flashLight implements Updatable
+public class flashLight extends GameComponent implements Updatable
 {
 	private int life = 100;
 	private int counter = 0;
 	private int nsec = 0;
-	Rectangle energyDraw;
-	Component cpn;
-	PaintEvent gc = new PaintEvent(cpn, 10, energyDraw);
+
+	UIText power = new UIText(0,50,"timesNewRoman.png", life + "%", 50);
 	
 	public flashLight()
 	{
-		
+		RenderingEngine.UI.add(power);
 	}
 
 	public int update(float delta)
 	{
-		nsec = (int) delta;
+		nsec++; 
 		
 		//when one second is hit counter adds one
-		if (nsec >= 1000000000)
+		if (nsec >= 20)
 		{
 			counter++;
 			nsec = 0;
@@ -35,12 +37,12 @@ public class flashLight implements Updatable
 		//after 10 seconds battery life dies. counter resets
 		if (counter >= 10)
 		{
+			//System.out.println("POWER DOWN");
 			life--;
 			counter = 0;
+			draw();
+			works();
 		}
-		works();
-		
-		draw();
 		
 		return 1;
 	}
@@ -66,11 +68,9 @@ public class flashLight implements Updatable
 		life = 100;
 	}
 	
-	//world.world.add
 	public void draw()
-	{
-		Rectangle rec = new Rectangle(0,0,200,100);
-		
-		gc.setUpdateRect(rec);
+	{	
+		power.text = life + "%";
+		power.generate();
 	}
 }

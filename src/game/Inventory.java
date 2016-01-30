@@ -1,5 +1,7 @@
 package game;
 
+import com.base.engine.core.GameObject;
+
 public class Inventory 
 {
 	//items in bag
@@ -8,27 +10,40 @@ public class Inventory
 	// 2 : power-up (only 1)
 	// 3 : 
 	// 4 : 
-	private int[] backpack = new int[4];
+	private GameObject[] backpack = new GameObject[14];
 	
 	public Inventory()
 	{
 		
 	}
 	
-	public void addItem(int itemNum)
+	public void addItem(GameObject go)
 	{
-		if (itemNum == 2)
+		try
 		{
-			System.out.println("Can not hold more than one power-up.");
+			for (int i = 0; i < backpack.length; i++)
+			{
+				if (backpack[i] == null)
+				{
+					backpack[i] = go;
+				}
+			}
 		}
-		else
+		catch (ArrayIndexOutOfBoundsException ex)
 		{
-			backpack[itemNum]++;
+			System.out.println("To much Stuff");
 		}
 	}
 	
-	public void removeItem(int itemNum)
+	public void removeItem(GameObject go)
 	{
-		backpack[itemNum]--;
+		for (int i = 0; i < backpack.length; i++)
+		{
+			if (backpack[i] == go)
+			{
+				backpack[i] = null;
+				break;
+			}
+		}
 	}
 }

@@ -29,7 +29,7 @@ public class RenderingEngine extends MappedValues
 	private ArrayList<LightAttachment> lights;
 	private LightAttachment activeLight;
 
-	private ArrayList<UIElement> UI;
+	public static ArrayList<UIElement> UI;
 	private Shader UIShader;
 	
 	private HashMap<String, Integer> samplerMap;

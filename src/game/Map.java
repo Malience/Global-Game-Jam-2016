@@ -100,6 +100,40 @@ public class Map
 				(x == midX + 1 && y == midY);
 	}
 	
+	public Room rotHandle(Room room)
+	{
+		try
+		{	
+			if(room.conPeek(0) == 1)
+			{
+				rooms[room.x-1][room.y].conPeek(2);
+			}
+				
+			if(room.conPeek(1) == 1)
+			{
+				rooms[room.x][room.y-1].conPeek(3);
+			}
+				
+			if(room.conPeek(2) == 1)
+			{
+				rooms[room.x+1][room.y].conPeek(0);
+			}
+				
+			if(room.conPeek(3) == 1)
+			{
+				rooms[room.x][room.y+1].conPeek(1);
+			}
+		}
+		catch(Exception e) 
+		{ 
+			room.roomRotate(); 
+			
+			return rotHandle(room);
+		}
+		
+		return room;
+	}
+	
 	public int getWidth()
 	{
 		return width;

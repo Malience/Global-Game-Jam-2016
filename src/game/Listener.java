@@ -17,6 +17,8 @@ public class Listener extends GameComponent implements Controlable
 	// Silence Range ~ 1990 - 2250
 	// Voice Range < 1800
 	
+	//Activated by holding tab
+	
 	public Listener()
 	{
 		

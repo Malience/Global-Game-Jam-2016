@@ -28,16 +28,13 @@ public class AccessItems extends GameComponent implements Controlable
 	}
 	
 	public int input(float delta)
-	{
-		//System.out.println("In Keypress");
-		
+	{	
 		timer++;
 		
 		if (timer >= 10)
 		{
 			if(Input.getKey(invKey))
 			{
-				//System.out.println("PAST 1st IF");
 				if (opened == true)
 				{
 					opened = false;
@@ -58,18 +55,12 @@ public class AccessItems extends GameComponent implements Controlable
 	
 	public void openInv()
 	{
-		//System.out.println("INVENTORY OPENED");
-		
-		//stuff.getItems();
-		
 		items.text =  stuff.getItems();
 		items.generate();
 	}
 	
 	public void closeInv()
-	{
-		//System.out.println("INVENTORY CLOSED");
-		
+	{	
 		items.text = " ";
 		items.generate();		
 	}

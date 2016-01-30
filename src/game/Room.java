@@ -33,7 +33,13 @@ public class Room extends GameObject
 	}
 	
 	public Room(Vector3f position)
+	{		
+		this(position, 0, 0);
+	}
+	
+	public Room(Vector3f position, int xPos, int yPos)
 	{
+		
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
@@ -42,14 +48,6 @@ public class Room extends GameObject
 //		recalculate();
 //		
 //		World.world.add(this);
-	}
-	
-	public Room(Vector3f position, int xPos, int yPos)
-	{
-		this(position);
-		
-		this.xPos = xPos;
-		this.yPos = yPos;
 	}
 	
 	public void recalculate()
@@ -66,6 +64,22 @@ public class Room extends GameObject
 		vertices[5] = new Vertex(new Vector3f(-halfX, -halfY, -halfZ), new Vector2f(0,1));
 		vertices[6] = new Vertex(new Vector3f(-halfX, -halfY, halfZ), new Vector2f(1,0));
 		vertices[7] = new Vertex(new Vector3f(-halfX, -halfY, -halfZ), new Vector2f(1,1));
+		
+		/*
+		for(int i = 0; i < 8; i += 2)
+		{	
+			
+			
+			int start = i * 3;
+			indices[start] = i;
+			indices[start + 1] = i + 2;
+			indices[start + 2] = i + 1;
+			indices[start + 3] = i + 2;
+			indices[start + 4] = i + 3;
+			indices[start + 5] = i + 1;
+					
+		}
+		*/
 		
 		
 		int bi[] = { 0, 1, 2,
@@ -88,10 +102,10 @@ public class Room extends GameObject
 				6, 7, 0,
 				0, 7, 1
 		};
-		mesh = new Mesh(vertices, indices);
+		mesh = new Mesh(vertices, bi);
 		
 		Material mat = new Material();
-		mat.addTexture("diffuse", new Texture("test.png"));
+		mat.addTexture("diffuse", new Texture("red.png"));
 		
 		if(meshRenderer == null)
 		{

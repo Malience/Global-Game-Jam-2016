@@ -177,14 +177,18 @@ public class TestGame extends Game
 		world.add(physics2);
 		world.add(physics1);
 		
-		GameObject object = new GameObject();
+		GameObject object = new GameObject("Last Object");
 		flashLight fl = new flashLight();
 		object.addComponent(fl);
 		world.add(object);
 		
 		Listener l = new Listener();
 		cameraObject.addComponent(l);
-		new Room(new Vector3f(0,10,0));
+		Room room = new Room("Our House");
+		room.addComponent(room.calculate());
+		room.getTransform().setPos(new Vector3f(0,10,0));
+		
+		world.add(room);
 		
 		//addObject(new TestObject(0,0,0).convert());
 	}

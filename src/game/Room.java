@@ -1,6 +1,7 @@
 package game;
 
 import com.base.engine.components.MeshRenderer;
+import com.base.engine.core.math.Vector2f;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.World;
@@ -22,6 +23,15 @@ public class Room extends GameObject
 	private int xPos;
 	private int yPos;
 	
+	public Room(String name)
+	{
+		super(name);
+		indices = new int[48];
+		vertices = new Vertex[8];		
+		connectors = new int[4];
+		
+	}
+	
 	public Room(Vector3f position)
 	{
 		indices = new int[48];
@@ -29,9 +39,9 @@ public class Room extends GameObject
 		connectors = new int[4];
 		getTransform().setPos(position);
 		
-		recalculate();
-		
-		World.world.add(this);
+//		recalculate();
+//		
+//		World.world.add(this);
 	}
 	
 	public Room(Vector3f position, int xPos, int yPos)
@@ -48,34 +58,40 @@ public class Room extends GameObject
 		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();
 		
 		
-		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ));
-		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ));
-		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ));
-		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ));
-		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ));
-		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ));
-		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ));
-		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ));
+		vertices[0] = new Vertex(new Vector3f(halfX, halfY, halfZ), new Vector2f(0,0));
+		vertices[1] = new Vertex(new Vector3f(halfX, halfY, -halfZ), new Vector2f(0,1));
+		vertices[2] = new Vertex(new Vector3f(halfX, -halfY, halfZ), new Vector2f(1,0));
+		vertices[3] = new Vertex(new Vector3f(halfX, -halfY, -halfZ), new Vector2f(1,1));
+		vertices[4] = new Vertex(new Vector3f(-halfX, -halfY, halfZ), new Vector2f(0,0));
+		vertices[5] = new Vertex(new Vector3f(-halfX, -halfY, -halfZ), new Vector2f(0,1));
+		vertices[6] = new Vertex(new Vector3f(-halfX, -halfY, halfZ), new Vector2f(1,0));
+		vertices[7] = new Vertex(new Vector3f(-halfX, -halfY, -halfZ), new Vector2f(1,1));
 		
 		
-		for(int i = 0; i < 8; i += 2)
-		{	
-			
-			
-			int start = i * 3;
-			indices[start] = i;
-			indices[start + 1] = i + 2;
-			indices[start + 2] = i + 1;
-			indices[start + 3] = i + 2;
-			indices[start + 4] = i + 3;
-			indices[start + 5] = i + 1;
-					
-		}	
-		
+		int bi[] = { 0, 1, 2,
+				2, 1, 3,
+				
+				//Bottom
+				1, 3, 5,
+				5, 1, 7,
+				
+				//Top
+				0, 2, 4,
+				4, 2, 6,
+				
+				2, 3, 4,
+				4, 3, 5,
+				
+				4, 5, 6,
+				6, 5, 7,
+				
+				6, 7, 0,
+				0, 7, 1
+		};
 		mesh = new Mesh(vertices, indices);
 		
 		Material mat = new Material();
-		mat.addTexture("Test", new Texture("test2.png"));
+		mat.addTexture("diffuse", new Texture("test.png"));
 		
 		if(meshRenderer == null)
 		{
@@ -88,6 +104,52 @@ public class Room extends GameObject
 		}
 		
 		
+	}
+	
+	public MeshRenderer calculate()
+	{
+		float x = getTransform().getPos().getX(), y = getTransform().getPos().getY(), z = getTransform().getPos().getZ();
+		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();
+		
+		
+		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ));
+		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ));
+		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ));
+		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ));
+		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ));
+		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ));
+		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ));
+		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ));
+		
+		
+		int bi[] = { 0, 1, 2,
+				2, 1, 3,
+				
+				//Bottom
+				1, 3, 5,
+				5, 1, 7,
+				
+				//Top
+				0, 2, 4,
+				4, 2, 6,
+				
+				2, 3, 4,
+				4, 3, 5,
+				
+				4, 5, 6,
+				6, 5, 7,
+				
+				6, 7, 0,
+				0, 7, 1
+		};
+		mesh = new Mesh(vertices, bi);
+		
+		Material mat = new Material();
+		mat.addTexture("Test", new Texture("test2.png"));
+		
+		MeshRenderer renderer = new MeshRenderer(mesh, mat);
+		
+		return renderer;
 	}
 	
 	

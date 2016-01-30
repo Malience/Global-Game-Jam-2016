@@ -159,4 +159,17 @@ public class Mesh
 		
 		return null;
 	}
+	
+	@Override
+	public String toString()
+	{
+		if(fileName.equals(" "))
+		{
+			return "Mesh";
+		}
+		else
+		{
+			return "Mesh." + fileName;
+		}
+	}
 }

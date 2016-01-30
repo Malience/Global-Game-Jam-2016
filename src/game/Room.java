@@ -1,7 +1,12 @@
 package game;
 
+import com.base.engine.components.MeshRenderer;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.core.GameObject;
+import com.base.engine.core.World;
+import com.base.engine.rendering.Material;
+import com.base.engine.rendering.Mesh;
+import com.base.engine.rendering.Texture;
 import com.base.engine.rendering.Vertex;
 
 
@@ -9,22 +14,32 @@ public class Room extends GameObject
 {
 	public static Vector3f roomSize = new Vector3f(10,10,10); //TODO: check room size
 	
+	private MeshRenderer meshRenderer;
+	private Mesh mesh;
 	private Vertex[] vertices;
 	private int[] indices;
 	private int[] connectors;
 	private int xPos;
 	private int yPos;
 	
-	public Room(Vector3f position, int xPos, int yPos)
+	public Room(Vector3f position)
 	{
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
-		this.xPos = xPos;
-		this.yPos = yPos;
 		getTransform().setPos(position);
 		
 		recalculate();
+		
+		World.world.add(this);
+	}
+	
+	public Room(Vector3f position, int xPos, int yPos)
+	{
+		this(position);
+		
+		this.xPos = xPos;
+		this.yPos = yPos;
 	}
 	
 	public void recalculate()
@@ -43,8 +58,10 @@ public class Room extends GameObject
 		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ));
 		
 		
-		for(int i = 0; i < 48; i += 2)
-		{
+		for(int i = 0; i < 8; i += 2)
+		{	
+			
+			
 			int start = i * 3;
 			indices[start] = i;
 			indices[start + 1] = i + 2;
@@ -52,8 +69,28 @@ public class Room extends GameObject
 			indices[start + 3] = i + 2;
 			indices[start + 4] = i + 3;
 			indices[start + 5] = i + 1;
+					
 		}	
-	}	
+		
+		mesh = new Mesh(vertices, indices);
+		
+		Material mat = new Material();
+		mat.addTexture("Test", new Texture("test2.png"));
+		
+		if(meshRenderer == null)
+		{
+			meshRenderer = new MeshRenderer(mesh, mat);
+			this.addComponent(meshRenderer);
+		}
+		else
+		{
+			meshRenderer.set(mesh, mat);
+		}
+		
+		
+	}
+	
+	
 	
 	public void setConnection(int left, int top, int right, int down)
 	{

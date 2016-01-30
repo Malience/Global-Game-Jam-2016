@@ -2,6 +2,7 @@ package com.base.game;
 
 import game.AccessItems;
 import game.Listener;
+import game.Room;
 import game.flashLight;
 
 import com.base.engine.components.*;
@@ -123,7 +124,7 @@ public class TestGame extends Game
 		
 		Listener l = new Listener();
 		cameraObject.addComponent(l);
-		
+		new Room(new Vector3f(0,10,0));
 		
 		//addObject(new TestObject(0,0,0).convert());
 	}

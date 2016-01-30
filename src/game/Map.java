@@ -65,7 +65,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),12);			
+			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),(width*height) + width);			
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -78,7 +78,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),12);
+			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),(width*height) + width);
 		}
 	}
 	

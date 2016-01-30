@@ -11,9 +11,9 @@ public class GenericRoom extends Room
 	
 	private final int ENUMSIZE = GenericRoomTypes.values().length;
 	
-	public GenericRoom(Vector3f position, int index) 
+	public GenericRoom(Vector3f position, int xPos, int yPos) 
 	{
-		super(position, index);
+		super(position, xPos, yPos);
 	}
 	
 }

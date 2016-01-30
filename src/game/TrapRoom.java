@@ -13,9 +13,9 @@ public class TrapRoom extends Room
 	
 	private final int ENUMSIZE = TrapRoomTypes.values().length;
 	
-	public TrapRoom(Vector3f position, int index) 
+	public TrapRoom(Vector3f position, int xPos, int yPos) 
 	{
-		super(position,index);
+		super(position, xPos, yPos);
 		
 		roomIterator += 1;
 	}

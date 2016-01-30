@@ -53,7 +53,7 @@ public class Map
 	private void setEssentialRooms()
 	{
 		//TODO: Set vector3f location correctly
-		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0),((width*height) + width)); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0),((width*height) + width), height / 2, width / 2); //MainRoom is always in the middle!
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{

@@ -54,7 +54,7 @@ public class FreeLook extends GameComponent implements Controlable
 			if(rotY)
 				getTransform().rotate(yAxis, (float) Math.toRadians(deltaPos.getX() * sensitivity));
 			if(rotX)
-				getTransform().rotate(getTransform().getRot().getRight(), (float) Math.toRadians(-deltaPos.getY() * sensitivity));
+				getTransform().rotate(getTransform().getRot().getRight(), (float) Math.toRadians(deltaPos.getY() * sensitivity));
 
 			if(rotY || rotX)
 				Input.setMousePosition(centerPosition);

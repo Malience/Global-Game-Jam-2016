@@ -17,6 +17,7 @@ public class PhysicsEngine
 	public PhysicsEngine()
 	{
 		world = World.world;
+		
 	}
 	
 	public void gather()

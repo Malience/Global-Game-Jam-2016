@@ -85,7 +85,7 @@ public class Map
 	{
 		//TODO: Set vector3f location correctly
 		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
-		rooms[width / 2][height / 2].setTexture("test.png");
+		rooms[width / 2][height / 2].setTexture("Wall001.png");
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{

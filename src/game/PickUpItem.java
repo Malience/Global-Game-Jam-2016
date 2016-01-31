@@ -16,7 +16,7 @@ public class PickUpItem extends GameComponent
 	private int grabKey = GLFW_KEY_E;
 	Player player = new Player();
 	
-	UIText message = new UIText(300,300,"timesNewRoman.png",  " ", 24);
+	UIText message = new UIText(300,300,"timesNewRoman.png",  " ", 18);
 	
 	public PickUpItem()
 	{

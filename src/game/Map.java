@@ -68,7 +68,8 @@ public class Map
 				{
 					if(rooms[i][j] == null)
 					{
-						rooms[i][j] = new GenericRoom("genericroom" + i + j);			
+						rooms[i][j] = new GenericRoom("genericroom" + i + j);
+						rooms[i][j].setTexture("Wall003.jpg");
 					}
 					
 					if(i > 0)
@@ -77,7 +78,7 @@ public class Map
 						{
 							rooms[i][j].setConnection(1, 2);
 							rooms[i-1][j].setConnection(3, 2);
-							rooms[i][j].setDoors(rooms[i-1][j].door[3]);
+							rooms[i][j].setDoor(rooms[i-1][j].door[3],1);
 						}
 					}
 					
@@ -85,28 +86,30 @@ public class Map
 					{
 						rooms[i][j].setConnection(0, 2);
 						rooms[i][j-1].setConnection(2, 2);
-						rooms[i][j].setDoors(rooms[i][j-1].door[2]);
+						rooms[i][j].setDoor(rooms[i][j-1].door[2],0);
 					}
 		
 					if(rooms[i][j].conPeek(2) == 1 && rooms[i][j+1].conPeek(0) == 1)
 					{
 						rooms[i][j].setConnection(2, 2);
 						rooms[i][j+1].setConnection(0, 2);
-						rooms[i][j].setDoors(rooms[i][j+1].door[0]);
+						rooms[i][j].setDoor(rooms[i][j+1].door[0],2);
+						
 					}
 						
 					if(rooms[i][j].conPeek(3) == 1 && rooms[i+1][j].conPeek(1) == 1)
 					{
 						rooms[i][j].setConnection(3, 2);
 						rooms[i+1][j].setConnection(1, 2);
-						rooms[i][j].setDoors(rooms[i+1][j].door[1]);
+						rooms[i][j].setDoor(rooms[i+1][j].door[1],3);
 					}
+					
+					
 				}
 				catch(NullPointerException e) {}
 				catch(ArrayIndexOutOfBoundsException e) {}
 				
 				rotHandle(rooms[i][j]);
-				rooms[i][j].setDoors(new Door());
 				
 				World.world.add(rooms[i][j]);
 				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));		
@@ -148,7 +151,7 @@ public class Map
 			//TODO: Set Vector3f location correctly
 
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
-			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
+			rooms[randomWidth][randomHeight].setTexture("Wall004.jpg");
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -162,7 +165,7 @@ public class Map
 			}
 			
 			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
-			rooms[randomWidth][randomHeight].setTexture("bricks2.jpg");
+			rooms[randomWidth][randomHeight].setTexture("Wall002.jpg");
 		}
 	}
 	

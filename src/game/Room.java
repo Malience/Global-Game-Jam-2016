@@ -41,6 +41,18 @@ public class Room extends GameObject
 		roomType = "g";
 		setConnection(1,1,1,1);
 		setTexture("EmptyRoom001Template.png");
+		
+		for(int i = 0; i < 4; i++)
+		{
+			if(connectors[i] == 0)
+			{
+				door[i] = new Door(0);	
+			}
+			else if(connectors[i] == 1)
+			{
+				door[i] = new Door(1);
+			}
+		}
 	}
 
 	public Room(Vector3f position)
@@ -222,29 +234,9 @@ public class Room extends GameObject
 		setConnection(connectors[3],connectors[0],connectors[1],connectors[2]);
 	}
 	
-	public void setDoors(Door anotherDoor)
+	public void setDoor(Door anotherDoor, int conPos)
 	{
-		try
-		{
-			for(int i = 0; i < 3; i++)
-			{
-				if(conPeek(i) == 0)
-				{
-					door[i].setConType(0);
-				}
-				
-				if(conPeek(i) == 1)
-				{
-					door[i].setConType(1);
-				}
-				
-				if(conPeek(i) == 2)
-				{
-					door[i] = new Door(anotherDoor,2);
-				}
-			}
-		}
-		catch(NullPointerException e) {}
+		door[conPos] = new Door(anotherDoor);
 	}
 	
 	public int getxPos()
@@ -259,7 +251,7 @@ public class Room extends GameObject
 	
 	public String toString()
 	{
-		return connectors[0] + "" + connectors[1] + "" + connectors[2] + "" + connectors[3];
+		return door[0] + "" + door[1] + "" + door[2] + "" + door[3];
 	}
 	
 	public String getRoomType()

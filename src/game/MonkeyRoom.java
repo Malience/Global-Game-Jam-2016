@@ -31,16 +31,21 @@ public class MonkeyRoom extends Room
 		roomIterator += 1;
 	}
 	
-	private void setMonkey()
+	public void setMonkey()
 	{
 		Material mat = new Material();
 		//mat.addTexture("diffuse", new Texture("red.png"));
 		
 		monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
 		
-		monkey.getTransform().setPos(getTransform().getPos());
+		//monkey.getTransform().setPos(getTransform().getPos());
 		
 		this.addChild(monkey);
+	}
+	
+	public void setObjectPositions(Vector3f position)
+	{		
+		this.moveTo(position);
 	}
 	
 	public MonkeyRoom(Vector3f position, int xPos, int yPos) 

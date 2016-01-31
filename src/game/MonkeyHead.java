@@ -1,17 +1,12 @@
 package game;
 
-import com.base.engine.components.MeshRenderer;
-import com.base.engine.rendering.Material;
-import com.base.engine.rendering.Mesh;
-import com.base.engine.rendering.Texture;
+import com.base.engine.components.attachments.Interactable;
 
-public class MonkeyHead extends Gear
+public class MonkeyHead extends Gear implements Interactable
 {
-	Material m = new Material();
-	Mesh n = new Mesh("monkey3.obj");
-	MeshRenderer mR;
-	
 	String identify = "";
+	
+	PickUpItem cmd =  new PickUpItem();
 	
 	public MonkeyHead (String type, float x, float y, float z)
 	{
@@ -21,49 +16,30 @@ public class MonkeyHead extends Gear
 		
 		if (type.equals("placebo"))
 		{
-			placebo();
+			identify = "Placebo";
 		}
 		else if (type.equals("time"))
 		{
-			time();
+			identify = "Time";
 		}
 		else if (type.equals("chameleon"))
 		{
-			chameleon();
+			identify = "Chameleon";
 		}
 		else if (type.equals("greed"))
 		{
-			greed();
+			identify = "Greed";
 		}
 		
-	}
-	
-	public void placebo()
-	{
-		m.addTexture("placebo", new Texture("blue.png"));
-		mR = new MeshRenderer (n, m);
-	}
-	
-	public void time()
-	{
-		m.addTexture("time", new Texture("red.png"));
-		mR = new MeshRenderer (n, m);
-	}
-	
-	public void chameleon()
-	{
-		m.addTexture("chameleon", new Texture("green.png"));
-		mR = new MeshRenderer (n, m);
-	}
-	
-	public void greed()
-	{
-		m.addTexture("greed", new Texture("black.png"));
-		mR = new MeshRenderer (n, m);
 	}
 	
 	public String toString()
 	{
 		return "Artifact : " + identify;
+	}
+	
+	public void interact()
+	{
+		cmd.pickUp(this);
 	}
 }

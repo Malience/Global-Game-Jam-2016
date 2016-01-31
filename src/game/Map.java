@@ -6,6 +6,22 @@ import com.base.engine.core.math.Vector3f;
 
 
 /*
+ *              x  o  B     x  o  B
+               o                 oo
+              B                 x x
+                                   
+            x                 B   B
+           o                 o    o
+          B  o  x     B  o  x     x
+          o                 o    o
+          x                 B   B
+                Monkey          
+          B                 x x
+          o                 oo
+          x  o  B     x  o  B
+ */
+
+/*
  * Holds a collection of Room objects
  * 
  */
@@ -45,7 +61,11 @@ public class Map
 		{
 			for(int j = 0; j < height; ++j)
 			{
-				//TODO: Set Generic Rooms here
+				if(rooms[i][j] == null)
+				{
+					rooms[i][j] = new GenericRoom("genericroom" + i + j);
+					rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * 10));
+				}
 			}
 		}
 	}
@@ -53,7 +73,7 @@ public class Map
 	private void setEssentialRooms()
 	{
 		//TODO: Set vector3f location correctly
-		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0),width/2,height/2); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -66,7 +86,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
 			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		
@@ -81,7 +101,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
 			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 	}
@@ -93,7 +113,12 @@ public class Map
 		{
 			for(int j= 0; j < height; j++)
 			{
-				System.out.print(rooms[i][j] + "   ");
+				System.out.print(rooms[i][j] + "\t"); //Print them for debugging.
+				
+				if(rooms[i][j] != null)
+				{
+					
+				}
 			}
 			
 			System.out.print("\n");
@@ -121,7 +146,7 @@ public class Map
 			   (x == (midX + 1) && y == midY)));
 	}
 	
-	public Room rotHandle(Room room)
+	private Room rotHandle(Room room)
 	{
 		try
 		{	
@@ -129,11 +154,11 @@ public class Map
 			{
 				if(room.conPeek(0) == 1)
 				{
-					rooms[room.getxPos()-1][room.getyPos()].conPeek(2);
+					rooms[room.getxPos()-1][room.getyPos()].conPeek(0);
 				}
 				else if(room.conPeek(1) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()-1].conPeek(3);
+					rooms[room.getxPos()][room.getyPos()-1].conPeek(0);
 				}
 				else if(room.conPeek(2) == 1)
 				{
@@ -141,34 +166,35 @@ public class Map
 				}
 				else if(room.conPeek(3) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()+1].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()+1].conPeek(0);
 				}
 			}
 			else if(room.conSum() == 2)
 			{
 				if(room.conPeek(0) == 1 && room.conPeek(1) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()-1].conPeek(0);
 				}
 				if(room.conPeek(1) == 1 && room.conPeek(2) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(2);
+					rooms[room.getxPos()+1][room.getyPos()].conPeek(0);
 				}
 				if(room.conPeek(2) == 1 && room.conPeek(3) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(3);
+					rooms[room.getxPos()][room.getyPos()+1].conPeek(0);
 				}
 				if(room.conPeek(3) == 1 && room.conPeek(0) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(0);
+					rooms[room.getxPos()-1][room.getyPos()].conPeek(0);
 				}
 			}
 		}
-		catch(Exception e) 
-		{ 
-			room.roomRotate(); 
+		catch(NullPointerException e) { }
+		catch(ArrayIndexOutOfBoundsException e)
+		{
+			room.roomRotate();
 			
-			return rotHandle(room);
+			rotHandle(room);
 		}
 		
 		return room;

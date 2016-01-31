@@ -14,5 +14,19 @@ public class GenericRoom extends Room
 	public GenericRoom(Vector3f position, int xPos, int yPos) 
 	{
 		super(position,xPos,yPos);
+		
+		handleConnectors();
+	}
+	
+	public GenericRoom(String name) 
+	{
+		super(name);
+		
+		handleConnectors();
+	}
+
+	public String toString()
+	{
+		return "G" + super.toString();
 	}
 }

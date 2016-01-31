@@ -23,6 +23,8 @@ public class Room extends GameObject
 	private int xPos;
 	private int yPos;
 	
+	protected boolean hasBattery, hasPowerup;
+	
 	public Room(String name)
 	{
 		super(name);
@@ -47,6 +49,13 @@ public class Room extends GameObject
 //		recalculate();
 //		
 //		World.world.add(this);
+	}
+	
+	public void setPosition(Vector3f position)
+	{
+		getTransform().setPos(position);
+		this.addComponent(calculate());
+		World.world.add(this);
 	}
 	
 	public void recalculate()
@@ -200,13 +209,6 @@ public class Room extends GameObject
 		return connectors[0] + connectors[1] + connectors[2] + connectors[3];
 	}
 	
-	public void showCon()
-	{
-		for(int i=0; i < 3; i++)
-		{
-			System.out.print(connectors[i] + " ");
-		}
-	}
 	
 	public int getxPos()
 	{
@@ -223,4 +225,11 @@ public class Room extends GameObject
 		return connectors[0] + "" + connectors[1] + "" + connectors[2] + "" + connectors[3];
 	}
 
+	public void handleConnectors()
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			connectors[i] = 1;
+		}
+	}
 }

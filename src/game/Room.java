@@ -23,6 +23,8 @@ public class Room extends GameObject
 	private int xPos;
 	private int yPos;
 	
+	protected boolean hasBattery, hasPowerup;
+	
 	public Room(String name)
 	{
 		super(name);
@@ -47,6 +49,13 @@ public class Room extends GameObject
 //		recalculate();
 //		
 //		World.world.add(this);
+	}
+	
+	public void setPosition(Vector3f position)
+	{
+		getTransform().setPos(position);
+		this.addComponent(calculate());
+		World.world.add(this);
 	}
 	
 	public void recalculate()

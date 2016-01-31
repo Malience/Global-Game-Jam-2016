@@ -63,7 +63,8 @@ public class Map
 			{
 				if(rooms[i][j] == null)
 				{
-					rooms[i][j] = new GenericRoom(new Vector3f(0,0,0),i,j);
+					rooms[i][j] = new GenericRoom("genericroom" + i + j);
+					rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * 10));
 				}
 			}
 		}
@@ -72,7 +73,7 @@ public class Map
 	private void setEssentialRooms()
 	{
 		//TODO: Set vector3f location correctly
-		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0),width/2,height/2); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -85,7 +86,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
 			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		
@@ -100,7 +101,7 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
 			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 	}
@@ -112,7 +113,12 @@ public class Map
 		{
 			for(int j= 0; j < height; j++)
 			{
-				System.out.print(rooms[i][j] + "\t");
+				System.out.print(rooms[i][j] + "\t"); //Print them for debugging.
+				
+				if(rooms[i][j] != null)
+				{
+					
+				}
 			}
 			
 			System.out.print("\n");

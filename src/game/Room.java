@@ -32,6 +32,7 @@ public class Room extends GameObject
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
+		roomType = "g";
 	}
 	
 	public Room(Vector3f position)
@@ -137,14 +138,14 @@ public class Room extends GameObject
 		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();
 		
 		
-		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ), new Vector2f(0.5f, 1.0f)); //+++
-		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ), new Vector2f(0.0f, 1.0f)); //++-
-		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ), new Vector2f(0.5f, 0.5f)); //+-+
-		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ), new Vector2f(0.0f, 0.5f)); //+--
-		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ), new Vector2f(0.5f, 0.5f)); //-++
-		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ), new Vector2f(0.0f, 0.5f)); //-+-
-		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ), new Vector2f(0.5f, 0.0f)); //--+
-		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ), new Vector2f(0.0f, 0.0f)); //---
+		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ), new Vector2f(1.0f, 1.0f));
+		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ), new Vector2f(1.0f, 0.0f));
+		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ), new Vector2f(1.0f, 1.0f));
+		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ), new Vector2f(1.0f, 0.0f));
+		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ), new Vector2f(0.0f, 1.0f));
+		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ), new Vector2f(0.0f, 0.0f));
+		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ), new Vector2f(0.0f, 1.0f));
+		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ), new Vector2f(0.0f, 0.0f));
 		
 		
 		//DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING
@@ -191,14 +192,13 @@ public class Room extends GameObject
 	 */
 	public void roomRotate()
 	{ 
-		int hold0 = connectors[0] , hold1 = connectors[1], hold2 = connectors[2];
+		int hold0 = connectors[0],
+		    hold1 = connectors[1], 
+		    hold2 = connectors[2], 
+		    hold3 = connectors[3];
 		
-		connectors[0] = connectors[3];
-		connectors[1] = hold0;
-		connectors[2] = hold1;
-		connectors[3] = hold2;
-		
-		getTransform().rotate(new Vector3f(0,1,0), 90);
+		setConnection(hold3,hold0,hold1,hold2);
+		getTransform().rotate(new Vector3f(0,1,0),270f);
 	}
 	
 	public int conPeek(int index)

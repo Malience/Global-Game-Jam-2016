@@ -122,6 +122,10 @@ public class ContactResolver
 			
 			contacts[index].applyPositionChange(linearChange, angularChange, max);
 			
+			//NO MORE ANGLES!!!
+			angularChange[0] = new Vector3f(0,0,0);
+			angularChange[1] = new Vector3f(0,0,0);
+			
 			for(i = 0; i <numContacts; i++)
 			{
 				for(int b = 0; b < 2; b++) 
@@ -169,6 +173,8 @@ public class ContactResolver
 			contacts[index].matchAwakeState();
 			
 			contacts[index].applyVelocityChange(velocityChange, rotationChange);
+			rotationChange[0] = new Vector3f(0,0,0);
+			rotationChange[1] = new Vector3f(0,0,0);
 			
 			for(int i = 0; i <numContacts; i++)
 			{

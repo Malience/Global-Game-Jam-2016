@@ -14,7 +14,7 @@ public class World
 {
 	public static World world = new World();
 	private SpatialHash spatialHash;
-	private ArrayList<Object> bucket;
+	private ArrayList<GameObject> bucket;
 	private ArrayList<Tuple> activeCells;
 	public GameObject focus;
 	private Game map;
@@ -23,7 +23,7 @@ public class World
 	public World()
 	{
 		spatialHash = new SpatialHash(100);
-		bucket = new ArrayList<Object>();
+		bucket = new ArrayList<GameObject>();
 		map = new TestGame();
 	}
 	
@@ -35,6 +35,11 @@ public class World
 	public void add(GameObject object)
 	{
 		spatialHash.insert(object, object.getPosition());
+	}
+	
+	public void addToBucket(GameObject object)
+	{
+		bucket.add(object);
 	}
 	
 	public void refreshActives()
@@ -73,17 +78,19 @@ public class World
 		{
 			out.addAll(point.getType("GameObject"));
 		}
+		out.addAll(bucket);
 		return out;
 	}
 	
 	public ArrayList<GameObject> getGameObjects(ArrayList<Tuple> cells)
 	{
 		ArrayList<GameObject> out = new ArrayList<GameObject>();
-		ArrayList<Point> points = spatialHash.get(cells);
+		ArrayList<Point> points = spatialHash.getAll();//get(cells);
 		for(Point point : points)
 		{
 			out.addAll(point.getType("GameObject"));
 		}
+		out.addAll(bucket);
 		return out;
 	}
 	

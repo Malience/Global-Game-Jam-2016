@@ -64,7 +64,7 @@ public class Room extends GameObject
 		vertices[5] = new Vertex(new Vector3f(-halfX, -halfY, -halfZ), new Vector2f(0,1));
 		vertices[6] = new Vertex(new Vector3f(-halfX, -halfY, halfZ), new Vector2f(1,0));
 		vertices[7] = new Vertex(new Vector3f(-halfX, -halfY, -halfZ), new Vector2f(1,1));
-		
+		//
 		/*
 		for(int i = 0; i < 8; i += 2)
 		{	

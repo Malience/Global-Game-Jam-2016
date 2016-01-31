@@ -45,13 +45,9 @@ public class Room extends GameObject
 		for(int i = 0; i < 4; i++)
 		{
 			if(connectors[i] == 0)
-			{
-				door[i] = new Door(0);	
-			}
-			else if(connectors[i] == 1)
-			{
+				door[i] = new Door(0);
+			else
 				door[i] = new Door(1);
-			}
 		} 
 	}
 

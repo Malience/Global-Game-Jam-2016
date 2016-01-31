@@ -93,6 +93,7 @@ public class Map
 						rooms[i][j].setConnection(2, 2);
 						rooms[i][j+1].setConnection(0, 2);
 						rooms[i][j].setDoor(rooms[i][j+1].door[0],2);
+						
 					}
 						
 					if(rooms[i][j].conPeek(3) == 1 && rooms[i+1][j].conPeek(1) == 1)
@@ -101,6 +102,8 @@ public class Map
 						rooms[i+1][j].setConnection(1, 2);
 						rooms[i][j].setDoor(rooms[i+1][j].door[1],3);
 					}
+					
+					
 				}
 				catch(NullPointerException e) {}
 				catch(ArrayIndexOutOfBoundsException e) {}

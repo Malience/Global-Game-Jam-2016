@@ -17,8 +17,7 @@ public class PowerUp extends Gear
 		Material m = new Material();
 		m.addTexture("Color", new Texture("blue.png"));
 		
-		Mesh n = new Mesh("");
-
+		Mesh n = new Mesh("PowerUp001.obj");
 	}
 	
 	public String toString()

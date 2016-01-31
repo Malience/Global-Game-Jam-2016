@@ -4,6 +4,7 @@ import game.AccessItems;
 import game.Listener;
 import game.Map;
 import game.NewBattery;
+import game.PowerUp;
 import game.Room;
 import game.flashLight;
 
@@ -190,7 +191,7 @@ public class TestGame extends Game
 		GameComponent accessItems = new AccessItems();
 		object.addComponent(accessItems);
 		
-	
+		
 		Map map = new Map(5,5);
 		map.showMap();
 		

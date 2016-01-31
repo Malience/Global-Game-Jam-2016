@@ -60,7 +60,7 @@ public class RenderingEngine extends MappedValues
 		UI = new ArrayList<UIElement>();
 		UIShader = new Shader("UI");
 		
-		UI.add(new UIText(0,0,"timesNewRoman.png", "Stuff", 64));
+		//UI.add(new UIText(0,0,"timesNewRoman.png", "Stuff", 64));
 				
 		glClearColor(0.0f, 1.0f, 1.0f, 0.0f);
 

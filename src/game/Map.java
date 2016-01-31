@@ -62,10 +62,49 @@ public class Map
 		{
 			for(int j = 0; j < height; ++j)
 			{
-				if(rooms[i][j] == null)
+				try
 				{
+<<<<<<< HEAD
+					if(rooms[i][j] == null)
+					{
+						rooms[i][j] = new GenericRoom("genericroom" + i + j);			
+					}
+					
+					if(i > 0)
+					{
+						if(rooms[i][j].conPeek(1) == 1 && rooms[i-1][j].conPeek(3) == 1)
+						{
+							rooms[i][j].setCon(1, 2);
+							rooms[i-1][j].setCon(3, 2);
+						}
+					}
+					
+					if(rooms[i][j].conPeek(0) == 1 && rooms[i][j-1].conPeek(2) == 1)
+					{
+						rooms[i][j].setCon(0, 2);
+						rooms[i][j-1].setCon(2, 2);
+					}
+		
+
+					if(rooms[i][j].conPeek(2) == 1 && rooms[i][j+1].conPeek(0) == 1)
+					{
+						rooms[i][j].setCon(2, 2);
+						rooms[i][j+1].setCon(0, 2);
+					}
+						
+					if(rooms[i][j].conPeek(3) == 1 && rooms[i+1][j].conPeek(1) == 1)
+					{
+						rooms[i][j].setCon(3, 2);
+						rooms[i+1][j].setCon(1, 2);
+					}
+=======
 					rooms[i][j] = new GenericRoom("genericroom" + i + j);
+>>>>>>> 0bb49a7a1211322824315c46c4e609682c2a4d3b
 				}
+				catch(NullPointerException e) {}
+				catch(ArrayIndexOutOfBoundsException e) {}
+				
+				rotHandle(rooms[i][j]);
 				
 				
 				
@@ -85,7 +124,7 @@ public class Map
 	{
 		//TODO: Set vector3f location correctly
 		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
-		rooms[width / 2][height / 2].setTexture("test.png");
+		rooms[width / 2][height / 2].setTexture("Wall001.png");
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -195,22 +234,23 @@ public class Map
 			{
 				if(room.conPeek(0) == 1)
 				{
-					rooms[room.getxPos()-1][room.getyPos()].conPeek(0);
+					rooms[room.getxPos()][room.getyPos()-1].conPeek(0);
 				}
 				else if(room.conPeek(1) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()-1].conPeek(0);
+					rooms[room.getxPos()-1][room.getyPos()].conPeek(0);
 				}
 				else if(room.conPeek(2) == 1)
 				{
-					rooms[room.getxPos()+1][room.getyPos()].conPeek(0);
+					rooms[room.getxPos()][room.getyPos()+1].conPeek(0);
 				}
 				else if(room.conPeek(3) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()+1].conPeek(0);
+					rooms[room.getxPos()+1][room.getyPos()].conPeek(0);
 				}
 			}
-			else if(room.conSum() == 2)
+			
+			if(room.conSum() == 2)
 			{
 				if(room.conPeek(0) == 1 && room.conPeek(1) == 1)
 				{

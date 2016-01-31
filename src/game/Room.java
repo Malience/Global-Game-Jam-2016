@@ -126,14 +126,14 @@ public class Room extends GameObject
 		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();
 		
 		
-		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ));
-		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ));
-		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ));
-		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ));
-		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ));
-		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ));
-		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ));
-		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ));
+		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ), new Vector2f(1.0f, 1.0f));
+		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ), new Vector2f(1.0f, 0.0f));
+		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ), new Vector2f(1.0f, 1.0f));
+		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ), new Vector2f(1.0f, 0.0f));
+		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ), new Vector2f(0.0f, 1.0f));
+		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ), new Vector2f(0.0f, 0.0f));
+		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ), new Vector2f(0.0f, 1.0f));
+		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ), new Vector2f(0.0f, 0.0f));
 		
 		
 		//DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING
@@ -159,10 +159,9 @@ public class Room extends GameObject
 		mesh = new Mesh(vertices, bi);
 		
 		Material mat = new Material();
-		mat.addTexture("Test", new Texture("test2.png"));
+		mat.addTexture("diffuse", new Texture("EmptyRoom001Template.png"));
 		
 		MeshRenderer renderer = new MeshRenderer(mesh, mat);
-		
 		return renderer;
 	}
 	

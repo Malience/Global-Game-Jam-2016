@@ -66,4 +66,9 @@ public class AccessItems extends GameComponent implements Controlable
 		items.text = " ";
 		items.generate();		
 	}
+	
+	public boolean getState()
+	{
+		return opened;
+	}
 }

@@ -14,6 +14,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_N;
 public class NewBattery extends GameComponent implements Controlable
 {
 	Inventory inv = new Inventory();
+	AccessItems aI = new AccessItems();
 	
 	private int reloadKey = GLFW_KEY_R;
 	private int acceptKey = GLFW_KEY_Y;
@@ -32,6 +33,10 @@ public class NewBattery extends GameComponent implements Controlable
 	public int input(float delta)
 	{
 		timer++;
+		if (aI.getState())
+		{
+			aI.closeInv();
+		}
 		
 		if (timer >= 10)
 		{

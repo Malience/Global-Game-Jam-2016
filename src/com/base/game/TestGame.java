@@ -187,15 +187,11 @@ public class TestGame extends Game
 		object.addComponent(fl);
 		world.add(object);
 		
-<<<<<<< HEAD
 		GameComponent accessItems = new AccessItems();
 		object.addComponent(accessItems);
 		
-		
-		Map map = new Map(7,7);
-=======
+	
 		Map map = new Map(5,5);
->>>>>>> 2e4883f1519758d9878306c52b91c7335a3fe238
 		map.showMap();
 		
 		Listener l = new Listener();

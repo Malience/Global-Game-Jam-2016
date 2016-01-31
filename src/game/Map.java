@@ -2,6 +2,7 @@ package game;
 
 import java.util.Random;
 
+import com.base.engine.core.World;
 import com.base.engine.core.math.Vector3f;
 
 
@@ -63,6 +64,7 @@ public class Map
 			{
 				try
 				{
+<<<<<<< HEAD
 					if(rooms[i][j] == null)
 					{
 						rooms[i][j] = new GenericRoom("genericroom" + i + j);			
@@ -95,13 +97,25 @@ public class Map
 						rooms[i][j].setCon(3, 2);
 						rooms[i+1][j].setCon(1, 2);
 					}
+=======
+					rooms[i][j] = new GenericRoom("genericroom" + i + j);
+>>>>>>> 0bb49a7a1211322824315c46c4e609682c2a4d3b
 				}
 				catch(NullPointerException e) {}
 				catch(ArrayIndexOutOfBoundsException e) {}
 				
 				rotHandle(rooms[i][j]);
 				
-				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * Room.roomSize.z));				
+				
+				
+				World.world.add(rooms[i][j]);
+				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));		
+				
+				if(rooms[i][j] instanceof MonkeyRoom)
+				{
+					MonkeyRoom monkeyRoom = (MonkeyRoom)rooms[i][j];
+					rooms[i][j].moveTo(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));
+				}
 			}
 		}
 	}
@@ -110,7 +124,7 @@ public class Map
 	{
 		//TODO: Set vector3f location correctly
 		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
-		rooms[width / 2][height / 2].setTexture("black.png");
+		rooms[width / 2][height / 2].setTexture("Wall001.png");
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -126,6 +140,7 @@ public class Map
 
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
 			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
+
 			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		

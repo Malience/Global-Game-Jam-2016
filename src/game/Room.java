@@ -63,7 +63,7 @@ public class Room extends GameObject
 		connectors = new int[4];
 		roomType = "g";
 		getTransform().setPos(position);
-		setTexture("Wall001.png");
+		setTexture("Wall001.jpg");
 		connectors = new int[4];
 		setConnection(1,1,1,1);
 //		recalculate();

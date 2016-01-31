@@ -29,7 +29,7 @@ public class Player extends GameObject
 		camera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		body = new RigidBody(5, 1, 0);
 		collider = new AABB();
-		FreeMove move = new FreeMove(10);
+		FreeMove move = new FreeMove(25);
 		//LockedYMove move = new LockedYMove(10);
 		FreeLook look = new FreeLook(0.5f);
 		//StandardLook look = new StandardLook(0.5f);

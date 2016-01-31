@@ -56,7 +56,7 @@ public class MonkeyRoom extends Room
 	
 	public void setObjectPositions(Vector3f position)
 	{		
-		this.moveTo(position);
+		monkey.moveTo(position);
 	}
 	
 	public void handleConnectors()

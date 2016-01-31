@@ -117,7 +117,8 @@ public class Map
 				if(rooms[i][j] instanceof MonkeyRoom)
 				{
 					MonkeyRoom monkeyRoom = (MonkeyRoom)rooms[i][j];
-					rooms[i][j].moveTo(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));
+					Vector3f pos = monkeyRoom.getPosition();
+					monkeyRoom.setObjectPositions(new Vector3f(i * pos.x, Room.roomSize.y, j * pos.z));
 				}
 			}
 		}

@@ -100,7 +100,7 @@ public class FlashLight extends GameObject// implements Updatable
 				life--;
 				counter = 0;
 				draw();
-				works();
+				
 			}
 			
 			hand.getTransform().setRot(this.getTransform().getRot());

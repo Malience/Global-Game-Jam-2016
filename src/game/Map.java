@@ -63,8 +63,6 @@ public class Map
 			{
 				randomWidth = rng.nextInt(width);
 				randomHeight = rng.nextInt(height);
-				
-				System.out.println(randomWidth + " " + randomHeight);
 			}
 			
 			//TODO: Set Vector3f location correctly
@@ -80,8 +78,6 @@ public class Map
 			{
 				randomWidth = rng.nextInt(width);
 				randomHeight = rng.nextInt(height);
-				
-				System.out.println(randomWidth + " " + randomHeight);
 			}
 			
 			//TODO: Set Vector3f location correctly
@@ -118,7 +114,7 @@ public class Map
 		int midY = height / 2;
 		
 		return (rooms[x][y] == null) || (x == midX && y == midY + 1) ||
-				(x == midX && y == midY - 1) || (x == midX - 1 || y == midY) ||
+				(x == midX && y == midY - 1) || (x == midX - 1 && y == midY) ||
 				(x == midX + 1 && y == midY);
 	}
 	

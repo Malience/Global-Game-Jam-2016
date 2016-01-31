@@ -201,13 +201,6 @@ public class Room extends GameObject
 		return connectors[0] + connectors[1] + connectors[2] + connectors[3];
 	}
 	
-	public void showCon()
-	{
-		for(int i=0; i < 3; i++)
-		{
-			System.out.print(connectors[i] + " ");
-		}
-	}
 	
 	public int getxPos()
 	{

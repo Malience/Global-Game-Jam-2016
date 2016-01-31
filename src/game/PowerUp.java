@@ -1,27 +1,23 @@
 package game;
 
-import com.base.engine.rendering.Material;
-import com.base.engine.rendering.Mesh;
-import com.base.engine.rendering.Texture;
+import com.base.engine.components.attachments.Interactable;
 
-public class PowerUp extends Gear
+public class PowerUp extends Gear implements Interactable
 {
+	PickUpItem cmd =  new PickUpItem();
 	
 	public PowerUp (float x, float y, float z)
 	{
 		super(x, y, z);
 	}
 	
-	public void PowerUp1()
-	{
-		Material m = new Material();
-		m.addTexture("Color", new Texture("blue.png"));
-		
-		Mesh n = new Mesh("PowerUp001.obj");
-	}
-	
 	public String toString()
 	{
 		return "Power-Up";
+	}
+	
+	public void interact()
+	{
+		cmd.pickUp(this);
 	}
 }

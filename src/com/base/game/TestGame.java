@@ -1,9 +1,11 @@
 package com.base.game;
 
 import game.AccessItems;
+import game.Battery;
 import game.Listener;
 import game.Map;
 import game.NewBattery;
+import game.PickUpItem;
 import game.PowerUp;
 import game.Room;
 import game.flashLight;
@@ -218,6 +220,9 @@ public class TestGame extends Game
 		
 		GameComponent accessItems = new AccessItems();
 		object.addComponent(accessItems);
+		
+		GameComponent pickUp = new PickUpItem();
+		object.addComponent(pickUp);
 		
 		
 		Map map = new Map(5,5);

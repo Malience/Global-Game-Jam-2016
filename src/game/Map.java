@@ -58,6 +58,7 @@ public class Map
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
 			int randomWidth = rng.nextInt(width), randomHeight = rng.nextInt(height);
+			
 			while(!isValidMonkeyPlacement(randomWidth, randomHeight))
 			{
 				randomWidth = rng.nextInt(width);
@@ -72,7 +73,7 @@ public class Map
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
 		{
 			int randomWidth = rng.nextInt(width), randomHeight = rng.nextInt(height);
-			while(!isValidTrapRoom(randomWidth, randomHeight))
+			while(!isValidTrapPlacement(randomWidth, randomHeight))
 			{
 				randomWidth = rng.nextInt(width);
 				randomHeight = rng.nextInt(height);
@@ -84,6 +85,9 @@ public class Map
 		}
 	}
 	
+<<<<<<< HEAD
+	private boolean isValidTrapPlacement(int x, int y)
+=======
 	public void setGenericRooms()
 	{
 		
@@ -104,10 +108,11 @@ public class Map
 	}
 	
 	private boolean isValidTrapRoom(int x, int y)
+>>>>>>> 18896c02cf6610a597f15100a690e35788b7dff6
 	{
 		if(x > width || y > height) { return false; }
 		
-		return rooms[x][y] == null;
+		return rooms[x][y] != null;
 	}
 	
 	private boolean isValidMonkeyPlacement(int x, int y)
@@ -116,7 +121,7 @@ public class Map
 		int midX = width / 2;
 		int midY = height / 2;
 		
-		return (rooms[x][y] == null) || (x == midX && y == midY + 1) ||
+		return (rooms[x][y] != null) || (x == midX && y == midY + 1) ||
 				(x == midX && y == midY - 1) || (x == midX - 1 || y == midY) ||
 				(x == midX + 1 && y == midY);
 	}

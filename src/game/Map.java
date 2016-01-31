@@ -68,7 +68,8 @@ public class Map
 				{
 					if(rooms[i][j] == null)
 					{
-						rooms[i][j] = new GenericRoom("genericroom" + i + j);			
+						rooms[i][j] = new GenericRoom("genericroom" + i + j);
+						rooms[i][j].setTexture("Wall003.jpg");
 					}
 					
 					if(i > 0)
@@ -150,7 +151,7 @@ public class Map
 			//TODO: Set Vector3f location correctly
 
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
-			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
+			rooms[randomWidth][randomHeight].setTexture("Wall004.jpg");
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -164,7 +165,7 @@ public class Map
 			}
 			
 			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
-			rooms[randomWidth][randomHeight].setTexture("bricks2.jpg");
+			rooms[randomWidth][randomHeight].setTexture("Wall002.jpg");
 		}
 	}
 	

@@ -108,9 +108,6 @@ public class TestGame extends Game
 		
 		//world.add(cameraObject);
 		
-		GameComponent newBat = new NewBattery();
-		//cameraObject.addComponent(newBat);
-		
 		//RenderingEngine.mainCamera = camera;
 		
 		//cameraObject.addComponent(freelook).addComponent(freeMove).addComponent(camera);
@@ -222,6 +219,9 @@ public class TestGame extends Game
 		GameComponent accessItems = new AccessItems();
 		object.addComponent(accessItems);
 		
+		GameComponent newBattery = new NewBattery();
+		object.addComponent(newBattery);
+		
 		GameComponent pickUp = new PickUpItem();
 		object.addComponent(pickUp);
 		
@@ -237,8 +237,9 @@ public class TestGame extends Game
 		
 		//world.add(room);
 		
+		Vector3f mainRoomTopCenterPos = map.getMainRoomPos().add(Room.roomSize.mul(2.0f));
 		Player player = new Player();
-		player.getTransform().setPos(new Vector3f(0,3,0));
+		player.getTransform().setPos(new Vector3f(mainRoomTopCenterPos.x, Room.roomSize.y * 2.0f, mainRoomTopCenterPos.z));
 		world.addToBucket(player);
 		
 		//addObject(new TestObject(0,0,0).convert());

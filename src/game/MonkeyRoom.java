@@ -20,6 +20,17 @@ public class MonkeyRoom extends Room
 	private final int ENUMSIZE = MonkeyRoomTypes.values().length;
 	private  GameObject monkey;
 	
+	public MonkeyRoom(Vector3f position, int xPos, int yPos) 
+	{	
+		super(position,xPos,yPos);
+		
+		roomType = "m";
+		
+		handleConnectors();
+		
+		roomIterator += 1;
+	}
+	
 	public MonkeyRoom(String name)
 	{
 		super(name);
@@ -48,18 +59,6 @@ public class MonkeyRoom extends Room
 		this.moveTo(position);
 	}
 	
-	public MonkeyRoom(Vector3f position, int xPos, int yPos) 
-	{	
-		super(position,xPos,yPos);
-		
-		roomType = "m";
-		
-		handleConnectors();
-		
-		roomIterator += 1;
-	}
-	
-	@Override  
 	public void handleConnectors()
 	{
 		if(roomIterator == 0)

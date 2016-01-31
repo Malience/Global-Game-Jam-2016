@@ -8,12 +8,21 @@ public class Door extends GameObject //implements Interactable
 {
 	private Door door = this;
 	private Door anotherDoor;
+	private int conType;
 	
 	private PickUpItem get = new PickUpItem();
 	
-	public Door(Door diffDoor)
+	public Door()
+	{
+		System.out.println(door);
+	}
+	
+	public Door(Door diffDoor, int conType)
 	{
 		anotherDoor = diffDoor;
+		this.conType = conType;
+		
+		System.out.println(door);
 	}
 	
 	public void interact()
@@ -31,5 +40,15 @@ public class Door extends GameObject //implements Interactable
 		newLoc.setY(0.5f);
 		
 		player.move(newLoc);
+	}
+	
+	public void setConType(int a)
+	{
+		conType = a;
+	}
+	
+	public String toString()
+	{
+		return conType + "";
 	}
 }

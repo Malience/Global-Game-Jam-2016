@@ -52,7 +52,7 @@ public class PickUpItem extends GameComponent
 				message.generate();
 				
 				mH = s.getPosition();
-				mH.setY(mH.getY() + 1);
+				mH.setY(mH.getY() + 0.2f);
 			}
 		}
 	}

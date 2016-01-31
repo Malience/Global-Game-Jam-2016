@@ -22,7 +22,8 @@ public class Room extends GameObject
 	private int[] connectors;
 	private int xPos;
 	private int yPos;
-	private Door door;
+	
+	protected Door[] door;
 	
 	protected String roomType;
 	
@@ -36,9 +37,9 @@ public class Room extends GameObject
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
-
+		door = new Door[4];
 		roomType = "g";
-		
+		setConnection(1,1,1,1);
 		setTexture("EmptyRoom001Template.png");
 	}
 
@@ -49,15 +50,14 @@ public class Room extends GameObject
 	
 	public Room(Vector3f position, int xPos, int yPos)
 	{
-		
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
 		roomType = "g";
 		getTransform().setPos(position);
-		
 		setTexture("Wall001.png");
-		
+		connectors = new int[4];
+		setConnection(1,1,1,1);
 //		recalculate();
 //		
 //		World.world.add(this);
@@ -191,8 +191,6 @@ public class Room extends GameObject
 		return renderer;
 	}
 	
-	
-	
 	public void setConnection(int left, int top, int right, int down)
 	{
 		connectors[0] = left;
@@ -201,23 +199,9 @@ public class Room extends GameObject
 		connectors[3] = down;
 	}
 	
-	public void setCon(int pos, int x)
+	public void setConnection(int pos, int x)
 	{
 		connectors[pos] = x;
-	}
-	
-	/**
-	 * Rotates room 90 degrees clockwise
-	 */
-	public void roomRotate()
-	{ 
-		int hold0 = connectors[0],
-		    hold1 = connectors[1], 
-		    hold2 = connectors[2], 
-		    hold3 = connectors[3];
-		
-		setConnection(hold3,hold0,hold1,hold2);
-
 	}
 	
 	public int conPeek(int index)
@@ -230,6 +214,38 @@ public class Room extends GameObject
 		return connectors[0] + connectors[1] + connectors[2] + connectors[3];
 	}
 	
+	/**
+	 * Rotates room 90 degrees clockwise
+	 */
+	public void roomRotate()
+	{ 
+		setConnection(connectors[3],connectors[0],connectors[1],connectors[2]);
+	}
+	
+	public void setDoors(Door anotherDoor)
+	{
+		try
+		{
+			for(int i = 0; i < 3; i++)
+			{
+				if(conPeek(i) == 0)
+				{
+					door[i].setConType(0);
+				}
+				
+				if(conPeek(i) == 1)
+				{
+					door[i].setConType(1);
+				}
+				
+				if(conPeek(i) == 2)
+				{
+					door[i] = new Door(anotherDoor,2);
+				}
+			}
+		}
+		catch(NullPointerException e) {}
+	}
 	
 	public int getxPos()
 	{
@@ -244,14 +260,6 @@ public class Room extends GameObject
 	public String toString()
 	{
 		return connectors[0] + "" + connectors[1] + "" + connectors[2] + "" + connectors[3];
-	}
-
-	public void handleConnectors()
-	{
-		for(int i = 0; i < 4; i++)
-		{
-			connectors[i] = 1;
-		}
 	}
 	
 	public String getRoomType()

@@ -22,6 +22,7 @@ public class Room extends GameObject
 	private int[] connectors;
 	private int xPos;
 	private int yPos;
+	private Door door;
 	
 	protected String roomType;
 	
@@ -200,6 +201,11 @@ public class Room extends GameObject
 		connectors[3] = down;
 	}
 	
+	public void setCon(int pos, int x)
+	{
+		connectors[pos] = x;
+	}
+	
 	/**
 	 * Rotates room 90 degrees clockwise
 	 */
@@ -211,7 +217,7 @@ public class Room extends GameObject
 		    hold3 = connectors[3];
 		
 		setConnection(hold3,hold0,hold1,hold2);
-		getTransform().rotate(new Vector3f(0,1,0),90f);
+
 	}
 	
 	public int conPeek(int index)

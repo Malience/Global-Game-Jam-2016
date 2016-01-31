@@ -61,10 +61,45 @@ public class Map
 		{
 			for(int j = 0; j < height; ++j)
 			{
-				if(rooms[i][j] == null)
+				try
 				{
-					rooms[i][j] = new GenericRoom("genericroom" + i + j);					
+					if(rooms[i][j] == null)
+					{
+						rooms[i][j] = new GenericRoom("genericroom" + i + j);			
+					}
+					
+					if(i > 0)
+					{
+						if(rooms[i][j].conPeek(1) == 1 && rooms[i-1][j].conPeek(3) == 1)
+						{
+							rooms[i][j].setCon(1, 2);
+							rooms[i-1][j].setCon(3, 2);
+						}
+					}
+					
+					if(rooms[i][j].conPeek(0) == 1 && rooms[i][j-1].conPeek(2) == 1)
+					{
+						rooms[i][j].setCon(0, 2);
+						rooms[i][j-1].setCon(2, 2);
+					}
+		
+
+					if(rooms[i][j].conPeek(2) == 1 && rooms[i][j+1].conPeek(0) == 1)
+					{
+						rooms[i][j].setCon(2, 2);
+						rooms[i][j+1].setCon(0, 2);
+					}
+						
+					if(rooms[i][j].conPeek(3) == 1 && rooms[i+1][j].conPeek(1) == 1)
+					{
+						rooms[i][j].setCon(3, 2);
+						rooms[i+1][j].setCon(1, 2);
+					}
 				}
+				catch(NullPointerException e) {}
+				catch(ArrayIndexOutOfBoundsException e) {}
+				
+				rotHandle(rooms[i][j]);
 				
 				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * Room.roomSize.z));				
 			}
@@ -184,22 +219,23 @@ public class Map
 			{
 				if(room.conPeek(0) == 1)
 				{
-					rooms[room.getxPos()-1][room.getyPos()].conPeek(0);
+					rooms[room.getxPos()][room.getyPos()-1].conPeek(0);
 				}
 				else if(room.conPeek(1) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()-1].conPeek(0);
+					rooms[room.getxPos()-1][room.getyPos()].conPeek(0);
 				}
 				else if(room.conPeek(2) == 1)
 				{
-					rooms[room.getxPos()+1][room.getyPos()].conPeek(0);
+					rooms[room.getxPos()][room.getyPos()+1].conPeek(0);
 				}
 				else if(room.conPeek(3) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()+1].conPeek(0);
+					rooms[room.getxPos()+1][room.getyPos()].conPeek(0);
 				}
 			}
-			else if(room.conSum() == 2)
+			
+			if(room.conSum() == 2)
 			{
 				if(room.conPeek(0) == 1 && room.conPeek(1) == 1)
 				{

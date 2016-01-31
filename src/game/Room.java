@@ -52,7 +52,7 @@ public class Room extends GameObject
 			{
 				door[i] = new Door(1);
 			}
-		}
+		} 
 	}
 
 	public Room(Vector3f position)
@@ -236,7 +236,9 @@ public class Room extends GameObject
 	
 	public void setDoor(Door anotherDoor, int conPos)
 	{
-		door[conPos] = new Door(anotherDoor);
+		door[conPos].setAnotherDoor(anotherDoor); 
+		door[conPos].setConType(2);
+		anotherDoor.setConType(2);
 	}
 	
 	public int getxPos()

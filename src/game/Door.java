@@ -46,6 +46,11 @@ public class Door extends GameObject //implements Interactable
 		conType = a;
 	}
 	
+	public void setAnotherDoor(Door anotherDoor)
+	{
+		this.anotherDoor = anotherDoor;
+	}
+	
 	public String peekDoor()
 	{
 		return anotherDoor.toString();

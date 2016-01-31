@@ -31,7 +31,7 @@ public class FlashLight extends GameObject// implements Updatable
 		RenderingEngine.UI.add(power);
 		fc = new FlashLightComponent();
 		Material mat = new Material();
-		mat.addTexture("diffuse", new Texture("test.png"));
+		mat.addTexture("diffuse", new Texture("FlashLight001.png"));
 		MeshRenderer renderer = new MeshRenderer(new Mesh("flashlight001.obj"), mat);
 		
 		this.addComponent(fc);

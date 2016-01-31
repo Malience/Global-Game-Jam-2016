@@ -22,10 +22,10 @@ public class CollisionDetector
 		{
 			return sphereAndHalfSpace((Sphere)two, (Plane)one, data);
 		}
-		if(s1 == Shape.Box && s2 == Shape.Box)
-		{
-			return boxAndBox((Box)one, (Box)two, data);
-		}
+//		if(s1 == Shape.Box && s2 == Shape.Box)
+//		{
+//			return boxAndBox((Box)one, (Box)two, data);
+//		}
 			
 		if(s1 == Shape.Box && s2 == Shape.Plane)
 		{
@@ -34,6 +34,15 @@ public class CollisionDetector
 		if(s1 == Shape.Plane && s2 == Shape.Box)
 		{
 			return boxAndHalfSpace((Box)two, (Plane)one, data);
+		}
+		
+		if(s1 == Shape.AABB && s2 == Shape.Plane)
+		{
+			return AABBAndHalfSpace((AABB)one, (Plane)two, data);
+		}
+		if(s1 == Shape.Plane && s2 == Shape.AABB)
+		{
+			return AABBAndHalfSpace((AABB)two, (Plane)one, data);
 		}
 		return 0;
 	}
@@ -49,6 +58,8 @@ public class CollisionDetector
 			return Shape.Plane;
 		case "Box":
 			return Shape.Box;
+		case "AABB":
+			return Shape.AABB;
 		}
 		return null;
 	}
@@ -57,7 +68,8 @@ public class CollisionDetector
 	{
 		Sphere,
 		Plane,
-		Box;
+		Box,
+		AABB;
 	}
 	
 	int sphereAndSphere(Sphere one, Sphere two, CollisionData data)
@@ -370,5 +382,70 @@ public class CollisionDetector
 		}
 			
 		return contactsUsed;
+	}
+	
+	public int AABBAndHalfSpace(AABB aabb, Plane plane, CollisionData data)
+	{
+		System.out.println("Collide");
+		int axis = -1;
+		float center = 0;
+		float edge = 0;
+		float planepos = plane.offset;
+		Vector3f move = new Vector3f(0,0,0);
+		
+		if(plane.direction.x != 0)
+		{
+			axis = 0;
+			center = aabb.body.getPosition().x;
+			edge = aabb.halfSize.x;
+			move.x = 1;
+			//edge = center + aabb.halfSize.x * plane.direction.x * -1;
+			//planepos *= plane.direction.x;
+		}
+		else if(plane.direction.y != 0)
+		{
+			axis = 1;
+			center = aabb.body.getPosition().y;
+			edge = aabb.halfSize.y;
+			move.y = 1;
+			//planepos *= plane.direction.y;
+		}
+		else if(plane.direction.z != 0)
+		{
+			axis = 2;
+			center = aabb.body.getPosition().z;
+			edge = aabb.halfSize.z;
+			move.z = 1;
+			//edge = center + aabb.halfSize.z * plane.direction.z * -1;
+			//planepos *= plane.direction.z;
+		}
+		
+		if(axis == -1) return 0;
+		
+		float penetration = 0;
+		boolean right = false;
+		
+		if(center < planepos) right = true;
+		
+		if(right)
+		{
+			edge = center + edge;
+			penetration = edge - planepos;
+			if(penetration < 0) return 0;
+			move.mul(penetration);
+			aabb.body.getTransform().setPos(aabb.body.getPosition().sub(move));
+		}
+		else
+		{
+			edge = center - edge;
+			penetration = planepos - edge;
+			if(penetration < 0) return 0;
+			move.mul(penetration);
+			aabb.body.getTransform().setPos(aabb.body.getPosition().add(move));
+		}
+		
+		aabb.body.setVelocity(new Vector3f(0,0,0));
+		
+		return 1;
 	}
 }

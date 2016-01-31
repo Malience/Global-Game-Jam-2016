@@ -5,6 +5,7 @@ import game.Battery;
 import game.Listener;
 import game.Map;
 import game.NewBattery;
+import game.Player;
 import game.PickUpItem;
 import game.PowerUp;
 import game.Room;
@@ -99,22 +100,22 @@ public class TestGame extends Game
 
 		testMesh1.addChild(testMesh2);
 		//getRootObject()
-		GameObject cameraObject = new GameObject();
-		Camera camera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
-		GameComponent freelook = new FreeLook(0.5f);
-		GameComponent freeMove = new FreeMove(10);
+		//GameObject cameraObject = new GameObject();
+		//Camera camera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
+		//GameComponent freelook = new FreeLook(0.5f);
+		//GameComponent freeMove = new FreeMove(10);
 		
 		
 		//world.add(cameraObject);
 		
 		GameComponent newBat = new NewBattery();
-		cameraObject.addComponent(newBat);
+		//cameraObject.addComponent(newBat);
 		
-		RenderingEngine.mainCamera = camera;
+		//RenderingEngine.mainCamera = camera;
 		
-		cameraObject.addComponent(freelook).addComponent(freeMove).addComponent(camera);
-		world.focus = cameraObject;
-		world.add(cameraObject);
+		//cameraObject.addComponent(freelook).addComponent(freeMove).addComponent(camera);
+		//world.focus = cameraObject;
+		//world.add(cameraObject);
 		//testMesh2.addChild(cameraObject);
 
 		//addObject(testMesh2);
@@ -155,10 +156,10 @@ public class TestGame extends Game
 		body2.attach(physics3);
 		
 		physics1.getTransform().setPos(new Vector3f(-20,21,1));
-		physics2.getTransform().setPos(new Vector3f(-20,-10,0));
+		physics2.getTransform().setPos(new Vector3f(0,0,0));
 		physics3.getTransform().setPos(new Vector3f(-20, 20, 0));
 		
-		plane.offset = -10;
+		plane.offset = 0;
 		plane.direction = new Vector3f(0,1,0);
 		
 		float halfSize = 1f;
@@ -209,9 +210,9 @@ public class TestGame extends Game
 		box.calculateInternals();
 		plane.calculateInternals();
 		
-		world.add(physics3);
+		//world.add(physics3);
 		world.add(physics2);
-		world.add(physics1);
+		//world.add(physics1);
 		
 		GameObject object = new GameObject("Last Object");
 		flashLight fl = new flashLight();
@@ -229,13 +230,16 @@ public class TestGame extends Game
 		map.showMap();
 		
 		Listener l = new Listener();
-		cameraObject.addComponent(l);
+		//cameraObject.addComponent(l);
 		//Room room = new Room("Our House");
 		//room.addComponent(room.calculate());
 		//room.getTransform().setPos(new Vector3f(0,10,0));	
 		
 		//world.add(room);
 		
+		Player player = new Player();
+		player.getTransform().setPos(new Vector3f(0,3,0));
+		world.addToBucket(player);
 		
 		//addObject(new TestObject(0,0,0).convert());
 	}

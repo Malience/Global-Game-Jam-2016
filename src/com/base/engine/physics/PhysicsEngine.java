@@ -39,7 +39,7 @@ public class PhysicsEngine
 		resolver = new ContactResolver(iterations);
 		calculateIterations = (iterations == 0);
 		bodies = new ArrayList<RigidBody>();
-		gravity = new Gravity(new Vector3f(0,-20,0));
+		gravity = new Gravity(new Vector3f(0,0,0));
 	}
 	
 	public void startFrame()

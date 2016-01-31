@@ -183,7 +183,7 @@ public class TestGame extends Game
 		object.addComponent(fl);
 		world.add(object);
 		
-		Map map = new Map(7,7);
+		Map map = new Map(5,5);
 		map.showMap();
 		
 		Listener l = new Listener();

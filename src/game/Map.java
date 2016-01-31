@@ -110,12 +110,15 @@ public class Map
 	private boolean isValidMonkeyPlacement(int x, int y)
 	{
 		if(x > width || y > height) { return false; }
+		
 		int midX = width / 2;
 		int midY = height / 2;
 		
-		return (rooms[x][y] == null) || (x == midX && y == midY + 1) ||
-				(x == midX && y == midY - 1) || (x == midX - 1 && y == midY) ||
-				(x == midX + 1 && y == midY);
+		return (rooms[x][y] == null) && 
+			   (!((x == midX && y == (midY + 1)) ||
+			   (x == midX && y == (midY - 1)) || 
+			   (x == (midX - 1) && y == midY) ||
+			   (x == (midX + 1) && y == midY)));
 	}
 	
 	public Room rotHandle(Room room)

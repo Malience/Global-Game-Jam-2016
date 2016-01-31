@@ -4,7 +4,7 @@ import com.base.engine.core.math.Vector3f;
 
 public class MonkeyRoom extends Room 
 {
-	private static int roomIterator = -1;
+	private static int roomIterator = 0;
 	
 	private enum MonkeyRoomTypes
 	{
@@ -14,8 +14,10 @@ public class MonkeyRoom extends Room
 	private final int ENUMSIZE = MonkeyRoomTypes.values().length;
 	
 	public MonkeyRoom(Vector3f position, int xPos, int yPos) 
-	{
+	{	
 		super(position,xPos,yPos);
+		
+		handleConnectors();
 		
 		roomIterator += 1;
 	}
@@ -37,13 +39,15 @@ public class MonkeyRoom extends Room
 		else if(roomIterator == 3)
 		{
 			setConnection(1,1,1,1);
-			roomIterator = -1;
+		}
+		else if(roomIterator == 4)
+		{
+			roomIterator = 0;
 		}
 	}
 	
 	public String toString()
 	{
-		return "Monk";
+		return "M" + super.toString();
 	}
-
 }

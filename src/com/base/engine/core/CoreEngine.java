@@ -77,6 +77,7 @@ public class CoreEngine {
 		Input.init(MainWindow);
 		
 		renderingEngine = new RenderingEngine();
+		physicsEngine = new PhysicsEngine();
 		world.init();
 		
 		
@@ -100,10 +101,11 @@ public class CoreEngine {
 			
 			world.refreshActives(renderingEngine.mainCamera.getTransform().getPos());
 			world.updateObjects();
+			physicsEngine.startFrame();
 			//Gather Resources
 			Input.gather();
 			renderingEngine.gather();
-			//physicsEngine.gather();
+			physicsEngine.gather();
 			world.gather();
 			
 			while(unprocessedTime > frameTime)
@@ -122,6 +124,12 @@ public class CoreEngine {
 				Input.update();
 				Input.input((float)frameTime);
 				world.update((float)frameTime);
+				
+				//Physics Engine
+				physicsEngine.integrate((float)frameTime);
+				physicsEngine.simulate((float)frameTime);
+				physicsEngine.generateContacts((float)frameTime);
+				physicsEngine.handleCollisions((float)frameTime);
 				
 				if(frameCounter >= 1.0)
 				{

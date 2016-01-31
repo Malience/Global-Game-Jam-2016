@@ -23,7 +23,7 @@ public class Mesh
 	
 	/**
 	 * Loads in a mesh file in .obj format
-	 * @param fileName Name of the file (full path) containing a mesh. Only accepts .obj files
+	 * @param fileName Name of the file containing a mesh. Only accepts .obj files
 	 */
 	public Mesh(String fileName)
 	{
@@ -158,5 +158,18 @@ public class Mesh
 		addVertices(vertexData, Util.toIntArray(indexData), false);
 		
 		return null;
+	}
+	
+	@Override
+	public String toString()
+	{
+		if(fileName.equals(" "))
+		{
+			return "Mesh";
+		}
+		else
+		{
+			return "Mesh." + fileName;
+		}
 	}
 }

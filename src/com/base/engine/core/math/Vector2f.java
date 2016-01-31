@@ -1,8 +1,8 @@
 package com.base.engine.core.math;
 public class Vector2f 
 {
-	private float x;
-	private float y;
+	public float x;
+	public float y;
 	//Constructors
 	public Vector2f(float x, float y){this.x = x; this.y = y;}
 	public Vector2f(Vector2f r){this.x = r.x; this.y = r.y;}

@@ -158,4 +158,38 @@ public class Matrix3f
 	{
 		m[x][y] = value;
 	}
+	
+	public void setComponents(Vector3f one, Vector3f two, Vector3f three)
+	{
+		m[0][0] = one.x;
+		m[1][0] = one.y;
+		m[2][0] = one.z;
+		m[0][1] = two.x;
+		m[1][1] = two.y;
+		m[2][1] = two.z;
+		m[0][2] = three.x;
+		m[1][2] = three.y;
+		m[2][2] = three.z;
+	}
+
+	public void setSkewSymmetric(Vector3f v) 
+	{
+		m[0][0] = m[1][1] = m[2][2] = 0;
+		m[0][1] = -v.z;
+		m[0][2] = v.y;
+		m[1][0] = v.z;
+		m[1][2] = -v.x;
+		m[2][0] = -v.y;
+		m[2][1] = v.x;
+		
+	}
+
+	public Matrix3f add(Matrix3f a) {
+		Matrix3f out = new Matrix3f();
+		for(int i = 0; i < 9; i++)
+		{
+			out.m[i%3][i/3] = m[i%3][i/3] + a.m[i%3][i/3];
+		}
+		return out;
+	}
 }

@@ -29,7 +29,6 @@ public class Room extends GameObject
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
-		
 	}
 	
 	public Room(Vector3f position)
@@ -116,7 +115,8 @@ public class Room extends GameObject
 		{
 			meshRenderer.set(mesh, mat);
 		}
-		
+		// MWAHAHAHAHAHAHA!
+		// I can write what ever i want to write
 		
 	}
 	
@@ -136,25 +136,25 @@ public class Room extends GameObject
 		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ));
 		
 		
-		int bi[] = { 0, 1, 2,
-				2, 1, 3,
+		//DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING
+		int bi[] = {
+				7, 5, 4,
+				4, 6, 7,
 				
-				//Bottom
-				1, 3, 5,
-				5, 1, 7,
+				3, 2, 0,
+				0, 1, 3,
 				
-				//Top
-				0, 2, 4,
-				4, 2, 6,
+				4, 0, 2,
+				2, 6, 4,
 				
-				2, 3, 4,
-				4, 3, 5,
+				7, 3, 1,
+				1, 5, 7,
 				
-				4, 5, 6,
-				6, 5, 7,
+				5, 1, 0,
+				0, 4, 5,
 				
-				6, 7, 0,
-				0, 7, 1
+				6, 2, 3,
+				3, 7, 6,
 		};
 		mesh = new Mesh(vertices, bi);
 		
@@ -201,6 +201,14 @@ public class Room extends GameObject
 		return connectors[0] + connectors[1] + connectors[2] + connectors[3];
 	}
 	
+	public void showCon()
+	{
+		for(int i=0; i < 3; i++)
+		{
+			System.out.print(connectors[i] + " ");
+		}
+	}
+	
 	public int getxPos()
 	{
 		return xPos;
@@ -210,4 +218,10 @@ public class Room extends GameObject
 	{
 		return yPos;
 	}
+	
+	public String toString()
+	{
+		return connectors[0] + "" + connectors[1] + "" + connectors[2] + "" + connectors[3];
+	}
+
 }

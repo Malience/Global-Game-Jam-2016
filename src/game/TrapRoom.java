@@ -41,4 +41,9 @@ public class TrapRoom extends Room
 		}
 	}
 
+	public String toString()
+	{
+		return "Trap";
+	}
+	
 }

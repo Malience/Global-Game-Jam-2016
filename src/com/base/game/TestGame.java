@@ -2,6 +2,7 @@ package com.base.game;
 
 import game.AccessItems;
 import game.Listener;
+import game.Map;
 import game.Room;
 import game.flashLight;
 
@@ -182,13 +183,17 @@ public class TestGame extends Game
 		object.addComponent(fl);
 		world.add(object);
 		
+		Map map = new Map(5,5);
+		map.showMap();
+		
 		Listener l = new Listener();
 		cameraObject.addComponent(l);
 		Room room = new Room("Our House");
 		room.addComponent(room.calculate());
-		room.getTransform().setPos(new Vector3f(0,10,0));
+		room.getTransform().setPos(new Vector3f(0,10,0));	
 		
 		world.add(room);
+		
 		
 		//addObject(new TestObject(0,0,0).convert());
 	}

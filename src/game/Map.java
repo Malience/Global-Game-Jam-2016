@@ -63,6 +63,8 @@ public class Map
 			{
 				randomWidth = rng.nextInt(width);
 				randomHeight = rng.nextInt(height);
+				
+				System.out.println(randomWidth + " " + randomHeight);
 			}
 			
 			//TODO: Set Vector3f location correctly
@@ -73,21 +75,19 @@ public class Map
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
 		{
 			int randomWidth = rng.nextInt(width), randomHeight = rng.nextInt(height);
+			
 			while(!isValidTrapPlacement(randomWidth, randomHeight))
 			{
 				randomWidth = rng.nextInt(width);
 				randomHeight = rng.nextInt(height);
+				
+				System.out.println(randomWidth + " " + randomHeight);
 			}
 			
 			//TODO: Set Vector3f location correctly
 			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
 			rotHandle(rooms[randomWidth][randomHeight]);
 		}
-	}
-	
-	public void setGenericRooms()
-	{
-		
 	}
 	
 	//debug
@@ -108,7 +108,7 @@ public class Map
 	{
 		if(x > width || y > height) { return false; }
 		
-		return rooms[x][y] != null;
+		return rooms[x][y] == null;
 	}
 	
 	private boolean isValidMonkeyPlacement(int x, int y)
@@ -117,7 +117,7 @@ public class Map
 		int midX = width / 2;
 		int midY = height / 2;
 		
-		return (rooms[x][y] != null) || (x == midX && y == midY + 1) ||
+		return (rooms[x][y] == null) || (x == midX && y == midY + 1) ||
 				(x == midX && y == midY - 1) || (x == midX - 1 || y == midY) ||
 				(x == midX + 1 && y == midY);
 	}

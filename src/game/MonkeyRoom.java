@@ -40,5 +40,10 @@ public class MonkeyRoom extends Room
 			roomIterator = -1;
 		}
 	}
+	
+	public String toString()
+	{
+		return "Monk";
+	}
 
 }

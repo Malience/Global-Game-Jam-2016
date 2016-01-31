@@ -85,9 +85,6 @@ public class Map
 		}
 	}
 	
-<<<<<<< HEAD
-	private boolean isValidTrapPlacement(int x, int y)
-=======
 	public void setGenericRooms()
 	{
 		
@@ -107,8 +104,7 @@ public class Map
 		}
 	}
 	
-	private boolean isValidTrapRoom(int x, int y)
->>>>>>> 18896c02cf6610a597f15100a690e35788b7dff6
+	private boolean isValidTrapPlacement(int x, int y)
 	{
 		if(x > width || y > height) { return false; }
 		

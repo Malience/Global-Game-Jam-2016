@@ -24,6 +24,15 @@ public class TrapRoom extends Room
 		roomIterator += 1;
 	}
 	
+	public TrapRoom(String name) 
+	{
+		super(name);
+		
+		handleConnectors();
+		
+		roomIterator += 1;
+	}
+
 	@Override
 	public void handleConnectors()
 	{

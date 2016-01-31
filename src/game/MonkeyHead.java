@@ -11,9 +11,13 @@ public class MonkeyHead extends Gear
 	Mesh n = new Mesh("monkey3.obj");
 	MeshRenderer mR;
 	
+	String identify = "";
+	
 	public MonkeyHead (String type, float x, float y, float z)
 	{
 		super( x, y, z);
+		
+		identify = type;
 		
 		if (type.equals("placebo"))
 		{
@@ -60,6 +64,6 @@ public class MonkeyHead extends Gear
 	
 	public String toString()
 	{
-		return "Artifact";
+		return "Artifact : " + identify;
 	}
 }

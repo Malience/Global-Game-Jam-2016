@@ -61,7 +61,10 @@ public class Map
 		{
 			for(int j = 0; j < height; ++j)
 			{
-				//TODO: Set Generic Rooms here
+				if(rooms[i][j] == null)
+				{
+					rooms[i][j] = new GenericRoom(new Vector3f(0,0,0),i,j);
+				}
 			}
 		}
 	}
@@ -137,7 +140,7 @@ public class Map
 			   (x == (midX + 1) && y == midY)));
 	}
 	
-	public Room rotHandle(Room room)
+	private Room rotHandle(Room room)
 	{
 		try
 		{	

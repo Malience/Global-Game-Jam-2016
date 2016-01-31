@@ -8,13 +8,19 @@ import java.util.ArrayList;
 import org.lwjgl.BufferUtils;
 
 import com.base.engine.components.attachments.Controlable;
+import com.base.engine.components.attachments.Interactable;
 import com.base.engine.core.math.Vector2f;
+import com.base.engine.core.math.Vector3f;
+import com.base.engine.rendering.RenderingEngine;
+import com.base.engine.rendering.UI.UIElement;
+import com.base.engine.rendering.UI.UIText;
 
 public class Input
 {
 	static World world = World.world;
 	
 	static ArrayList<Controlable> inputs;
+	static ArrayList<Interactable> interacts;
 	
 	final static int NUM_KEYS = 338;
 	final static int NUM_MOUSE = 8;
@@ -25,6 +31,9 @@ public class Input
 	static boolean[] prevKeys = new boolean[NUM_KEYS];
 	
 	static long MainWindow;
+	
+	public static UIText interactIcon;
+	public static UIText interactText;
 	
 	//private static GLFWKeyCallback keyCallback;
 	
@@ -46,12 +55,19 @@ public class Input
             }
         });
         */
-
+		interactIcon = new UIText(400, 100, "timesNewRoman.png", "E", 64);
+		interactText = new UIText(400, 50, "timesNewRoman.png", "E", 32);
+		
+		interactIcon.active = false;
+		interactText.active = false;
+		
+		interacts = new ArrayList<Interactable>();
 	}
 	
 	public static void gather()
 	{
 		inputs = world.getControlable();
+		interacts = world.getInteractables();
 	}
 	
 	public static void input(float delta)
@@ -59,6 +75,54 @@ public class Input
 		for(Controlable input : inputs)
 		{
 			input.input(delta);
+		}
+	}
+	
+	private static Vector3f interactThreshold = new Vector3f(1,5,1);
+	private static boolean first = true;
+	public static void interact()
+	{
+		if(first)
+		{
+			RenderingEngine.UI.add(interactIcon);
+			RenderingEngine.UI.add(interactText);
+			first = false;
+		}
+		
+		Interactable interacting = null;
+		Vector3f playerpos = World.world.focus.getPosition();
+		
+		int i = 0;
+		int size = interacts.size();
+		if(size <= 0) return;
+		Interactable interact = interacts.get(i);
+		while(interacting == null)
+		{
+			Vector3f distance = interact.getTransform().getPos().sub(playerpos);
+			if((Math.abs(distance.x) - interactThreshold.x) < 0 && (Math.abs(distance.y) - interactThreshold.y) < 0 && (Math.abs(distance.z) - interactThreshold.z) < 0)
+			{
+				interacting = interact;
+			}
+			i++;
+			if(i >= size) break;
+			interact = interacts.get(i);
+		}
+		
+		if(interacting != null)
+		{
+			interactIcon.active = true;
+			interactText.text = "Interact";// + interacting.getParent().toString();
+			interactText.generate();
+			interactText.active = true;
+			if(getKey(GLFW_KEY_E))
+			{
+				interacting.interact();
+			}
+		}
+		else
+		{
+			interactIcon.active = false;
+			interactText.active = false;
 		}
 	}
 	

@@ -4,7 +4,9 @@ import com.base.engine.components.Camera;
 import com.base.engine.components.FreeLook;
 import com.base.engine.components.FreeMove;
 import com.base.engine.components.GameComponent;
+import com.base.engine.components.LockedYMove;
 import com.base.engine.components.SpotLight;
+import com.base.engine.components.StandardLook;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.World;
 import com.base.engine.core.math.Vector3f;
@@ -28,8 +30,11 @@ public class Player extends GameObject
 		body = new RigidBody(5, 1, 0);
 		collider = new AABB();
 		SpotLight light = new SpotLight(new Vector3f(1,0,0), 0.4f, new Attenuation(0,0,0.1f), 0.7f);
-		FreeMove move = new FreeMove(10);
-		FreeLook freelook = new FreeLook(0.5f);
+		//FreeMove move = new FreeMove(10);
+		LockedYMove move = new LockedYMove(10);
+		FreeLook look = new FreeLook(0.5f);
+		//StandardLook look = new StandardLook(0.5f);
+		//InteractionTest test = new InteractionTest();
 		
 		body.attach(this);
 		collider.attach(body);
@@ -43,7 +48,8 @@ public class Player extends GameObject
 		this.addComponent(collider);
 		this.addComponent(light);
 		this.addComponent(move);
-		this.addComponent(freelook);
+		this.addComponent(look);
+		//this.addComponent(test);
 		
 		collider.halfSize = new Vector3f(1,2,1);
 		collider.calculateInternals();

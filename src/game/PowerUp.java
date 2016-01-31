@@ -1,8 +1,9 @@
 package game;
 
 import com.base.engine.components.attachments.Interactable;
+import com.base.engine.core.GameObject;
 
-public class PowerUp extends Gear implements Interactable
+public class PowerUp extends Gear //implements Interactable
 {
 	PickUpItem cmd =  new PickUpItem();
 	

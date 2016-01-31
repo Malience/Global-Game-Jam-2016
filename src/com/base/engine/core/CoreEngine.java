@@ -123,6 +123,7 @@ public class CoreEngine {
 				
 				Input.update();
 				Input.input((float)frameTime);
+				Input.interact();
 				world.update((float)frameTime);
 				
 				//Physics Engine

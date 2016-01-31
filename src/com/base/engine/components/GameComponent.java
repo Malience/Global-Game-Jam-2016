@@ -20,6 +20,11 @@ public abstract class GameComponent implements ComponentAttachment
 		return parent.getTransform();
 	}
 	
+	public GameObject getParent()
+	{
+		return parent;
+	}
+	
 	public void addToEngine(CoreEngine engine)
 	{
 		

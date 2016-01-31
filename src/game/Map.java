@@ -119,6 +119,11 @@ public class Map
 		}
 	}
 	
+	public Vector3f getMainRoomPos()
+	{
+		return rooms[width / 2][height / 2].getPosition();
+	}
+	
 	
 	/**
 	 * Sets game essential rooms in the game-space array.

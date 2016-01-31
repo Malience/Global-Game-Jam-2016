@@ -2,7 +2,7 @@ package game;
 
 import com.base.engine.components.attachments.Interactable;
 
-public class MonkeyHead extends Gear implements Interactable
+public class MonkeyHead extends Gear //implements Interactable
 {
 	String identify = "";
 	

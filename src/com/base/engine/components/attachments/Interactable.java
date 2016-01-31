@@ -1,6 +1,6 @@
 package com.base.engine.components.attachments;
 
-public interface Interactable 
+public interface Interactable extends ComponentAttachment
 {
 	public void interact();
 }

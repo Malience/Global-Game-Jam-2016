@@ -4,7 +4,7 @@ import com.base.engine.components.attachments.Interactable;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.math.Vector3f;
 
-public class Door extends GameObject implements Interactable
+public class Door extends GameObject //implements Interactable
 {
 	private Door door = this;
 	private Door anotherDoor;

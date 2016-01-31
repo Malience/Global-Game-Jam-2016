@@ -197,10 +197,10 @@ public class TestGame extends Game
 		Mesh bm = new Mesh(bv, bi);
 		MeshRenderer boxMesh = new MeshRenderer(bm, material);
 		MeshRenderer boxMesh2 = new MeshRenderer(bm, material);
-		MeshRenderer planeMesh = new MeshRenderer(mesh2, material);
+		//MeshRenderer planeMesh = new MeshRenderer(mesh2, material);
 		
 		physics3.addComponent(boxMesh2);
-		physics2.addComponent(planeMesh);
+		//physics2.addComponent(planeMesh);
 		physics1.addComponent(boxMesh);
 		
 		box2.calculateInternals();
@@ -237,8 +237,9 @@ public class TestGame extends Game
 		
 		//world.add(room);
 		
+		Vector3f mainRoomTopCenterPos = map.getMainRoomPos().add(Room.roomSize.mul(2.0f));
 		Player player = new Player();
-		player.getTransform().setPos(new Vector3f(0,3,0));
+		player.getTransform().setPos(new Vector3f(mainRoomTopCenterPos.x, Room.roomSize.y * 2.0f, mainRoomTopCenterPos.z));
 		world.addToBucket(player);
 		
 		//addObject(new TestObject(0,0,0).convert());

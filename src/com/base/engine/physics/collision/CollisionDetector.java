@@ -386,7 +386,7 @@ public class CollisionDetector
 	
 	public int AABBAndHalfSpace(AABB aabb, Plane plane, CollisionData data)
 	{
-		System.out.println("Collide");
+		//System.out.println("Collide");
 		int axis = -1;
 		float center = 0;
 		float edge = 0;

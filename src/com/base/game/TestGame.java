@@ -239,7 +239,7 @@ public class TestGame extends Game
 		
 		Vector3f mainRoomTopCenterPos = map.getMainRoomPos().add(Room.roomSize.mul(2.0f));
 		Player player = new Player();
-		player.getTransform().setPos(new Vector3f(mainRoomTopCenterPos.x, Room.roomSize.y * 2.0f, mainRoomTopCenterPos.z));
+		player.getTransform().setPos(new Vector3f(mainRoomTopCenterPos.x, Room.roomSize.y * 1.5f, mainRoomTopCenterPos.z));
 		world.addToBucket(player);
 		
 		//addObject(new TestObject(0,0,0).convert());

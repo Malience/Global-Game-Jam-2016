@@ -1,5 +1,6 @@
 package game;
 
+import com.base.engine.components.GameComponent;
 import com.base.engine.components.attachments.Interactable;
 
 public class MonkeyHead extends Gear //implements Interactable
@@ -7,12 +8,14 @@ public class MonkeyHead extends Gear //implements Interactable
 	String identify = "";
 	
 	PickUpItem cmd =  new PickUpItem();
+	MonkeyHeadComponent mhc = new MonkeyHeadComponent();
 	
 	public MonkeyHead (String type, float x, float y, float z)
 	{
 		super( x, y, z);
 		
 		identify = type;
+		addComponent(mhc);
 		
 		if (type.equals("placebo"))
 		{
@@ -37,9 +40,14 @@ public class MonkeyHead extends Gear //implements Interactable
 	{
 		return "Artifact : " + identify;
 	}
+
 	
-	public void interact()
+	private class MonkeyHeadComponent extends GameComponent implements Interactable
 	{
-		cmd.pickUp(this);
+		public void interact() 
+		{	
+			cmd.pickUp(this.getParent());
+		}
+		
 	}
 }

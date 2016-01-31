@@ -12,17 +12,16 @@ public class Door extends GameObject //implements Interactable
 	
 	private PickUpItem get = new PickUpItem();
 	
-	public Door()
+	public Door(int conType)
 	{
-		System.out.println(door);
+		this.conType = conType;
 	}
 	
-	public Door(Door diffDoor, int conType)
+	public Door(Door anotherDoor)
 	{
-		anotherDoor = diffDoor;
-		this.conType = conType;
-		
-		System.out.println(door);
+		this.anotherDoor = anotherDoor;
+		conType = 2;
+		anotherDoor.setConType(2);
 	}
 	
 	public void interact()
@@ -45,6 +44,16 @@ public class Door extends GameObject //implements Interactable
 	public void setConType(int a)
 	{
 		conType = a;
+	}
+	
+	public void setAnotherDoor(Door anotherDoor)
+	{
+		this.anotherDoor = anotherDoor;
+	}
+	
+	public String peekDoor()
+	{
+		return anotherDoor.toString();
 	}
 	
 	public String toString()

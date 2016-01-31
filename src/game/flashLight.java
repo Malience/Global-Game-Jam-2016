@@ -30,7 +30,7 @@ public class flashLight extends GameComponent implements Updatable
 		}
 		
 		//after 10 seconds battery life dies. counter resets
-		if (counter >= 10)
+		if (counter >= 10 && life > 0)
 		{
 			life--;
 			counter = 0;

@@ -135,14 +135,14 @@ public class Room extends GameObject
 		float halfX = roomSize.getX(), halfY = roomSize.getY(), halfZ = roomSize.getZ();
 		
 		
-		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ), new Vector2f(0.5f, 1.0f)); //+++
-		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ), new Vector2f(0.0f, 1.0f)); //++-
-		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ), new Vector2f(0.5f, 0.5f)); //+-+
-		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ), new Vector2f(0.0f, 0.5f)); //+--
-		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ), new Vector2f(0.5f, 0.5f)); //-++
-		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ), new Vector2f(0.0f, 0.5f)); //-+-
-		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ), new Vector2f(0.5f, 0.0f)); //--+
-		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ), new Vector2f(0.0f, 0.0f)); //---
+		vertices[0] = new Vertex(new Vector3f(x + halfX, y + halfY, z + halfZ), new Vector2f(1.0f, 0.0f)); //+++
+		vertices[1] = new Vertex(new Vector3f(x + halfX, y + halfY, z - halfZ), new Vector2f(1.0f, 1.0f)); //++-
+		vertices[2] = new Vertex(new Vector3f(x + halfX, y - halfY, z + halfZ), new Vector2f(0.75f, 0.25f)); //+-+
+		vertices[3] = new Vertex(new Vector3f(x + halfX, y - halfY, z - halfZ), new Vector2f(0.75f, 0.75f)); //+--
+		vertices[4] = new Vertex(new Vector3f(x - halfX, y + halfY, z + halfZ), new Vector2f(0.0f, 0.0f)); //-++
+		vertices[5] = new Vertex(new Vector3f(x - halfX, y + halfY, z - halfZ), new Vector2f(0.0f, 1.0f)); //-+-
+		vertices[6] = new Vertex(new Vector3f(x - halfX, y - halfY, z + halfZ), new Vector2f(0.25f, 0.25f)); //--+
+		vertices[7] = new Vertex(new Vector3f(x - halfX, y - halfY, z - halfZ), new Vector2f(0.25f, 0.75f)); //---
 		
 		
 		//DO NOT CHANGE THESE UNLESS YOU KNOW WHAT YOU'RE DOING
@@ -168,7 +168,7 @@ public class Room extends GameObject
 		mesh = new Mesh(vertices, bi);
 		
 		Material mat = new Material();
-		mat.addTexture("diffuse", new Texture("EmptyRoom001Template.png"));
+		mat.addTexture("diffuse", new Texture("Wall001.png"));
 		
 		MeshRenderer renderer = new MeshRenderer(mesh, mat);
 		return renderer;

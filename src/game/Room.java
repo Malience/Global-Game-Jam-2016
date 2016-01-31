@@ -22,7 +22,10 @@ public class Room extends GameObject
 	private int[] connectors;
 	private int xPos;
 	private int yPos;
+	
 	protected String roomType;
+	
+	protected String textureName;
 	
 	protected boolean hasBattery, hasPowerup;
 	
@@ -32,6 +35,8 @@ public class Room extends GameObject
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
+		
+		setTexture("EmptyRoom001Template.png");
 	}
 	
 	public Room(Vector3f position)
@@ -48,9 +53,16 @@ public class Room extends GameObject
 		roomType = "g";
 		getTransform().setPos(position);
 		
+		setTexture("EmptyRoom001Template.png");
+		
 //		recalculate();
 //		
 //		World.world.add(this);
+	}
+	
+	protected void setTexture(String textureName)
+	{
+		this.textureName = textureName;
 	}
 	
 	public void setPosition(Vector3f position)
@@ -170,7 +182,7 @@ public class Room extends GameObject
 		mesh = new Mesh(vertices, bi);
 		
 		Material mat = new Material();
-		mat.addTexture("diffuse", new Texture("EmptyRoom001Template.png"));
+		mat.addTexture("diffuse", new Texture(textureName));
 		
 		MeshRenderer renderer = new MeshRenderer(mesh, mat);
 		return renderer;

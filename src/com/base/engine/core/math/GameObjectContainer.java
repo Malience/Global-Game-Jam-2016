@@ -15,6 +15,19 @@ public interface GameObjectContainer
 			{
 				out.add((E)object);
 			}
+			else 
+			{
+				Class supclass = object.getClass().getSuperclass();
+				while(supclass.getSimpleName() != "Object")
+				{
+					if(supclass.getSimpleName().equals(type))
+					{
+						out.add((E)object);
+						break;
+					}
+					supclass = supclass.getSuperclass();
+				}
+			}
 		}
 		return out;
 	}

@@ -58,6 +58,7 @@ public class Map
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
 			int randomWidth = rng.nextInt(width), randomHeight = rng.nextInt(height);
+			
 			while(!isValidMonkeyPlacement(randomWidth, randomHeight))
 			{
 				randomWidth = rng.nextInt(width);
@@ -72,7 +73,7 @@ public class Map
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
 		{
 			int randomWidth = rng.nextInt(width), randomHeight = rng.nextInt(height);
-			while(!isValidTrapRoom(randomWidth, randomHeight))
+			while(!isValidTrapPlacement(randomWidth, randomHeight))
 			{
 				randomWidth = rng.nextInt(width);
 				randomHeight = rng.nextInt(height);
@@ -84,11 +85,30 @@ public class Map
 		}
 	}
 	
-	private boolean isValidTrapRoom(int x, int y)
+	public void setGenericRooms()
+	{
+		
+	}
+	
+	//debug
+	public void showMap()
+	{
+		for(int i = 0; i < width; i++)
+		{
+			for(int j= 0; j < height; j++)
+			{
+				System.out.print(rooms[i][j] + "   ");
+			}
+			
+			System.out.print("\n");
+		}
+	}
+	
+	private boolean isValidTrapPlacement(int x, int y)
 	{
 		if(x > width || y > height) { return false; }
 		
-		return rooms[x][y] == null;
+		return rooms[x][y] != null;
 	}
 	
 	private boolean isValidMonkeyPlacement(int x, int y)
@@ -97,7 +117,7 @@ public class Map
 		int midX = width / 2;
 		int midY = height / 2;
 		
-		return (rooms[x][y] == null) || (x == midX && y == midY + 1) ||
+		return (rooms[x][y] != null) || (x == midX && y == midY + 1) ||
 				(x == midX && y == midY - 1) || (x == midX - 1 || y == midY) ||
 				(x == midX + 1 && y == midY);
 	}
@@ -133,15 +153,15 @@ public class Map
 				}
 				if(room.conPeek(1) == 1 && room.conPeek(2) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()].conPeek(2);
 				}
 				if(room.conPeek(2) == 1 && room.conPeek(3) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()].conPeek(3);
 				}
 				if(room.conPeek(3) == 1 && room.conPeek(0) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()].conPeek(0);
 				}
 			}
 		}

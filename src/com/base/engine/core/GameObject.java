@@ -14,6 +14,7 @@ public class GameObject implements GameObjectContainer
 	private ArrayList<GameObject> children;
 	private ComponentHash components;
 	private Transform transform;
+	private String name;
 
 	
 	public GameObject()
@@ -21,6 +22,14 @@ public class GameObject implements GameObjectContainer
 		children = new ArrayList<GameObject>();
 		components = new ComponentHash();
 		transform = new Transform();
+	}
+	
+	public GameObject(String name)
+	{
+		children = new ArrayList<GameObject>();
+		components = new ComponentHash();
+		transform = new Transform();
+		this.name = name;
 	}
 
 	public void addChild(GameObject child)
@@ -183,6 +192,9 @@ public class GameObject implements GameObjectContainer
 	@Override
 	public String toString()
 	{
-		return this.getClass().getSimpleName() + "->" + components.toString();
+		if(name == null)
+			return this.getClass().getSimpleName() + "->" + components.toString();
+		else
+			return this.getClass().getSimpleName() + "." + name + "->" + components.toString();
 	}
 }

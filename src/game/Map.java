@@ -69,8 +69,6 @@ public class Map
 				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * Room.roomSize.z));				
 			}
 		}
-		
-		cleanGenericRooms();
 	}
 	
 	private void setEssentialRooms()
@@ -93,7 +91,7 @@ public class Map
 
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
 			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
-			rotHandle(rooms[randomWidth][randomHeight]);
+			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -110,7 +108,7 @@ public class Map
 
 			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
 			rooms[randomWidth][randomHeight].setTexture("bricks2.jpg");
-			rotHandle(rooms[randomWidth][randomHeight]);
+			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 	}
 	

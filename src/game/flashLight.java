@@ -11,7 +11,7 @@ public class flashLight extends GameComponent implements Updatable
 	private int counter = 0;
 	private int nsec = 0;
 
-	UIText power = new UIText(0,50,"timesNewRoman.png", life + "%", 50);
+	UIText power = new UIText(0,0,"timesNewRoman.png", life + "%", 50);
 	
 	public flashLight()
 	{

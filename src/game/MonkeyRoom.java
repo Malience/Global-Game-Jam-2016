@@ -18,7 +18,7 @@ public class MonkeyRoom extends Room
 	}
 	
 	private final int ENUMSIZE = MonkeyRoomTypes.values().length;
-	private  GameObject monkey;
+	private  MonkeyHead monkey;
 	
 	public MonkeyRoom(Vector3f position, int xPos, int yPos) 
 	{	
@@ -33,7 +33,7 @@ public class MonkeyRoom extends Room
 		Material mat = new Material();
 		//mat.addTexture("diffuse", new Texture("red.png"));
 		
-		monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
+		monkey = new MonkeyHead("",0,0,0);
 		
 		//this.addChild(monkey);
 	}
@@ -45,7 +45,7 @@ public class MonkeyRoom extends Room
 		Material mat = new Material();
 		mat.addTexture("diffuse", new Texture("red.png"));
 		
-		monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
+		monkey = new MonkeyHead("",0,0,0);
 		
 		//this.addChild(monkey);
 		

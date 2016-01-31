@@ -5,7 +5,7 @@ import com.base.engine.core.GameObject;
 public class Inventory 
 {
 	//items in bag
-	private GameObject[] backpack = new GameObject[14];
+	public static GameObject[] backpack = new GameObject[14];
 	private String list = "Inventory:\n";
 	
 	public Inventory()

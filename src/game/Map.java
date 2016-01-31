@@ -119,6 +119,12 @@ public class Map
 					MonkeyRoom monkeyRoom = (MonkeyRoom)rooms[i][j];
 					monkeyRoom.setMonkey();
 				}
+				if(rooms[i][j] instanceof MainRoom)
+				{
+					MainRoom mroom = (MainRoom) rooms[i][j];
+					mroom.setStuff();
+				}
+				
 			}
 		}
 	}
@@ -137,6 +143,9 @@ public class Map
 		//TODO: Set vector3f location correctly
 		rooms[width / 2][height / 2] = new MainRoom("main"); 	//MainRoom is always in the middle!
 		rooms[width / 2][height / 2].setTexture("Wall001.jpg");
+		
+		//MainRoom mroom = (MainRoom) rooms[width / 2][height / 2];
+		//mroom.setStuff();
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{

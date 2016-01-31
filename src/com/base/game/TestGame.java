@@ -246,6 +246,21 @@ public class TestGame extends Game
 		player.getTransform().setPos(new Vector3f(mainRoomTopCenterPos.x, Room.roomSize.y * 1.5f, mainRoomTopCenterPos.z));
 		world.addToBucket(player);
 		
+		
+		GameObject gmonkey = new GameObject();
+		Material m = new Material();
+		m.addTexture("diffuse", new Texture("test.png"));
+		
+		MeshRenderer renderer = new MeshRenderer(new Mesh("monkey3.obj"), m);
+		
+		gmonkey.addComponent(renderer);
+		gmonkey.addComponent(new LookAtComponent());
+		
+		gmonkey.getTransform().setPos(new Vector3f(0,800,700));
+		gmonkey.getTransform().setScale(100);
+		
+		world.add(gmonkey);
+		
 		//addObject(new TestObject(0,0,0).convert());
 	}
 }

@@ -1,7 +1,11 @@
 package game;
 
 import com.base.engine.components.GameComponent;
+import com.base.engine.components.MeshRenderer;
 import com.base.engine.components.attachments.Interactable;
+import com.base.engine.rendering.Material;
+import com.base.engine.rendering.Mesh;
+import com.base.engine.rendering.Texture;
 
 public class MonkeyHead extends Gear //implements Interactable
 {
@@ -14,8 +18,13 @@ public class MonkeyHead extends Gear //implements Interactable
 	{
 		super( x, y, z);
 		
+		Material mat = new Material();
+		mat.addTexture("diffuse", new Texture("red.png"));
+		MeshRenderer renderer = new MeshRenderer(new Mesh("monkey3.obj"),mat);
+		
 		identify = type;
 		addComponent(mhc);
+		this.addComponent(renderer);
 		
 		if (type.equals("placebo"))
 		{

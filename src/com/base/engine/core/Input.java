@@ -78,7 +78,7 @@ public class Input
 		}
 	}
 	
-	private static Vector3f interactThreshold = new Vector3f(1,5,1);
+	private static Vector3f interactThreshold = new Vector3f(2,20,2);
 	private static boolean first = true;
 	public static void interact()
 	{

@@ -24,15 +24,16 @@ public class Player extends GameObject
 	Camera camera;
 	RigidBody body;
 	AABB collider;
+	MoveComponent finalmove;
 	
 	public Player()
 	{
 		camera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		body = new RigidBody(5, 1, 0);
 		collider = new AABB();
-		FreeMove move = new FreeMove(25);
-		//LockedYMove move = new LockedYMove(10);
-		//MoveComponent move = new MoveComponent(1, 10);
+		//FreeMove move = new FreeMove(25);
+		LockedYMove move = new LockedYMove(20);
+		finalmove = new MoveComponent(1, 5);
 		FreeLook look = new FreeLook(0.5f);
 		//StandardLook look = new StandardLook(0.5f);
 		//InteractionTest test = new InteractionTest();
@@ -69,5 +70,10 @@ public class Player extends GameObject
 	public Camera getCamera()
 	{
 		return camera;
+	}
+	
+	public void win()
+	{
+		this.addComponent(finalmove);
 	}
 }

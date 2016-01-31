@@ -108,9 +108,6 @@ public class TestGame extends Game
 		
 		//world.add(cameraObject);
 		
-		GameComponent newBat = new NewBattery();
-		//cameraObject.addComponent(newBat);
-		
 		//RenderingEngine.mainCamera = camera;
 		
 		//cameraObject.addComponent(freelook).addComponent(freeMove).addComponent(camera);
@@ -221,6 +218,9 @@ public class TestGame extends Game
 		
 		GameComponent accessItems = new AccessItems();
 		object.addComponent(accessItems);
+		
+		GameComponent newBattery = new NewBattery();
+		object.addComponent(newBattery);
 		
 		GameComponent pickUp = new PickUpItem();
 		object.addComponent(pickUp);

@@ -19,7 +19,7 @@ public class NewBattery extends GameComponent implements Controlable
 	private int acceptKey = GLFW_KEY_Y;
 	private int rejectKey = GLFW_KEY_N;
 
-	UIText ask = new UIText(150,400,"timesNewRoman.png",  " ", 40);
+	UIText ask = new UIText(200,400,"timesNewRoman.png",  " ", 40);
 	
 	int timer = 0;
 	Battery bty;

@@ -67,8 +67,16 @@ public class Map
 					rooms[i][j] = new GenericRoom("genericroom" + i + j);
 				}
 				
+				
+				
 				World.world.add(rooms[i][j]);
-				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * Room.roomSize.z));				
+				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));		
+				
+				if(rooms[i][j] instanceof MonkeyRoom)
+				{
+					MonkeyRoom monkeyRoom = (MonkeyRoom)rooms[i][j];
+					rooms[i][j].moveTo(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));
+				}
 			}
 		}
 	}
@@ -93,6 +101,7 @@ public class Map
 
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
 			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
+
 			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		

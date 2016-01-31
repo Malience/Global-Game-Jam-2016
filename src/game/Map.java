@@ -64,7 +64,7 @@ public class Map
 			{
 				try
 				{
-<<<<<<< HEAD
+//<<<<<<< HEAD
 					if(rooms[i][j] == null)
 					{
 						rooms[i][j] = new GenericRoom("genericroom" + i + j);			
@@ -97,9 +97,9 @@ public class Map
 						rooms[i][j].setCon(3, 2);
 						rooms[i+1][j].setCon(1, 2);
 					}
-=======
+//=======
 					rooms[i][j] = new GenericRoom("genericroom" + i + j);
->>>>>>> 0bb49a7a1211322824315c46c4e609682c2a4d3b
+//>>>>>>> 0bb49a7a1211322824315c46c4e609682c2a4d3b
 				}
 				catch(NullPointerException e) {}
 				catch(ArrayIndexOutOfBoundsException e) {}

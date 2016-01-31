@@ -14,6 +14,7 @@ public class PickUpItem extends GameComponent
 	private Inventory inv = new Inventory();
 	Stand s;
 	private int grabKey = GLFW_KEY_E;
+	Player player = new Player();
 	
 	UIText message = new UIText(300,300,"timesNewRoman.png",  " ", 24);
 	
@@ -53,6 +54,19 @@ public class PickUpItem extends GameComponent
 				mH = s.getPosition();
 				mH.setY(mH.getY() + 1);
 			}
+		}
+	}
+	
+	public void openDoor(Door go)
+	{
+		message.text = "Open (e)";
+		message.generate();
+		
+		if (Input.getKey(grabKey))
+		{	
+			message.text = "";
+			message.generate();
+			go.getNewLoc();
 		}
 	}
 }

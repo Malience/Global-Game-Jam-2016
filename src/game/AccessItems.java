@@ -5,7 +5,6 @@ import com.base.engine.components.attachments.Controlable;
 import com.base.engine.core.Input;
 
 import com.base.engine.rendering.RenderingEngine;
-import com.base.engine.rendering.Window;
 import com.base.engine.rendering.UI.UIText;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_I;
@@ -16,8 +15,7 @@ public class AccessItems extends GameComponent implements Controlable
 	private boolean opened = false;
 	private int invKey = GLFW_KEY_I;
 	int timer = 0;
-	
-	//UIText items = new UIText(Window.width/2,Window.height/2,"timesNewRoman.png",  " ", 40);
+
 	UIText items = new UIText(300,500,"timesNewRoman.png",  " ", 40);
 	
 	Inventory stuff = new Inventory();
@@ -52,7 +50,6 @@ public class AccessItems extends GameComponent implements Controlable
 		
 		return 1;
 	}
-	
 	
 	public void openInv()
 	{

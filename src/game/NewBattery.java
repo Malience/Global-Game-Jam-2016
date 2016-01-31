@@ -4,7 +4,6 @@ import com.base.engine.components.GameComponent;
 import com.base.engine.components.attachments.Controlable;
 import com.base.engine.core.Input;
 import com.base.engine.rendering.RenderingEngine;
-import com.base.engine.rendering.Window;
 import com.base.engine.rendering.UI.UIText;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_R;
@@ -33,16 +32,13 @@ public class NewBattery extends GameComponent implements Controlable
 	public int input(float delta)
 	{
 		timer++;
-		if (aI.getState())
-		{
-			aI.closeInv();
-		}
+		
 		
 		if (timer >= 10)
 		{
 			if(Input.getKey(reloadKey))
-			{
-				ask.text = "Change Battery (y/n)? \nYou have " + inv.findItem(bty);
+			{	
+				ask.text = "Change Battery (y/n)? You have " + inv.findItem(bty);
 				ask.generate();
 			}
 			

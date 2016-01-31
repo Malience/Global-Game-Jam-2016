@@ -32,7 +32,6 @@ public class flashLight extends GameComponent implements Updatable
 		//after 10 seconds battery life dies. counter resets
 		if (counter >= 10)
 		{
-			//System.out.println("POWER DOWN");
 			life--;
 			counter = 0;
 			draw();
@@ -46,7 +45,6 @@ public class flashLight extends GameComponent implements Updatable
 	
 	public boolean works()
 	{
-		//System.out.println("Battery Life: " + life);
 		if (life > 0)
 		{
 			return true;

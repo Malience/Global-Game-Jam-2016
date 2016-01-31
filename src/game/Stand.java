@@ -1,5 +1,6 @@
 package game;
 
+import com.base.engine.components.MeshRenderer;
 import com.base.engine.rendering.Material;
 import com.base.engine.rendering.Mesh;
 import com.base.engine.rendering.Texture;
@@ -11,9 +12,10 @@ public class Stand extends Gear
 		super (x,y,z);
 		
 		Material m = new Material();
-		m.addTexture("Testing", new Texture("brown.png"));
+		m.addTexture("Stand", new Texture("Stand001.png"));
 		
-		Mesh n = new Mesh("");
+		Mesh n = new Mesh("Stand001.obj");
+		MeshRenderer mR = new MeshRenderer(n, m);
 
 	}
 	

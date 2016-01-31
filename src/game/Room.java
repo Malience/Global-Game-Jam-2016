@@ -13,7 +13,7 @@ import com.base.engine.rendering.Vertex;
 
 public class Room extends GameObject
 {
-	public static Vector3f roomSize = new Vector3f(10,10,10); //TODO: check room size
+	public static Vector3f roomSize = new Vector3f(20,20,20); //TODO: check room size
 	
 	private MeshRenderer meshRenderer;
 	private Mesh mesh;
@@ -181,7 +181,7 @@ public class Room extends GameObject
 				6, 2, 3,
 				3, 7, 6,
 		};
-		mesh = new Mesh(vertices, bi);
+		mesh = new Mesh(vertices, bi, true);
 		
 		Material mat = new Material();
 

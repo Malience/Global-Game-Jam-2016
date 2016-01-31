@@ -9,7 +9,7 @@ import game.Player;
 import game.PickUpItem;
 import game.PowerUp;
 import game.Room;
-import game.flashLight;
+import game.FlashLight;
 
 import com.base.engine.components.*;
 import com.base.engine.core.*;
@@ -65,7 +65,7 @@ public class TestGame extends Game
 		planeObject.getTransform().getPos().set(0, -1, 5);
 
 		GameObject directionalLightObject = new GameObject();
-		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(150f/255f,75f/255f,20f/255f), 0.4f);
+		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(150f/255f,75f/255f,20f/255f), 0f);
 //		RenderingEngine.dlight = directionalLight;
 
 		directionalLightObject.addComponent(directionalLight);
@@ -212,8 +212,8 @@ public class TestGame extends Game
 		//world.add(physics1);
 		
 		GameObject object = new GameObject("Last Object");
-		flashLight fl = new flashLight();
-		object.addComponent(fl);
+		FlashLight fl = new FlashLight();
+		//object.addChild(fl);
 		world.add(object);
 		
 		GameComponent accessItems = new AccessItems();
@@ -240,6 +240,9 @@ public class TestGame extends Game
 		Vector3f mainRoomTopCenterPos = map.getMainRoomPos().add(Room.roomSize.mul(2.0f));
 		Player player = new Player();
 		player.getTransform().setPos(new Vector3f(mainRoomTopCenterPos.x, Room.roomSize.y * 2.0f, mainRoomTopCenterPos.z));
+		
+		player.addChild(fl);
+		
 		world.addToBucket(player);
 		
 		//addObject(new TestObject(0,0,0).convert());

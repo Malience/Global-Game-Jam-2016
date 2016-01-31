@@ -29,9 +29,8 @@ public class Player extends GameObject
 		camera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		body = new RigidBody(5, 1, 0);
 		collider = new AABB();
-		SpotLight light = new SpotLight(new Vector3f(1,0,0), 0.4f, new Attenuation(0,0,0.1f), 0.7f);
-		//FreeMove move = new FreeMove(10);
-		LockedYMove move = new LockedYMove(10);
+		FreeMove move = new FreeMove(10);
+		//LockedYMove move = new LockedYMove(10);
 		FreeLook look = new FreeLook(0.5f);
 		//StandardLook look = new StandardLook(0.5f);
 		//InteractionTest test = new InteractionTest();
@@ -46,7 +45,6 @@ public class Player extends GameObject
 		this.addComponent(camera);
 		this.addComponent(body);
 		this.addComponent(collider);
-		this.addComponent(light);
 		this.addComponent(move);
 		this.addComponent(look);
 		//this.addComponent(test);

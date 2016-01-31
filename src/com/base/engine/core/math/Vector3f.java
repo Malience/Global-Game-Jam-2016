@@ -121,7 +121,7 @@ public class Vector3f
 	}
 	
 	//Compare Methods
-	public boolean equals(Vector3f r){return x == r.getX() && y == r.getY() && z == r.getZ();}
+	public boolean equals(Vector3f r){if(r == null) return false; return x == r.getX() && y == r.getY() && z == r.getZ();}
 	public boolean equalsOr(Vector3f r){return x == r.getX() || y == r.getY() || z == r.getZ(); }
 	public int compareTo(Vector3f r)
 	{

@@ -49,6 +49,7 @@ public class Room extends GameObject
 			else
 				door[i] = new Door(1);
 		} 
+		//this.addComponent(calculate());
 	}
 
 	public Room(Vector3f position)
@@ -69,6 +70,7 @@ public class Room extends GameObject
 //		recalculate();
 //		
 //		World.world.add(this);
+		//this.addComponent(calculate());
 	}
 	
 	protected void setTexture(String textureName)

@@ -65,7 +65,7 @@ public class TestGame extends Game
 		planeObject.getTransform().getPos().set(0, -1, 5);
 
 		GameObject directionalLightObject = new GameObject();
-		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(150f/255f,75f/255f,20f/255f), 0f);
+		DirectionalLight directionalLight = new DirectionalLight(new Vector3f(150f/255f,75f/255f,20f/255f), .5f);
 //		RenderingEngine.dlight = directionalLight;
 
 		directionalLightObject.addComponent(directionalLight);

@@ -112,12 +112,12 @@ public class Map
 				rotHandle(rooms[i][j]);
 				
 				World.world.add(rooms[i][j]);
-				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));		
+				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));
 				
 				if(rooms[i][j] instanceof MonkeyRoom)
 				{
 					MonkeyRoom monkeyRoom = (MonkeyRoom)rooms[i][j];
-					rooms[i][j].moveTo(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));
+					monkeyRoom.setMonkey();
 				}
 			}
 		}

@@ -29,13 +29,25 @@ public class MonkeyRoom extends Room
 		handleConnectors();
 		
 		roomIterator += 1;
+		
+		Material mat = new Material();
+		//mat.addTexture("diffuse", new Texture("red.png"));
+		
+		monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
+		
+		//this.addChild(monkey);
 	}
 	
 	public MonkeyRoom(String name)
 	{
 		super(name);
 		
-		setMonkey();
+		Material mat = new Material();
+		mat.addTexture("diffuse", new Texture("red.png"));
+		
+		monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
+		
+		//this.addChild(monkey);
 		
 		handleConnectors();
 		
@@ -44,14 +56,15 @@ public class MonkeyRoom extends Room
 	
 	public void setMonkey()
 	{
-		Material mat = new Material();
+		//Material mat = new Material();
 		//mat.addTexture("diffuse", new Texture("red.png"));
 		
-		monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
+		//monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
 		
-		//monkey.getTransform().setPos(getTransform().getPos());
+		monkey.getTransform().setPos(getTransform().getPos());
+		World.world.add(monkey);
 		
-		this.addChild(monkey);
+		//this.addChild(monkey);
 	}
 	
 	public void setObjectPositions(Vector3f position)

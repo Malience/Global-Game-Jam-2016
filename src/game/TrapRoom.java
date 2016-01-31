@@ -33,7 +33,6 @@ public class TrapRoom extends Room
 		roomIterator += 1;
 	}
 
-	@Override
 	public void handleConnectors()
 	{
 		if(roomIterator == 0)

@@ -5,7 +5,6 @@ import java.util.Random;
 import com.base.engine.core.World;
 import com.base.engine.core.math.Vector3f;
 
-
 /*
  *              x  o  B     x  o  B
                o                 oo
@@ -22,7 +21,7 @@ import com.base.engine.core.math.Vector3f;
           x  o  B     x  o  B
  */
 
-/*
+/**
  * Holds a collection of Room objects
  * 
  */
@@ -50,9 +49,9 @@ public class Map
 		randomize();
 	}
 	
-	/*
+	/**
 	 * TODO: Complete method
-	 * Randomly sorts the Map
+	 * Randomly sorts the Map and connections
 	 */
 	public void randomize()
 	{
@@ -62,9 +61,12 @@ public class Map
 		{
 			for(int j = 0; j < height; ++j)
 			{
+				
+				//looks at every generated room in game-space
+				//if connections are available to be made
+				//links them together
 				try
 				{
-//<<<<<<< HEAD
 					if(rooms[i][j] == null)
 					{
 						rooms[i][j] = new GenericRoom("genericroom" + i + j);			
@@ -74,39 +76,33 @@ public class Map
 					{
 						if(rooms[i][j].conPeek(1) == 1 && rooms[i-1][j].conPeek(3) == 1)
 						{
-							rooms[i][j].setCon(1, 2);
-							rooms[i-1][j].setCon(3, 2);
+							rooms[i][j].setConnection(1, 2);
+							rooms[i-1][j].setConnection(3, 2);
 						}
 					}
 					
 					if(rooms[i][j].conPeek(0) == 1 && rooms[i][j-1].conPeek(2) == 1)
 					{
-						rooms[i][j].setCon(0, 2);
-						rooms[i][j-1].setCon(2, 2);
+						rooms[i][j].setConnection(0, 2);
+						rooms[i][j-1].setConnection(2, 2);
 					}
 		
-
 					if(rooms[i][j].conPeek(2) == 1 && rooms[i][j+1].conPeek(0) == 1)
 					{
-						rooms[i][j].setCon(2, 2);
-						rooms[i][j+1].setCon(0, 2);
+						rooms[i][j].setConnection(2, 2);
+						rooms[i][j+1].setConnection(0, 2);
 					}
 						
 					if(rooms[i][j].conPeek(3) == 1 && rooms[i+1][j].conPeek(1) == 1)
 					{
-						rooms[i][j].setCon(3, 2);
-						rooms[i+1][j].setCon(1, 2);
+						rooms[i][j].setConnection(3, 2);
+						rooms[i+1][j].setConnection(1, 2);
 					}
-//=======
-					rooms[i][j] = new GenericRoom("genericroom" + i + j);
-//>>>>>>> 0bb49a7a1211322824315c46c4e609682c2a4d3b
 				}
 				catch(NullPointerException e) {}
 				catch(ArrayIndexOutOfBoundsException e) {}
 				
 				rotHandle(rooms[i][j]);
-				
-				
 				
 				World.world.add(rooms[i][j]);
 				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, Room.roomSize.y, j * Room.roomSize.z));		
@@ -120,10 +116,14 @@ public class Map
 		}
 	}
 	
+	
+	/**
+	 * Sets game essential rooms in the game-space array.
+	 */
 	private void setEssentialRooms()
 	{
 		//TODO: Set vector3f location correctly
-		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2] = new MainRoom("main"); 	//MainRoom is always in the middle!
 		rooms[width / 2][height / 2].setTexture("Wall001.png");
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
@@ -140,8 +140,6 @@ public class Map
 
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
 			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
-
-			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -154,11 +152,8 @@ public class Map
 				randomHeight = rng.nextInt(height);
 			}
 			
-			//TODO: Set Vector3f location correctly
-
 			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
 			rooms[randomWidth][randomHeight].setTexture("bricks2.jpg");
-			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 	}
 	
@@ -170,38 +165,8 @@ public class Map
 			for(int j= 0; j < height; j++)
 			{
 				System.out.print(rooms[i][j] + "\t"); //Print them for debugging.
-				
-				if(rooms[i][j] != null)
-				{
-					
-				}
 			}
-			
 			System.out.print("\n");
-		}
-	}
-	
-	public void cleanGenericRooms()
-	{
-		for(int i = 0; i < width; i++)
-		{
-			for(int j = 0; j < height; j ++)
-			{
-				try
-				{	
-					if(rooms[i][j].getRoomType().equalsIgnoreCase("g"))
-					{
-						if(rooms[i+1][j].getRoomType().equalsIgnoreCase("g") && 
-						   rooms[i-1][j].getRoomType().equalsIgnoreCase("g") &&	
-						   rooms[i][j+1].getRoomType().equalsIgnoreCase("g") &&
-						   rooms[i][j-1].getRoomType().equalsIgnoreCase("g"))
-						{
-							rooms[i][j] = null;
-						}
-					}
-				}
-				catch(Exception e) { }
-			}
 		}
 	}
 	
@@ -226,6 +191,12 @@ public class Map
 			   (x == (midX + 1) && y == midY)));
 	}
 	
+	/**
+	 * Handles room rotation for edges/connections.
+	 * 
+	 * @param room
+	 * @return
+	 */
 	private Room rotHandle(Room room)
 	{
 		try

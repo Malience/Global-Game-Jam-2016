@@ -89,13 +89,9 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-<<<<<<< HEAD
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
-			//rotHandle(rooms[randomWidth][randomHeight]);
-=======
+
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
 			rotHandle(rooms[randomWidth][randomHeight]);
->>>>>>> 692eb91f6676cc3313f67c3dd57381d1a3338d52
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -109,13 +105,9 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-<<<<<<< HEAD
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
-			//rotHandle(rooms[randomWidth][randomHeight]);
-=======
+
 			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
 			rotHandle(rooms[randomWidth][randomHeight]);
->>>>>>> 692eb91f6676cc3313f67c3dd57381d1a3338d52
 		}
 	}
 	

@@ -66,7 +66,7 @@ public class Map
 					rooms[i][j] = new GenericRoom("genericroom" + i + j);					
 				}
 				
-				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * 10));				
+				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * Room.roomSize.z));				
 			}
 		}
 		
@@ -77,6 +77,7 @@ public class Map
 	{
 		//TODO: Set vector3f location correctly
 		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2].setTexture("black.png");
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -89,13 +90,10 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-<<<<<<< HEAD
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
-			//rotHandle(rooms[randomWidth][randomHeight]);
-=======
+
 			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
+			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
 			rotHandle(rooms[randomWidth][randomHeight]);
->>>>>>> 692eb91f6676cc3313f67c3dd57381d1a3338d52
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -109,13 +107,10 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-<<<<<<< HEAD
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
-			//rotHandle(rooms[randomWidth][randomHeight]);
-=======
+
 			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
+			rooms[randomWidth][randomHeight].setTexture("bricks2.jpg");
 			rotHandle(rooms[randomWidth][randomHeight]);
->>>>>>> 692eb91f6676cc3313f67c3dd57381d1a3338d52
 		}
 	}
 	

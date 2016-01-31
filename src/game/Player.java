@@ -3,7 +3,7 @@ package game;
 import com.base.engine.components.GameComponent;
 import com.base.engine.core.GameObject;
 
-public class Player extends GameObject
+public class Player extends GameObject 
 {
 	boolean alive = true;
 	GameComponent gc;

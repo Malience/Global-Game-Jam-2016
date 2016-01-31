@@ -59,4 +59,19 @@ public class Inventory
 		}
 		return list;
 	}
+	
+	public int findItem(GameObject go)
+	{
+		int counter = 0;
+		
+		for (int i = 0; i < 14; i++)
+		{
+			if (backpack[i] != go)
+			{
+				counter++;
+			}
+		}
+		
+		return counter;
+	}
 }

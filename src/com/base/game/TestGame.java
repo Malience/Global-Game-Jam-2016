@@ -3,6 +3,7 @@ package com.base.game;
 import game.AccessItems;
 import game.Listener;
 import game.Map;
+import game.NewBattery;
 import game.Room;
 import game.flashLight;
 
@@ -100,8 +101,11 @@ public class TestGame extends Game
 		GameComponent freelook = new FreeLook(0.5f);
 		GameComponent freeMove = new FreeMove(10);
 		
-		GameComponent accessItems = new AccessItems();
-		cameraObject.addComponent(accessItems);
+		
+		//world.add(cameraObject);
+		
+		GameComponent newBat = new NewBattery();
+		cameraObject.addComponent(newBat);
 		
 		RenderingEngine.mainCamera = camera;
 		
@@ -183,7 +187,15 @@ public class TestGame extends Game
 		object.addComponent(fl);
 		world.add(object);
 		
+<<<<<<< HEAD
+		GameComponent accessItems = new AccessItems();
+		object.addComponent(accessItems);
+		
+		
 		Map map = new Map(7,7);
+=======
+		Map map = new Map(5,5);
+>>>>>>> 2e4883f1519758d9878306c52b91c7335a3fe238
 		map.showMap();
 		
 		Listener l = new Listener();

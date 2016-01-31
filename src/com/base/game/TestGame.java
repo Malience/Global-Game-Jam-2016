@@ -4,6 +4,7 @@ import game.AccessItems;
 import game.Listener;
 import game.Map;
 import game.NewBattery;
+import game.PowerUp;
 import game.Room;
 import game.flashLight;
 
@@ -78,10 +79,10 @@ public class TestGame extends Game
 		spotLightObject.getTransform().getPos().set(5, 0, 5);
 		spotLightObject.getTransform().setRot(new Quaternion(new Vector3f(0,1,0), (float)Math.toRadians(90.0f)));
 
-		addObject(planeObject);
+		//addObject(planeObject);
 		addObject(directionalLightObject);
-		addObject(pointLightObject);
-		addObject(spotLightObject);
+		//addObject(pointLightObject);
+		//addObject(spotLightObject);
 
 		//getRootObject().addChild(new GameObject().addComponent(new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f)));
 
@@ -110,37 +111,57 @@ public class TestGame extends Game
 		RenderingEngine.mainCamera = camera;
 		
 		cameraObject.addComponent(freelook).addComponent(freeMove).addComponent(camera);
-		
-		testMesh2.addChild(cameraObject);
+		world.focus = cameraObject;
+		world.add(cameraObject);
+		//testMesh2.addChild(cameraObject);
 
-		addObject(testMesh2);
+		//addObject(testMesh2);
 		
-		addObject(testMesh1);
-		addObject(testMesh3);
+		//addObject(testMesh1);
+		//addObject(testMesh3);
 
 		testMesh3.getTransform().getPos().set(5, 5, 5);
 		testMesh3.getTransform().setRot(new Quaternion(new Vector3f(0,1,0), (float)Math.toRadians(-70.0f)));
 		
-		addObject(new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), material)));
+		//addObject(new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), material)));
 		
 		directionalLight.getTransform().setRot(new Quaternion(new Vector3f(1,0,0), (float)Math.toRadians(-45)));
 		
 		
 		GameObject physics1 = new GameObject();
 		GameObject physics2 = new GameObject();
+		GameObject physics3 = new GameObject();
+		
 		Box box = new Box();
+		Box box2 = new Box();
 		Plane plane = new Plane();
-		RigidBody body = new RigidBody(5, 1, 1);
+		
+		RigidBody body = new RigidBody(5, .2f, .2f);
+		RigidBody body2 = new RigidBody(5, .5f, .5f);
+		
 		box.attach(body);
+		box2.attach(body2);
+		
 		physics1.addComponent(body);
+		physics3.addComponent(body2);
+		
 		physics1.addComponent(box);
 		physics2.addComponent(plane);
+		physics3.addComponent(box2);
+		
+		body.attach(physics1);
+		body2.attach(physics3);
+		
+		physics1.getTransform().setPos(new Vector3f(-20,21,1));
 		physics2.getTransform().setPos(new Vector3f(-20,-10,0));
+		physics3.getTransform().setPos(new Vector3f(-20, 20, 0));
+		
 		plane.offset = -10;
 		plane.direction = new Vector3f(0,1,0);
-		physics1.getTransform().setPos(new Vector3f(-20,-10,0));
+		
 		float halfSize = 1f;
 		box.halfSize = new Vector3f(halfSize, halfSize, halfSize);
+		box2.halfSize = new Vector3f(halfSize, halfSize, halfSize);
 		
 		Vertex[] bv = new Vertex[]{ 
 				new Vertex( new Vector3f(halfSize, halfSize, halfSize), new Vector2f(0.0f, 0.0f)),
@@ -175,10 +196,18 @@ public class TestGame extends Game
 		};
 		Mesh bm = new Mesh(bv, bi);
 		MeshRenderer boxMesh = new MeshRenderer(bm, material);
+		MeshRenderer boxMesh2 = new MeshRenderer(bm, material);
 		MeshRenderer planeMesh = new MeshRenderer(mesh2, material);
+		
+		physics3.addComponent(boxMesh2);
 		physics2.addComponent(planeMesh);
 		physics1.addComponent(boxMesh);
 		
+		box2.calculateInternals();
+		box.calculateInternals();
+		plane.calculateInternals();
+		
+		world.add(physics3);
 		world.add(physics2);
 		world.add(physics1);
 		
@@ -190,7 +219,7 @@ public class TestGame extends Game
 		GameComponent accessItems = new AccessItems();
 		object.addComponent(accessItems);
 		
-	
+		
 		Map map = new Map(5,5);
 		map.showMap();
 		

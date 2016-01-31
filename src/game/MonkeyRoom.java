@@ -1,6 +1,12 @@
 package game;
 
+import com.base.engine.components.MeshRenderer;
+import com.base.engine.core.GameObject;
+import com.base.engine.core.World;
 import com.base.engine.core.math.Vector3f;
+import com.base.engine.rendering.Material;
+import com.base.engine.rendering.Mesh;
+import com.base.engine.rendering.Texture;
 
 public class MonkeyRoom extends Room 
 {
@@ -12,26 +18,48 @@ public class MonkeyRoom extends Room
 	}
 	
 	private final int ENUMSIZE = MonkeyRoomTypes.values().length;
+	private  GameObject monkey;
 	
 	public MonkeyRoom(String name)
 	{
 		super(name);
 		
+		setMonkey();
+		
 		handleConnectors();
 		
 		roomIterator += 1;
+	}
+	
+	public void setMonkey()
+	{
+		Material mat = new Material();
+		//mat.addTexture("diffuse", new Texture("red.png"));
+		
+		monkey = new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), mat));
+		
+		//monkey.getTransform().setPos(getTransform().getPos());
+		
+		this.addChild(monkey);
+	}
+	
+	public void setObjectPositions(Vector3f position)
+	{		
+		this.moveTo(position);
 	}
 	
 	public MonkeyRoom(Vector3f position, int xPos, int yPos) 
 	{	
 		super(position,xPos,yPos);
 		
+		roomType = "m";
+		
 		handleConnectors();
 		
 		roomIterator += 1;
 	}
 	
-	@Override 
+	@Override  
 	public void handleConnectors()
 	{
 		if(roomIterator == 0)

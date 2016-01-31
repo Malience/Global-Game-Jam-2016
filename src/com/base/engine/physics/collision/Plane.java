@@ -7,4 +7,10 @@ public class Plane extends Primitive implements Collidable
 {
 	public Vector3f direction;
 	public float offset;
+	
+	@Override
+	public void calculateInternals()
+	{
+		
+	}
 }

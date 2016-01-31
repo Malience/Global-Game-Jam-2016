@@ -15,6 +15,8 @@ public class MainRoom extends Room
 	{
 		super(position,xPos,yPos);
 		
+		roomType = "O";
+		
 		setConnection(1,1,1,1);
 	}
 }

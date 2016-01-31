@@ -5,11 +5,6 @@ import com.base.engine.core.GameObject;
 public class Inventory 
 {
 	//items in bag
-	// 0 : batteries
-	// 1 : artifact (monkey heads) (4)
-	// 2 : power-up (only 1)
-	// 3 : 
-	// 4 : 
 	private GameObject[] backpack = new GameObject[14];
 	private String list = "Inventory:\n";
 	
@@ -58,5 +53,20 @@ public class Inventory
 			}
 		}
 		return list;
+	}
+	
+	public int findItem(GameObject go)
+	{
+		int counter = 0;
+		
+		for (int i = 0; i < 14; i++)
+		{
+			if (backpack[i] != go)
+			{
+				counter++;
+			}
+		}
+		
+		return counter;
 	}
 }

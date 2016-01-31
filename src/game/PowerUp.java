@@ -15,7 +15,7 @@ public class PowerUp extends Gear
 	public void PowerUp1()
 	{
 		Material m = new Material();
-		m.addTexture("Testing", new Texture("brown.png"));
+		m.addTexture("Color", new Texture("blue.png"));
 		
 		Mesh n = new Mesh("");
 

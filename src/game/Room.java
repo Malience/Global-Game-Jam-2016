@@ -71,7 +71,7 @@ public class Room extends GameObject
 	{
 		getTransform().setPos(position);
 		this.addComponent(calculate());
-		World.world.add(this);
+		//World.world.add(this);
 	}
 	
 	public void recalculate()

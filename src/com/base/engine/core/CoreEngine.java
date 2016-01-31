@@ -99,7 +99,7 @@ public class CoreEngine {
 			unprocessedTime += passedTime;
 			frameCounter += passedTime;
 			
-			world.refreshActives(renderingEngine.mainCamera.getTransform().getPos());
+			world.refreshActives();
 			world.updateObjects();
 			physicsEngine.startFrame();
 			//Gather Resources

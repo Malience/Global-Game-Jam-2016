@@ -16,6 +16,7 @@ public class World
 	private SpatialHash spatialHash;
 	private ArrayList<Object> bucket;
 	private ArrayList<Tuple> activeCells;
+	public GameObject focus;
 	private Game map;
 	ArrayList<Updatable> updates;
 	
@@ -36,9 +37,9 @@ public class World
 		spatialHash.insert(object, object.getPosition());
 	}
 	
-	public void refreshActives(Vector3f currentPos)
+	public void refreshActives()
 	{
-		activeCells = spatialHash.getCellsAdjacent(spatialHash.hash(currentPos));
+		activeCells = spatialHash.getCellsAdjacent(spatialHash.hash(focus.getPosition()));
 	}
 	
 	//Convenience Methods!

@@ -78,10 +78,10 @@ public class TestGame extends Game
 		spotLightObject.getTransform().getPos().set(5, 0, 5);
 		spotLightObject.getTransform().setRot(new Quaternion(new Vector3f(0,1,0), (float)Math.toRadians(90.0f)));
 
-		addObject(planeObject);
+		//addObject(planeObject);
 		addObject(directionalLightObject);
-		addObject(pointLightObject);
-		addObject(spotLightObject);
+		//addObject(pointLightObject);
+		//addObject(spotLightObject);
 
 		//getRootObject().addChild(new GameObject().addComponent(new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f)));
 
@@ -110,18 +110,19 @@ public class TestGame extends Game
 		RenderingEngine.mainCamera = camera;
 		
 		cameraObject.addComponent(freelook).addComponent(freeMove).addComponent(camera);
-		
-		testMesh2.addChild(cameraObject);
+		world.focus = cameraObject;
+		world.add(cameraObject);
+		//testMesh2.addChild(cameraObject);
 
-		addObject(testMesh2);
+		//addObject(testMesh2);
 		
-		addObject(testMesh1);
-		addObject(testMesh3);
+		//addObject(testMesh1);
+		//addObject(testMesh3);
 
 		testMesh3.getTransform().getPos().set(5, 5, 5);
 		testMesh3.getTransform().setRot(new Quaternion(new Vector3f(0,1,0), (float)Math.toRadians(-70.0f)));
 		
-		addObject(new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), material)));
+		//addObject(new GameObject().addComponent(new MeshRenderer(new Mesh("monkey3.obj"), material)));
 		
 		directionalLight.getTransform().setRot(new Quaternion(new Vector3f(1,0,0), (float)Math.toRadians(-45)));
 		

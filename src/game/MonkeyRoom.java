@@ -17,12 +17,14 @@ public class MonkeyRoom extends Room
 	{	
 		super(position,xPos,yPos);
 		
+		roomType = "m";
+		
 		handleConnectors();
 		
 		roomIterator += 1;
 	}
 	
-	@Override 
+	@Override  
 	public void handleConnectors()
 	{
 		if(roomIterator == 0)

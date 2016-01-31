@@ -17,6 +17,8 @@ public class TrapRoom extends Room
 	{
 		super(position,xPos,yPos);
 		
+		roomType = "t";
+		
 		handleConnectors();
 		
 		roomIterator += 1;

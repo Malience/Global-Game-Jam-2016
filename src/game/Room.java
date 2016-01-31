@@ -22,6 +22,7 @@ public class Room extends GameObject
 	private int[] connectors;
 	private int xPos;
 	private int yPos;
+	protected String roomType;
 	
 	public Room(String name)
 	{
@@ -42,6 +43,7 @@ public class Room extends GameObject
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
+		roomType = "g";
 		getTransform().setPos(position);
 		
 //		recalculate();
@@ -222,5 +224,10 @@ public class Room extends GameObject
 		{
 			connectors[i] = 1;
 		}
+	}
+	
+	public String getRoomType()
+	{
+		return roomType;
 	}
 }

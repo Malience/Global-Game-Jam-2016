@@ -67,6 +67,8 @@ public class Map
 				}
 			}
 		}
+		
+		cleanGenericRooms();
 	}
 	
 	private void setEssentialRooms()
@@ -86,7 +88,7 @@ public class Map
 			
 			//TODO: Set Vector3f location correctly
 			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
-			rotHandle(rooms[randomWidth][randomHeight]);
+			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		
 		for(int i = 0; i < MAX_TRAP_ROOMS; ++i)
@@ -101,7 +103,7 @@ public class Map
 			
 			//TODO: Set Vector3f location correctly
 			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
-			rotHandle(rooms[randomWidth][randomHeight]);
+			//rotHandle(rooms[randomWidth][randomHeight]);
 		}
 	}
 	
@@ -116,6 +118,30 @@ public class Map
 			}
 			
 			System.out.print("\n");
+		}
+	}
+	
+	public void cleanGenericRooms()
+	{
+		for(int i = 0; i < width; i++)
+		{
+			for(int j = 0; j < height; j ++)
+			{
+				try
+				{	
+					if(rooms[i][j].getRoomType().equalsIgnoreCase("g"))
+					{
+						if(rooms[i+1][j].getRoomType().equalsIgnoreCase("g") && 
+						   rooms[i-1][j].getRoomType().equalsIgnoreCase("g") &&	
+						   rooms[i][j+1].getRoomType().equalsIgnoreCase("g") &&
+						   rooms[i][j-1].getRoomType().equalsIgnoreCase("g"))
+						{
+							rooms[i][j] = null;
+						}
+					}
+				}
+				catch(Exception e) { }
+			}
 		}
 	}
 	

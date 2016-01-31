@@ -84,6 +84,25 @@ public class Map
 		}
 	}
 	
+	public void setGenericRooms()
+	{
+		
+	}
+	
+	//debug
+	public void showMap()
+	{
+		for(int i = 0; i < width; i++)
+		{
+			for(int j= 0; j < height; j++)
+			{
+				System.out.print(rooms[i][j] + "   ");
+			}
+			
+			System.out.print("\n");
+		}
+	}
+	
 	private boolean isValidTrapRoom(int x, int y)
 	{
 		if(x > width || y > height) { return false; }
@@ -133,15 +152,15 @@ public class Map
 				}
 				if(room.conPeek(1) == 1 && room.conPeek(2) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()].conPeek(2);
 				}
 				if(room.conPeek(2) == 1 && room.conPeek(3) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()].conPeek(3);
 				}
 				if(room.conPeek(3) == 1 && room.conPeek(0) == 1)
 				{
-					rooms[room.getxPos()][room.getyPos()].conPeek(1);
+					rooms[room.getxPos()][room.getyPos()].conPeek(0);
 				}
 			}
 		}

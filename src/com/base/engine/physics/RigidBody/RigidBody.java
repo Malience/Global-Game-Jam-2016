@@ -11,11 +11,12 @@ import com.base.engine.core.math.Vector3f;
 
 public class RigidBody extends PhysicsComponent implements Physical
 {
+	private static final float sleepEpsilon = .01f;
+	
 	float inverseMass;
 	float linearDamping;
 	float angularDamping;
 	
-	Transform parentTransform;
 	Vector3f velocity;
 	Vector3f rotationVelocity;
 	Vector3f acceleration;
@@ -30,7 +31,7 @@ public class RigidBody extends PhysicsComponent implements Physical
 	
 	float motion;
 	boolean isAwake;
-	boolean canSleep;
+	boolean canSleep = true;
 	
 	
 	public RigidBody(float mass, float ldamping, float adamping)
@@ -39,7 +40,6 @@ public class RigidBody extends PhysicsComponent implements Physical
 		linearDamping = ldamping;
 		angularDamping = adamping;
 		
-		parentTransform = null;
 		velocity = new Vector3f(0,0,0);
 		rotationVelocity = new Vector3f(0,0,0);
 		acceleration = new Vector3f(0,0,0);
@@ -47,6 +47,11 @@ public class RigidBody extends PhysicsComponent implements Physical
 		transformMatrix = new Matrix4f();
 		inverseInertiaTensor = new Matrix3f();
 		inverseInertiaTensorWorld = new Matrix3f();
+		Matrix3f inertiaTensor = new Matrix3f();
+		inertiaTensor.m[0][0] = 2*(mass)/12.0f;
+		inertiaTensor.m[1][1] = 2*(mass)/12.0f;
+		inertiaTensor.m[2][2] = 2*(mass)/12.0f;
+		setInertiaTensor(inertiaTensor);
 		
 		forceAccum = new Vector3f(0,0,0);
 		torqueAccum = new Vector3f(0,0,0);
@@ -55,14 +60,15 @@ public class RigidBody extends PhysicsComponent implements Physical
 	@Override
 	public int attach(GameObject parent)
 	{
-		this.parentTransform = parent.getTransform();
+		this.parent = parent;
 		return 1;
 	}
 	
 	public void calculateDerivedData()
 	{
-		calculateTransformMatrix(transformMatrix, parentTransform.getPos(), parentTransform.getRot());
-		transformInertiaTensor(inverseInertiaTensorWorld, parentTransform.getRot(), inverseInertiaTensor, transformMatrix);
+		
+		calculateTransformMatrix(transformMatrix, parent.getTransform().getPos(), parent.getTransform().getRot());
+		transformInertiaTensor(inverseInertiaTensorWorld, parent.getTransform().getRot(), inverseInertiaTensor, transformMatrix);
 	}
 	
 	public void setInertiaTensor(Matrix3f inertiaTensor)
@@ -157,11 +163,11 @@ public class RigidBody extends PhysicsComponent implements Physical
 				t62*rotmat.m[2][2];
 	}
 	
-	public void setPosition(Vector3f v){parentTransform.setPos(v);}
-	public Vector3f getPosition(){return parentTransform.getPos();}
+	public void setPosition(Vector3f v){parent.getTransform().setPos(v);}
+	public Vector3f getPosition(){return parent.getTransform().getPos();}
 	
-	public void setOrientation(Quaternion q){parentTransform.setRot(q);}
-	public Quaternion getOrientation(){return parentTransform.getRot();}
+	public void setOrientation(Quaternion q){parent.getTransform().setRot(q);}
+	public Quaternion getOrientation(){return parent.getTransform().getRot();}
 	
 	public Vector3f getVelocity() {return velocity;}
 	public void setVelocity(Vector3f velocity) {this.velocity = velocity;}
@@ -173,10 +179,10 @@ public class RigidBody extends PhysicsComponent implements Physical
 	public float getMass() {return 1/inverseMass;}
 	public void setMass(float mass) {this.inverseMass = 1/mass;}
 	
-	public void addForce(Vector3f v){forceAccum = forceAccum.add(v);}
-	public void addTorque(Vector3f v){torqueAccum = torqueAccum.add(v);}
-	public void addVelocity(Vector3f v){velocity = velocity.add(v);}
-	public void addRotation(Vector3f v){rotationVelocity = rotationVelocity.add(v);}
+	public void addForce(Vector3f v){forceAccum = forceAccum.add(v); isAwake = true;}
+	public void addTorque(Vector3f v){torqueAccum = torqueAccum.add(v); isAwake = true;}
+	public void addVelocity(Vector3f v){velocity = velocity.add(v); isAwake = true;}
+	public void addRotation(Vector3f v){rotationVelocity = rotationVelocity.add(v); isAwake = true;}
 	
 	
 	public void addForceAtBodyPoint(Vector3f force, Vector3f point)
@@ -187,15 +193,30 @@ public class RigidBody extends PhysicsComponent implements Physical
 	
 	public void addForceAtPoint(Vector3f force, Vector3f point)
 	{
-		Vector3f distance = parentTransform.getPos().sub(point);
+		Vector3f distance = point.sub(parent.getTransform().getPos());
+		addForce(force);
 		addTorque(distance.cross(force));
-		float angle = force.dot(distance)/(force.magnitude()*distance.magnitude());
-		addForce(force.mul(angle));
+		isAwake = true;
+	}
+	
+	public Vector3f getPointInLocalSpace(Vector3f point)
+	{
+		return transformMatrix.transformInverse(point);
 	}
 	
 	public Vector3f getPointInWorldSpace(Vector3f point)
 	{
-		return transformMatrix.localToWorld(point, transformMatrix);
+		return transformMatrix.transform(point);
+	}
+	
+	public Vector3f getDirectionInLocalSpace(Vector3f direction)
+	{
+		return transformMatrix.transformInverseDirection(direction);
+	}
+	
+	public Vector3f getDirectionInWorldSpace(Vector3f direction)
+	{
+		return transformMatrix.transformDirection(direction);
 	}
 	
 	public void clearAccumulators()
@@ -206,6 +227,8 @@ public class RigidBody extends PhysicsComponent implements Physical
 	
 	public int integrate(float delta)
 	{
+		if (!isAwake) return 0;
+		
 		lastFrameAcceleration = acceleration.add(forceAccum.mul(inverseMass));
 		
 		Vector3f angularAcceleration = inverseInertiaTensorWorld.transform(torqueAccum);
@@ -217,9 +240,11 @@ public class RigidBody extends PhysicsComponent implements Physical
 		
 	public int simulate(float delta)
 	{
-		parentTransform.setPos(parentTransform.getPos().add(velocity.mul(delta)));
+		if (!isAwake) return 0;
 		
-		parentTransform.getRot().addScaledVector(rotationVelocity, delta);
+		parent.getTransform().setPos(parent.getTransform().getPos().add(velocity.mul(delta)));
+		
+		parent.getTransform().getRot().addScaledVector(rotationVelocity, delta);
 		
 		velocity = velocity.mul((float)Math.pow(linearDamping, delta));
 		rotationVelocity = rotationVelocity.mul((float)Math.pow(angularDamping, delta));
@@ -227,17 +252,30 @@ public class RigidBody extends PhysicsComponent implements Physical
 		calculateDerivedData();
 		
 		clearAccumulators();
+		
+		if(canSleep)
+		{
+			float currentMotion = velocity.dot(velocity) + rotationVelocity.dot(rotationVelocity);
+			
+			float bias = (float) Math.pow(0.5f, delta);
+			
+			motion = bias*motion + (1-bias)*currentMotion;
+			
+			if(motion < sleepEpsilon) setAwake(false);
+			else if(motion > 10 * sleepEpsilon) motion = 10 * sleepEpsilon;
+		}
+		
 		return 1;
 	}
 	
 	public void getInverseInertiaTensorWorld(Matrix3f inverseInertiaTensor)
 	{
-		
+		inverseInertiaTensor.setM(this.inverseInertiaTensor.m);
 	}
 	
 	public Matrix3f getInverseInertiaTensorWorld()
 	{
-		return null;
+		return inverseInertiaTensor;
 	}
 	
 	public boolean getAwake()
@@ -256,7 +294,7 @@ public class RigidBody extends PhysicsComponent implements Physical
 		{
 			isAwake = true;
 			
-			motion = 2*2.0f;
+			motion = sleepEpsilon*2.0f;
 		}
 		else
 		{

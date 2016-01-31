@@ -32,7 +32,7 @@ public class PhysicsEngine
 	{
 		world = World.world;
 		detector = new CollisionDetector();
-		maxContacts = 20;
+		maxContacts = 50;
 		iterations = 3;
 		data = new CollisionData(maxContacts);
 		contacts = new Contact[maxContacts];
@@ -96,8 +96,9 @@ public class PhysicsEngine
 		{
 			resolver.setIterations(0);
 		}
+		int i = data.contactCount;
 		contacts = data.getContacts();
-		resolver.resolveContacts(contacts, 0, delta);
+		resolver.resolveContacts(contacts, i, delta);
 	}
 	
 	public void runPhysics(float delta)

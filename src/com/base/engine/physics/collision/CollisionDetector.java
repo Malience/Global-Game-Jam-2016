@@ -22,6 +22,11 @@ public class CollisionDetector
 		{
 			return sphereAndHalfSpace((Sphere)two, (Plane)one, data);
 		}
+		if(s1 == Shape.Box && s2 == Shape.Box)
+		{
+			return boxAndBox((Box)one, (Box)two, data);
+		}
+			
 		if(s1 == Shape.Box && s2 == Shape.Plane)
 		{
 			return boxAndHalfSpace((Box)one, (Plane)two, data);
@@ -134,46 +139,6 @@ public class CollisionDetector
 		return 1;
 	}
 	
-	int boxAndHalfSpace(Box box, Plane plane, CollisionData data)
-	{
-//		if(data.contactsLeft <= 0) return 0;
-//		
-//		float halfX = box.halfSize.getX();
-//		float halfY = box.halfSize.getY();
-//		float halfZ = box.halfSize.getZ();
-//		Vector3f vertices[] =
-//			{
-//			new Vector3f(-halfX, -halfY, -halfZ),
-//			new Vector3f(-halfX, -halfY, +halfZ),
-//			new Vector3f(-halfX, +halfY, -halfZ),
-//			new Vector3f(-halfX, +halfY, +halfZ),
-//			new Vector3f(+halfX, -halfY, -halfZ),
-//			new Vector3f(+halfX, -halfY, +halfZ),
-//			new Vector3f(+halfX, +halfY, -halfZ),
-//			new Vector3f(+halfX, +halfY, +halfZ)
-//			};
-//			for (int i = 0; i < 8; i++)
-//			{
-//				float vertexDistance = vertices[i].mul(plane.direction).magnitude();
-//				
-//				if(vertexDistance <= plane.offset + data.tolerance)
-//				{
-//					
-//					Contact contact = data.nextContact();
-//					contact.contactNormal = plane.direction;
-//					contact.penetration = plane.offset - vertexDistance;
-//					contact.contactPoint = plane.direction.mul(vertexDistance-plane.offset);
-//					
-//					contact.body[0] = box.body;
-//					contact.body[1] = null;
-////					contact.restitution = data.restitution;
-////					contact.friction = data.friction;
-//				}
-//			}
-		
-		
-		return 1;
-	}
 	
 //	int boxAndSphere(Box box, Sphere sphere, CollisionData data)
 //	{
@@ -219,7 +184,7 @@ public class CollisionDetector
 		if (!IntersectionTests.tryAxis(one, two, (two.getAxis(1)), toCentre, (4), penstuff)) return 0;
 		if (!IntersectionTests.tryAxis(one, two, (two.getAxis(2)), toCentre, (5), penstuff)) return 0;
 		
-		int bestSingleAxis = best;
+		int bestSingleAxis = (int) penstuff.y;
 		
 		if (!IntersectionTests.tryAxis(one, two, (one.getAxis(0).cross(two.getAxis(0))), toCentre, (6), penstuff)) return 0;
 		if (!IntersectionTests.tryAxis(one, two, (one.getAxis(0).cross(two.getAxis(1))), toCentre, (7), penstuff)) return 0;
@@ -230,6 +195,8 @@ public class CollisionDetector
 		if (!IntersectionTests.tryAxis(one, two, (one.getAxis(2).cross(two.getAxis(0))), toCentre, (12), penstuff)) return 0;
 		if (!IntersectionTests.tryAxis(one, two, (one.getAxis(2).cross(two.getAxis(1))), toCentre, (13), penstuff)) return 0;
 		if (!IntersectionTests.tryAxis(one, two, (one.getAxis(2).cross(two.getAxis(2))), toCentre, (14), penstuff)) return 0;
+		
+		best = (int) penstuff.y;
 		
 		if(best == 0xffffff) return 0;
 		
@@ -266,8 +233,8 @@ public class CollisionDetector
 				else if(two.getAxis(i).dot(axis) < 0) ptOnTwoEdge.set(i, -ptOnTwoEdge.get(i));
 			}
 			
-			ptOnOneEdge = one.transform.transform(ptOnOneEdge);
-			ptOnTwoEdge = two.transform.transform(ptOnTwoEdge);
+			ptOnOneEdge = one.getTransform().getTransformation().transform(ptOnOneEdge);
+			ptOnTwoEdge = two.getTransform().getTransformation().transform(ptOnTwoEdge);
 			
 			Vector3f vertex = IntersectionTests.contactPoint(
 					ptOnOneEdge, oneAxis, one.halfSize.get(oneAxisIndex),
@@ -287,7 +254,7 @@ public class CollisionDetector
 	
 	public int boxAndPoint(Box box, Vector3f point, CollisionData data)
 	{
-		Vector3f relPt = box.transform.transformInverse(point);
+		Vector3f relPt = box.getTransform().getTransformation().transformInverse(point);
 		
 		Vector3f normal = new Vector3f(0,0,0);
 		
@@ -324,7 +291,7 @@ public class CollisionDetector
 	public int boxAndSphere(Box box, Sphere sphere, CollisionData data)
 	{
 		Vector3f centre = sphere.getAxis(3);
-		Vector3f relCentre = box.transform.transformInverse(centre);
+		Vector3f relCentre = box.getTransform().getTransformation().transformInverse(centre);
 		
 		if(
 				Math.abs(relCentre.x) - sphere.radius > box.halfSize.x ||
@@ -354,7 +321,7 @@ public class CollisionDetector
 		dist = (s.magnitude()*s.magnitude());
 		if(dist > sphere.radius * sphere.radius) return 0;
 		
-		Vector3f closestPtWorld = box.transform.transform(closestPt);
+		Vector3f closestPtWorld = box.getTransform().getTransformation().transform(closestPt);
 		
 		Contact contact = data.nextContact();
 		contact.contactNormal = (closestPtWorld.sub(centre));
@@ -364,5 +331,44 @@ public class CollisionDetector
 		contact.setBodyData(box.body, sphere.body, data.friction, data.restitution);
 		
 		return 1;
+	}
+	
+	public int boxAndHalfSpace(Box box, Plane plane, CollisionData data)
+	{
+		if(data.contactsLeft <= 0) return 0;
+		
+		if(!IntersectionTests.boxAndHalfSpace(box, plane))
+		{
+			return 0;
+		}
+		
+		float mults[][] = {{1,1,1},{-1,1,1},{1,-1,1},{-1,-1,1},{1,1,-1},{-1,1,-1},{1,-1,-1},{-1,-1,-1}};
+		
+		Contact contact;
+		int contactsUsed = 0;
+		for(int i = 0; i < 8; i++)
+		{
+			Vector3f vertexPos = new Vector3f(mults[i][0], mults[i][1], mults[i][2]);
+			
+			vertexPos = vertexPos.mul(box.halfSize);
+			vertexPos = box.getTransform().getTransformation().transform(vertexPos);
+			
+			float vertexDistance = vertexPos.dot(plane.direction);
+			if(vertexDistance <= plane.offset)
+			{
+				contact = data.nextContact();
+				contact.contactPoint = plane.direction.mul((vertexDistance - plane.offset));
+				contact.contactPoint = contact.contactPoint.add(vertexPos);
+				contact.contactNormal = plane.direction;
+				contact.penetration = plane.offset - vertexDistance;
+				
+				contact.setBodyData(box.body, null, data.friction, data.restitution);
+				contactsUsed++;
+				if(contactsUsed == data.contactsLeft) return contactsUsed;
+			}
+			
+		}
+			
+		return contactsUsed;
 	}
 }

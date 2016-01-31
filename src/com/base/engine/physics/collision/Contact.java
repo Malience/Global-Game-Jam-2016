@@ -1,6 +1,7 @@
 package com.base.engine.physics.collision;
 
 import com.base.engine.core.math.Matrix3f;
+import com.base.engine.core.math.Matrix4f;
 import com.base.engine.core.math.Quaternion;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.physics.RigidBody.RigidBody;
@@ -22,10 +23,14 @@ public class Contact
 	
 	protected void setBodyData(RigidBody one, RigidBody two, float friction, float restitution)
 	{
+		body = new RigidBody[2];
 		body[0] = one;
 		body[1] = two;
 		this.friction = friction;
 		this.restitution = restitution;
+		contactVelocity = new Vector3f(0,0,0);
+		relativeContactPosition = new Vector3f[]{new Vector3f(0,0,0), new Vector3f(0,0,0)};
+		contactToWorld = new Matrix3f();
 	}
 	
 	protected void calculateInternals(float delta)
@@ -34,7 +39,14 @@ public class Contact
 		
 		calculateContactBasis();
 		
-		relativeContactPosition[0] = contactPoint.sub(body[0].getPosition());
+		try
+		{
+			relativeContactPosition[0] = contactPoint.sub(body[0].getPosition());
+		}
+		catch(Exception e)
+		{
+			relativeContactPosition[0] = contactPoint.sub(body[0].getPosition());
+		}
 		if(body[1] != null)
 		{
 			relativeContactPosition[1] = contactPoint.sub(body[1].getPosition());
@@ -118,7 +130,7 @@ public class Contact
 	
 	protected void calculateContactBasis()
 	{
-		Vector3f contactTangent[] = new Vector3f[2];
+		Vector3f contactTangent[] = new Vector3f[]{new Vector3f(0,0,0), new Vector3f(0,0,0)};
 		
 		if(Math.abs(contactNormal.getX()) > Math.abs(contactNormal.getY()))
 		{
@@ -155,7 +167,8 @@ public class Contact
 	
 	protected void applyVelocityChange(Vector3f velocityChange[], Vector3f rotationChange[])
 	{
-		Matrix3f inverseInertiaTensor[] = new Matrix3f[2];
+		Matrix3f inverseInertiaTensor[] = new Matrix3f[]{new Matrix3f(), new Matrix3f()};
+		
 		body[0].getInverseInertiaTensorWorld(inverseInertiaTensor[0]);
 		if(body[1] != null)
 		{
@@ -188,8 +201,8 @@ public class Contact
 			rotationChange[1] = inverseInertiaTensor[1].transform(impulsiveTorque);
 			velocityChange[1] = impulse.mul(-body[1].getInverseMass());
 			
-			body[1].addVelocity(velocityChange[0]);
-			body[1].addRotation(rotationChange[0]);
+			body[1].addVelocity(velocityChange[1]);
+			body[1].addRotation(rotationChange[1]);
 		}
 	}
 	
@@ -230,7 +243,7 @@ public class Contact
 				linearMove[i] = sign * penetration * (linearInertia[i] / totalInertia);
 				
 				Vector3f projection = relativeContactPosition[i];
-				projection.add(contactNormal.mul(-relativeContactPosition[i].dot(contactNormal)));
+				projection = projection.add(contactNormal.mul(-relativeContactPosition[i].dot(contactNormal)));
 				
 				float maxMagnitude = angularLimit * projection.magnitude();
 				
@@ -264,7 +277,7 @@ public class Contact
 				linearChange[i] = contactNormal.mul(linearMove[i]);
 				
 				Vector3f pos = body[i].getPosition();
-				pos = pos.add(contactNormal).mul(linearMove[i]);
+				pos = pos.add(contactNormal.mul(linearMove[i]));
 				body[i].setPosition(pos);
 				
 				Quaternion q = body[i].getOrientation();

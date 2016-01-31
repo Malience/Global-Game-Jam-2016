@@ -64,11 +64,27 @@ public class ContactResolver
 		if(numContacts == 0) return;
 		if(!isValid()) return;
 		
-		prepareContacts(contacts, numContacts, delta);
+		Contact realContacts[] = new Contact[numContacts];
+		int x = 0;
 		
-		adjustPositions(contacts, numContacts, delta);
+		for(int i = 0; i < contacts.length; i++)
+		{
+			if(contacts[i] != null)
+			{
+				realContacts[x] = contacts[i];
+				x++;
+				if(x >= numContacts)
+				{
+					break;
+				}
+			}
+		}
+			
+		prepareContacts(realContacts, numContacts, delta);
 		
-		adjustVelocities(contacts, numContacts, delta);
+		adjustPositions(realContacts, numContacts, delta);
+		
+		adjustVelocities(realContacts, numContacts, delta);
 	}
 	
 	protected void prepareContacts(Contact contacts[], int numContacts, float delta)

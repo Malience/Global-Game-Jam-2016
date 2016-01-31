@@ -10,11 +10,14 @@ public class Primitive extends GameComponent implements Collidable
 {
 	RigidBody body;
 	Matrix4f offset;
-	public Matrix4f transform;
 	
 	public void calculateInternals()
 	{
-		transform = body.getTransform().getTransformation().mul(offset);
+		if(offset == null)
+		{
+			offset = new Matrix4f();
+			offset = offset.initIdentity();
+		}
 	}
 	
 	
@@ -31,7 +34,8 @@ public class Primitive extends GameComponent implements Collidable
 	
 	public Vector3f getAxis(int index)
 	{
-		return transform.getAxisVector(index);
+		return parent.getTransform().getTransformation().mul(offset).getAxisVector(index);
 	}
+	
 	
 }

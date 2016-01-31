@@ -6,8 +6,8 @@ public class CollisionData
 	int contactsLeft;
 	int index;
 	float tolerance;
-	int contactCount;
-	float friction;
+	public int contactCount;
+	float friction = 10;
 	float restitution;
 	
 	public CollisionData(int max)
@@ -28,6 +28,7 @@ public class CollisionData
 	{
 		contactsLeft = contacts.length;
 		contactCount = 0;
+		index = 0;
 		contacts = new Contact[contactsLeft];
 	}
 	
@@ -35,7 +36,11 @@ public class CollisionData
 	{
 		contactsLeft--;
 		contactCount++;
-		return contacts[index++];
+		if(contactsLeft <= 0)
+			return null;
+		index++;
+		contacts[index] = new Contact();
+		return contacts[index];
 	}
 	
 	public Contact[] getContacts()

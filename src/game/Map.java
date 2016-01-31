@@ -63,16 +63,21 @@ public class Map
 			{
 				if(rooms[i][j] == null)
 				{
-					rooms[i][j] = new GenericRoom(new Vector3f(0,0,0),i,j);
+					rooms[i][j] = new GenericRoom("genericroom" + i + j);					
 				}
+				
+				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * Room.roomSize.z));				
 			}
 		}
+		
+		cleanGenericRooms();
 	}
 	
 	private void setEssentialRooms()
 	{
 		//TODO: Set vector3f location correctly
-		rooms[width / 2][height / 2] = new MainRoom(new Vector3f(0,0,0),width/2,height/2); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2] = new MainRoom("main"); //MainRoom is always in the middle!
+		rooms[width / 2][height / 2].setTexture("black.png");
 		
 		for(int i = 0; i < MAX_MONKEY_ROOMS; ++i) 
 		{
@@ -85,7 +90,9 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new MonkeyRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+
+			rooms[randomWidth][randomHeight] = new MonkeyRoom("monkeyroom" + i);
+			rooms[randomWidth][randomHeight].setTexture("bricks.jpg");
 			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 		
@@ -100,7 +107,9 @@ public class Map
 			}
 			
 			//TODO: Set Vector3f location correctly
-			rooms[randomWidth][randomHeight] = new TrapRoom(new Vector3f(0,0,0),randomWidth,randomHeight);
+
+			rooms[randomWidth][randomHeight] = new TrapRoom("traproom" + i);
+			rooms[randomWidth][randomHeight].setTexture("bricks2.jpg");
 			rotHandle(rooms[randomWidth][randomHeight]);
 		}
 	}
@@ -112,10 +121,39 @@ public class Map
 		{
 			for(int j= 0; j < height; j++)
 			{
-				System.out.print(rooms[i][j] + "\t");
+				System.out.print(rooms[i][j] + "\t"); //Print them for debugging.
+				
+				if(rooms[i][j] != null)
+				{
+					
+				}
 			}
 			
 			System.out.print("\n");
+		}
+	}
+	
+	public void cleanGenericRooms()
+	{
+		for(int i = 0; i < width; i++)
+		{
+			for(int j = 0; j < height; j ++)
+			{
+				try
+				{	
+					if(rooms[i][j].getRoomType().equalsIgnoreCase("g"))
+					{
+						if(rooms[i+1][j].getRoomType().equalsIgnoreCase("g") && 
+						   rooms[i-1][j].getRoomType().equalsIgnoreCase("g") &&	
+						   rooms[i][j+1].getRoomType().equalsIgnoreCase("g") &&
+						   rooms[i][j-1].getRoomType().equalsIgnoreCase("g"))
+						{
+							rooms[i][j] = null;
+						}
+					}
+				}
+				catch(Exception e) { }
+			}
 		}
 	}
 	

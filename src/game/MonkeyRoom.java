@@ -13,16 +13,27 @@ public class MonkeyRoom extends Room
 	
 	private final int ENUMSIZE = MonkeyRoomTypes.values().length;
 	
-	public MonkeyRoom(Vector3f position, int xPos, int yPos) 
-	{	
-		super(position,xPos,yPos);
+	public MonkeyRoom(String name)
+	{
+		super(name);
 		
 		handleConnectors();
 		
 		roomIterator += 1;
 	}
 	
-	@Override 
+	public MonkeyRoom(Vector3f position, int xPos, int yPos) 
+	{	
+		super(position,xPos,yPos);
+		
+		roomType = "m";
+		
+		handleConnectors();
+		
+		roomIterator += 1;
+	}
+	
+	@Override  
 	public void handleConnectors()
 	{
 		if(roomIterator == 0)

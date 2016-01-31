@@ -129,19 +129,38 @@ public class TestGame extends Game
 		
 		GameObject physics1 = new GameObject();
 		GameObject physics2 = new GameObject();
+		GameObject physics3 = new GameObject();
+		
 		Box box = new Box();
+		Box box2 = new Box();
 		Plane plane = new Plane();
-		RigidBody body = new RigidBody(5, 1, 1);
+		
+		RigidBody body = new RigidBody(5, .2f, .2f);
+		RigidBody body2 = new RigidBody(5, .5f, .5f);
+		
 		box.attach(body);
+		box2.attach(body2);
+		
 		physics1.addComponent(body);
+		physics3.addComponent(body2);
+		
 		physics1.addComponent(box);
 		physics2.addComponent(plane);
+		physics3.addComponent(box2);
+		
+		body.attach(physics1);
+		body2.attach(physics3);
+		
+		physics1.getTransform().setPos(new Vector3f(-20,21,1));
 		physics2.getTransform().setPos(new Vector3f(-20,-10,0));
+		physics3.getTransform().setPos(new Vector3f(-20, 20, 0));
+		
 		plane.offset = -10;
 		plane.direction = new Vector3f(0,1,0);
-		physics1.getTransform().setPos(new Vector3f(-20,-10,0));
+		
 		float halfSize = 1f;
 		box.halfSize = new Vector3f(halfSize, halfSize, halfSize);
+		box2.halfSize = new Vector3f(halfSize, halfSize, halfSize);
 		
 		Vertex[] bv = new Vertex[]{ 
 				new Vertex( new Vector3f(halfSize, halfSize, halfSize), new Vector2f(0.0f, 0.0f)),
@@ -176,10 +195,18 @@ public class TestGame extends Game
 		};
 		Mesh bm = new Mesh(bv, bi);
 		MeshRenderer boxMesh = new MeshRenderer(bm, material);
+		MeshRenderer boxMesh2 = new MeshRenderer(bm, material);
 		MeshRenderer planeMesh = new MeshRenderer(mesh2, material);
+		
+		physics3.addComponent(boxMesh2);
 		physics2.addComponent(planeMesh);
 		physics1.addComponent(boxMesh);
 		
+		box2.calculateInternals();
+		box.calculateInternals();
+		plane.calculateInternals();
+		
+		world.add(physics3);
 		world.add(physics2);
 		world.add(physics1);
 		
@@ -197,11 +224,11 @@ public class TestGame extends Game
 		
 		Listener l = new Listener();
 		cameraObject.addComponent(l);
-		Room room = new Room("Our House");
-		room.addComponent(room.calculate());
-		room.getTransform().setPos(new Vector3f(0,10,0));	
+		//Room room = new Room("Our House");
+		//room.addComponent(room.calculate());
+		//room.getTransform().setPos(new Vector3f(0,10,0));	
 		
-		world.add(room);
+		//world.add(room);
 		
 		
 		//addObject(new TestObject(0,0,0).convert());

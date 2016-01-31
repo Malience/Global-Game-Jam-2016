@@ -17,11 +17,22 @@ public class TrapRoom extends Room
 	{
 		super(position,xPos,yPos);
 		
+		roomType = "t";
+		
 		handleConnectors();
 		
 		roomIterator += 1;
 	}
 	
+	public TrapRoom(String name) 
+	{
+		super(name);
+		
+		handleConnectors();
+		
+		roomIterator += 1;
+	}
+
 	@Override
 	public void handleConnectors()
 	{

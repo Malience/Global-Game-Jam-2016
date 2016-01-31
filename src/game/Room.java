@@ -23,14 +23,24 @@ public class Room extends GameObject
 	private int xPos;
 	private int yPos;
 	
+	protected String roomType;
+	
+	protected String textureName;
+	
+	protected boolean hasBattery, hasPowerup;
+	
 	public Room(String name)
 	{
 		super(name);
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
+
+		roomType = "g";
+		
+		setTexture("EmptyRoom001Template.png");
 	}
-	
+
 	public Room(Vector3f position)
 	{		
 		this(position, 0, 0);
@@ -42,11 +52,26 @@ public class Room extends GameObject
 		indices = new int[48];
 		vertices = new Vertex[8];		
 		connectors = new int[4];
+		roomType = "g";
 		getTransform().setPos(position);
+		
+		setTexture("EmptyRoom001Template.png");
 		
 //		recalculate();
 //		
 //		World.world.add(this);
+	}
+	
+	protected void setTexture(String textureName)
+	{
+		this.textureName = textureName;
+	}
+	
+	public void setPosition(Vector3f position)
+	{
+		getTransform().setPos(position);
+		this.addComponent(calculate());
+		World.world.add(this);
 	}
 	
 	public void recalculate()
@@ -159,7 +184,7 @@ public class Room extends GameObject
 		mesh = new Mesh(vertices, bi);
 		
 		Material mat = new Material();
-		mat.addTexture("diffuse", new Texture("EmptyRoom001Template.png"));
+		mat.addTexture("diffuse", new Texture(textureName));
 		
 		MeshRenderer renderer = new MeshRenderer(mesh, mat);
 		return renderer;
@@ -180,14 +205,13 @@ public class Room extends GameObject
 	 */
 	public void roomRotate()
 	{ 
-		int hold0 = connectors[0] , hold1 = connectors[1], hold2 = connectors[2];
+		int hold0 = connectors[0],
+		    hold1 = connectors[1], 
+		    hold2 = connectors[2], 
+		    hold3 = connectors[3];
 		
-		connectors[0] = connectors[3];
-		connectors[1] = hold0;
-		connectors[2] = hold1;
-		connectors[3] = hold2;
-		
-		getTransform().rotate(new Vector3f(0,1,0), 90);
+		setConnection(hold3,hold0,hold1,hold2);
+		getTransform().rotate(new Vector3f(0,1,0),90f);
 	}
 	
 	public int conPeek(int index)
@@ -222,5 +246,10 @@ public class Room extends GameObject
 		{
 			connectors[i] = 1;
 		}
+	}
+	
+	public String getRoomType()
+	{
+		return roomType;
 	}
 }

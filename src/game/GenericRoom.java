@@ -18,6 +18,13 @@ public class GenericRoom extends Room
 		handleConnectors();
 	}
 	
+	public GenericRoom(String name) 
+	{
+		super(name);
+		
+		handleConnectors();
+	}
+
 	public String toString()
 	{
 		return "G" + super.toString();

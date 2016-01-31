@@ -113,6 +113,25 @@ public class GameObject implements GameObjectContainer
 		return transform;
 	}
 	
+	
+	public void moveTo(Vector3f pos)
+	{
+		Vector3f movement = transform.getPos().sub(pos);
+		transform.setPos(pos);
+		for(GameObject child : children)
+		{
+			child.move(movement);
+		}
+	}
+	public void move(Vector3f movement)
+	{
+		transform.setPos(getPosition().add(movement));
+		for(GameObject child : children)
+		{
+			child.move(movement);
+		}
+	}
+	
 	public Vector3f getPosition()
 	{
 		return transform.getPos();

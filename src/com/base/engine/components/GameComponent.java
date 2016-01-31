@@ -7,7 +7,7 @@ import com.base.engine.core.math.Transform;
 
 public abstract class GameComponent implements ComponentAttachment
 {
-	private GameObject parent;
+	protected GameObject parent;
 
 	public int attach(GameObject parent)
 	{

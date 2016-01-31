@@ -63,9 +63,10 @@ public class Map
 			{
 				if(rooms[i][j] == null)
 				{
-					rooms[i][j] = new GenericRoom("genericroom" + i + j);
-					rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * 10));
+					rooms[i][j] = new GenericRoom("genericroom" + i + j);					
 				}
+				
+				rooms[i][j].setPosition(new Vector3f(i * Room.roomSize.x, 0, j * 10));				
 			}
 		}
 	}

@@ -1,17 +1,11 @@
 package game;
 
-/*
- *  Material m = new Material();
-	m.addTexture("Battery", new Texture("Battery001.png"));
-		
-	Mesh n = new Mesh("Battery001.obj");
+import com.base.engine.components.attachments.Interactable;
 
-	MeshRenderer mR = new MeshRenderer (n, m);
- * 
- */
-
-public class Battery extends Gear
+public class Battery extends Gear implements Interactable
 {	
+	PickUpItem cmd =  new PickUpItem();
+	
 	public Battery(float x, float y, float z)
 	{
 		super(x, y, z);
@@ -22,5 +16,10 @@ public class Battery extends Gear
 	public String toString()
 	{
 		return "Battery";
+	}
+
+	public void interact() 
+	{	
+		cmd.pickUp(this);
 	}
 }

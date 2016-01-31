@@ -11,5 +11,10 @@ public class MainRoom extends Room
 		
 		setConnection(1,1,1,1);
 	}
+	
+	public String toString()
+	{
+		return "Main";
+	}
 
 }

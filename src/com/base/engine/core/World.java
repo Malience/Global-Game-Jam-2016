@@ -163,4 +163,15 @@ public class World
 		}
 		return out;
 	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Interactable> getInteractables() {
+		ArrayList<Interactable> out = new ArrayList<Interactable>();
+		ArrayList<GameObject> objects = getGameObjects(activeCells);
+		for(GameObject object : objects)
+		{
+			out.addAll((Collection<? extends Interactable>) object.getAllComponentsOf("Interactable"));
+		}
+		return out;
+	}
 }

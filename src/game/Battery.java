@@ -2,7 +2,7 @@ package game;
 
 import com.base.engine.components.attachments.Interactable;
 
-public class Battery extends Gear implements Interactable
+public class Battery extends Gear //implements Interactable
 {	
 	PickUpItem cmd =  new PickUpItem();
 	

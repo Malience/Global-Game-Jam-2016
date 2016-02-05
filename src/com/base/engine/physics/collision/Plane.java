@@ -5,12 +5,29 @@ import com.base.engine.core.math.Vector3f;
 
 public class Plane extends Primitive implements Collidable
 {
-	public Vector3f direction;
-	public float offset;
+	private Vector3f direction;
+	private float offset;
+	
+	public Plane(){this(new Vector3f(0,1,0),0);}
+	public Plane(Vector3f direction, float offset)
+	{
+		this.direction = direction;
+		this.offset = offset;
+	}
 	
 	@Override
 	public void calculateInternals()
 	{
 		
+	}
+	
+	public Vector3f getDirection()
+	{
+		return direction;
+	}
+	
+	public float getOffset()
+	{
+		return offset;
 	}
 }

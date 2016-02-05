@@ -99,6 +99,7 @@ public class CoreEngine {
 			unprocessedTime += passedTime;
 			frameCounter += passedTime;
 			
+			world.remove();
 			world.refreshActives();
 			world.updateObjects();
 			physicsEngine.startFrame();
@@ -130,16 +131,7 @@ public class CoreEngine {
 				physicsEngine.integrate((float)frameTime);
 				physicsEngine.simulate((float)frameTime);
 				physicsEngine.generateContacts((float)frameTime);
-				
-				try
-				{
 				physicsEngine.handleCollisions((float)frameTime);
-				}
-				catch(Exception e)
-				{
-					int i = 4;
-					i -= 4;
-				}
 				
 				if(frameCounter >= 1.0)
 				{

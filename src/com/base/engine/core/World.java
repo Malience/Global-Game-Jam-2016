@@ -19,11 +19,13 @@ public class World
 	public GameObject focus;
 	private Game map;
 	ArrayList<Updatable> updates;
+	ArrayList<GameObject> removeList;
 	
 	public World()
 	{
 		spatialHash = new SpatialHash(100);
 		bucket = new ArrayList<GameObject>();
+		removeList = new ArrayList<GameObject>();
 		map = new TestGame();
 	}
 	
@@ -45,6 +47,18 @@ public class World
 	public void refreshActives()
 	{
 		activeCells = spatialHash.getCellsAdjacent(spatialHash.hash(focus.getPosition()));
+	}
+	
+	public void remove(GameObject object)
+	{
+		removeList.add(object);
+	}
+	
+	public void remove()
+	{
+		for(GameObject object : removeList)
+			if(!bucket.remove(object))
+				spatialHash.remove(object);
 	}
 	
 	//Convenience Methods!

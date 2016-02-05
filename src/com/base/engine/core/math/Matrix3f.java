@@ -62,7 +62,7 @@ public class Matrix3f
 		float n[][] = other.getM();
 		float t4 = n[0][0] * n[1][1];
 		float t6 = n[0][0] * n[1][2];
-		float t8 = n[0][1] * n[0][2];
+		float t8 = n[0][1] * n[1][0];
 		float t10 = n[0][2] * n[1][0];
 		float t12 = n[0][1] * n[2][0];
 		float t14 = n[0][2] * n[2][0];

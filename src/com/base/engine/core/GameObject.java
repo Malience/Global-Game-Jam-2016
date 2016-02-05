@@ -51,50 +51,6 @@ public class GameObject implements GameObjectContainer
 	{
 		transform.update();
 	}
-//	public void inputAll(float delta)
-//	{
-//		input(delta);
-//
-//		for(GameObject child : children)
-//			child.inputAll(delta);
-//	}
-//
-//	public void updateAll(float delta, PhysicsEngine physicsEngine)
-//	{
-//		update(delta, physicsEngine);
-//
-//		for(GameObject child : children)
-//			child.updateAll(delta, physicsEngine);
-//	}
-//
-//	public void renderAll(Shader shader, RenderingEngine renderingEngine)
-//	{
-//		render(shader, renderingEngine);
-//
-//		for(GameObject child : children)
-//			child.renderAll(shader, renderingEngine);
-//	}
-//	
-//	public void input(float delta)
-//	{
-//		transform.update();
-//
-//		for(GameComponent component : components)
-//			component.input(delta);
-//	}
-//
-//	public void update(float delta, PhysicsEngine physicsEngine)
-//	{
-//		for(GameComponent component : components)
-//			component.update(delta, physicsEngine);
-//	}
-//
-//	public void render(Shader shader, RenderingEngine renderingEngine)
-//	{
-//		for(GameComponent component : components)
-//			component.render(shader, renderingEngine);
-//	}
-	
 	
 	public ArrayList<GameObject> getAllAttached()
 	{
@@ -197,6 +153,11 @@ public class GameObject implements GameObjectContainer
 			}
 		}
 		return out;
+	}
+	
+	public void delete()
+	{
+		World.world.remove(this);
 	}
 	
 	@Override

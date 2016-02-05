@@ -12,18 +12,44 @@ import com.base.engine.rendering.Shader;
 public class LookAtComponent extends GameComponent implements Updatable, Renderable
 {
 	RenderingEngine renderingEngine;
-
+	GameObject target;
+	
+	public LookAtComponent()
+	{
+		
+	}
+	
+	public LookAtComponent(GameObject target)
+	{
+		this.target = target;
+	}
+	
 	@Override
 	public int update(float delta)
 	{
-		if(renderingEngine != null)
+		if(target == null)
 		{
-			Quaternion newRot = getTransform().getLookAtRotation(renderingEngine.getMainCamera().getTransform().getTransformedPos(),
-					new Vector3f(0,1,0));
-					//getTransform().getRot().getUp());
-
-			getTransform().setRot(getTransform().getRot().nlerp(newRot, delta * 5.0f, true));
-			//getTransform().setRot(getTransform().getRot().slerp(newRot, delta * 5.0f, true));
+			if(renderingEngine != null)
+			{
+				Quaternion newRot = getTransform().getLookAtRotation(renderingEngine.getMainCamera().getTransform().getTransformedPos(),
+						new Vector3f(0,1,0));
+						//getTransform().getRot().getUp());
+	
+				getTransform().setRot(getTransform().getRot().nlerp(newRot, delta * 5.0f, true));
+				//getTransform().setRot(getTransform().getRot().slerp(newRot, delta * 5.0f, true));
+			}
+		}
+		else
+		{
+			if(renderingEngine != null)
+			{
+				Quaternion newRot = getTransform().getLookAtRotation(target.getTransform().getTransformedPos(),
+						new Vector3f(0,1,0));
+						//getTransform().getRot().getUp());
+	
+				getTransform().setRot(getTransform().getRot().nlerp(newRot, delta * 5.0f, true));
+				//getTransform().setRot(getTransform().getRot().slerp(newRot, delta * 5.0f, true));
+			}
 		}
 		return 1;
 	}

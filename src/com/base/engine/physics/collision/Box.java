@@ -5,5 +5,20 @@ import com.base.engine.core.math.Vector3f;
 
 public class Box extends Primitive implements Collidable
 {
-	public Vector3f halfSize;
+	private Vector3f halfSize;
+	
+	public Box()
+	{
+		halfSize = new Vector3f(1,1,1);
+	}
+	
+	public Box(Vector3f halfSize)
+	{
+		this.halfSize = halfSize;
+	}
+	
+	public Vector3f getHalfSize()
+	{
+		return halfSize;
+	}
 }

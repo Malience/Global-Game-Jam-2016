@@ -18,7 +18,7 @@ public class Contact
 	
 	protected Matrix3f contactToWorld;
 	protected Vector3f contactVelocity;
-	protected float desiredDeltaVelocity;
+	protected float desiredDeltaVelocity = 0;
 	protected Vector3f relativeContactPosition[];
 	
 	protected void setBodyData(RigidBody one, RigidBody two, float friction, float restitution)
@@ -39,14 +39,7 @@ public class Contact
 		
 		calculateContactBasis();
 		
-		try
-		{
-			relativeContactPosition[0] = contactPoint.sub(body[0].getPosition());
-		}
-		catch(Exception e)
-		{
-			relativeContactPosition[0] = contactPoint.sub(body[0].getPosition());
-		}
+		relativeContactPosition[0] = contactPoint.sub(body[0].getPosition());
 		if(body[1] != null)
 		{
 			relativeContactPosition[1] = contactPoint.sub(body[1].getPosition());
@@ -132,7 +125,7 @@ public class Contact
 	{
 		Vector3f contactTangent[] = new Vector3f[]{new Vector3f(0,0,0), new Vector3f(0,0,0)};
 		
-		if(Math.abs(contactNormal.getX()) > Math.abs(contactNormal.getY()))
+		if(Math.abs(contactNormal.x) > Math.abs(contactNormal.y))
 		{
 			float s = (float)(1.0f/Math.sqrt(contactNormal.z*contactNormal.z + contactNormal.x*contactNormal.x));
 			
@@ -281,8 +274,10 @@ public class Contact
 				body[i].setPosition(pos);
 				
 				Quaternion q = body[i].getOrientation();
-				q.addScaledVector(contactNormal, linearMove[i]);
+				q.addScaledVector(angularChange[i], 1.0f);
 				body[i].setOrientation(q);
+				
+				//System.out.println(angularChange[i]);
 				
 				if(!body[i].getAwake()) body[i].calculateDerivedData();
 			}
@@ -314,6 +309,8 @@ public class Contact
 		}
 		
 		impulseContact.x = desiredDeltaVelocity / deltaVelocity;
+		impulseContact.y = 0;
+		impulseContact.z = 0;
 		
 		return impulseContact;
 	}

@@ -2,6 +2,7 @@ package com.base.engine.physics.collision;
 
 import com.base.engine.core.math.Vector2f;
 import com.base.engine.core.math.Vector3f;
+import com.base.engine.physics.PhysicsEngine;
 
 public class CollisionDetector 
 {
@@ -22,10 +23,10 @@ public class CollisionDetector
 		{
 			return sphereAndHalfSpace((Sphere)two, (Plane)one, data);
 		}
-//		if(s1 == Shape.Box && s2 == Shape.Box)
-//		{
-//			return boxAndBox((Box)one, (Box)two, data);
-//		}
+		if(s1 == Shape.Box && s2 == Shape.Box)
+		{
+			return boxAndBox((Box)one, (Box)two, data);
+		}
 			
 		if(s1 == Shape.Box && s2 == Shape.Plane)
 		{
@@ -36,14 +37,14 @@ public class CollisionDetector
 			return boxAndHalfSpace((Box)two, (Plane)one, data);
 		}
 		
-		if(s1 == Shape.AABB && s2 == Shape.Plane)
-		{
-			return AABBAndHalfSpace((AABB)one, (Plane)two, data);
-		}
-		if(s1 == Shape.Plane && s2 == Shape.AABB)
-		{
-			return AABBAndHalfSpace((AABB)two, (Plane)one, data);
-		}
+//		if(s1 == Shape.AABB && s2 == Shape.Plane)
+//		{
+//			return AABBAndHalfSpace((AABB)one, (Plane)two, data);
+//		}
+//		if(s1 == Shape.Plane && s2 == Shape.AABB)
+//		{
+//			return AABBAndHalfSpace((AABB)two, (Plane)one, data);
+//		}
 		return 0;
 	}
 	
@@ -90,6 +91,7 @@ public class CollisionDetector
 		Vector3f normal = midline.mul(1.0f/size);
 		
 		Contact contact = data.nextContact();
+		if(contact == null) return 0;
 		contact.contactNormal = normal;
 		contact.contactPoint = pos1.add(midline.mul(.5f));
 		contact.penetration = one.radius + two.radius - size;
@@ -106,14 +108,14 @@ public class CollisionDetector
 		
 		Vector3f pos = sphere.getAxis(3);
 		
-		float ballDistance = plane.direction.dot(pos) - sphere.radius - plane.offset;
+		float ballDistance = plane.getDirection().dot(pos) - sphere.radius - plane.getOffset();
 		
 		if(ballDistance >= 0) return 0;
 		
 		Contact contact = data.nextContact();
-		contact.contactNormal = plane.direction;
+		contact.contactNormal = plane.getDirection();
 		contact.penetration = -ballDistance;
-		contact.contactPoint = pos.sub(plane.direction.mul(ballDistance + sphere.radius));
+		contact.contactPoint = pos.sub(plane.getDirection().mul(ballDistance + sphere.radius));
 		
 		contact.setBodyData(sphere.body, null, data.friction, data.restitution);
 		
@@ -127,11 +129,11 @@ public class CollisionDetector
 		
 		Vector3f pos = sphere.getAxis(3);
 		
-		float centerDistance = plane.direction.dot(pos) - plane.offset;
+		float centerDistance = plane.getDirection().dot(pos) - plane.getOffset();
 		
 		if(centerDistance*centerDistance > sphere.radius*sphere.radius) return 0;
 		
-		Vector3f normal = plane.direction;
+		Vector3f normal = plane.getDirection();
 		float penetration = -centerDistance;
 		if(centerDistance < 0)
 		{
@@ -144,7 +146,7 @@ public class CollisionDetector
 		Contact contact = data.nextContact();
 		contact.contactNormal = normal;
 		contact.penetration = penetration;
-		contact.contactPoint = pos.sub(plane.direction.mul(centerDistance));
+		contact.contactPoint = pos.sub(plane.getDirection().mul(centerDistance));
 		
 		contact.setBodyData(sphere.body, null, data.friction, data.restitution);
 		
@@ -168,7 +170,7 @@ public class CollisionDetector
 			normal = normal.mul(-1);
 		}
 		
-		Vector3f vertex = two.halfSize;
+		Vector3f vertex = two.getHalfSize();
 		if(two.getAxis(0).dot(normal) < 0) vertex.x = -vertex.x;
 		if(two.getAxis(1).dot(normal) < 0) vertex.y = -vertex.y;
 		if(two.getAxis(2).dot(normal) < 0) vertex.z = -vertex.z;
@@ -234,8 +236,8 @@ public class CollisionDetector
 			
 			if(axis.dot(toCentre) > 0) axis = axis.mul(-1f);
 			
-			Vector3f ptOnOneEdge = one.halfSize;
-			Vector3f ptOnTwoEdge = two.halfSize;
+			Vector3f ptOnOneEdge = one.getHalfSize();
+			Vector3f ptOnTwoEdge = two.getHalfSize();
 			for(int i = 0; i < 3; i++)
 			{
 				if(i == oneAxisIndex) ptOnOneEdge.set(i, 0);
@@ -249,8 +251,8 @@ public class CollisionDetector
 			ptOnTwoEdge = two.getTransform().getTransformation().transform(ptOnTwoEdge);
 			
 			Vector3f vertex = IntersectionTests.contactPoint(
-					ptOnOneEdge, oneAxis, one.halfSize.get(oneAxisIndex),
-					ptOnTwoEdge, twoAxis, two.halfSize.get(twoAxisIndex),
+					ptOnOneEdge, oneAxis, one.getHalfSize().get(oneAxisIndex),
+					ptOnTwoEdge, twoAxis, two.getHalfSize().get(twoAxisIndex),
 					bestSingleAxis > 2
 							);
 			
@@ -270,11 +272,11 @@ public class CollisionDetector
 		
 		Vector3f normal = new Vector3f(0,0,0);
 		
-		float mindepth = box.halfSize.x - Math.abs(relPt.x);
+		float mindepth = box.getHalfSize().x - Math.abs(relPt.x);
 		if(mindepth < 0) return 0;
 		normal = box.getAxis(0).mul((relPt.x < 0)?-1:1);
 		
-		float depth = box.halfSize.y - Math.abs(relPt.y);
+		float depth = box.getHalfSize().y - Math.abs(relPt.y);
 		if(depth < 0) return 0;
 		else if(depth < mindepth)
 		{
@@ -282,7 +284,7 @@ public class CollisionDetector
 			normal = box.getAxis(1).mul((relPt.y < 0)?-1:1);
 		}
 		
-		depth = box.halfSize.z - Math.abs(relPt.y);
+		depth = box.getHalfSize().z - Math.abs(relPt.y);
 		if(depth < 0) return 0;
 		else if(depth < mindepth)
 		{
@@ -306,27 +308,27 @@ public class CollisionDetector
 		Vector3f relCentre = box.getTransform().getTransformation().transformInverse(centre);
 		
 		if(
-				Math.abs(relCentre.x) - sphere.radius > box.halfSize.x ||
-				Math.abs(relCentre.y) - sphere.radius > box.halfSize.y ||
-				Math.abs(relCentre.z) - sphere.radius > box.halfSize.z
+				Math.abs(relCentre.x) - sphere.radius > box.getHalfSize().x ||
+				Math.abs(relCentre.y) - sphere.radius > box.getHalfSize().y ||
+				Math.abs(relCentre.z) - sphere.radius > box.getHalfSize().z
 				) return 0;
 		
 		Vector3f closestPt = new Vector3f(0,0,0);
 		float dist;
 		
 		dist = relCentre.x;
-		if(dist > box.halfSize.x) dist = box.halfSize.x;
-		if(dist < -box.halfSize.x) dist = -box.halfSize.x;
+		if(dist > box.getHalfSize().x) dist = box.getHalfSize().x;
+		if(dist < -box.getHalfSize().x) dist = -box.getHalfSize().x;
 		closestPt.x = dist;
 		
 		dist = relCentre.y;
-		if(dist > box.halfSize.y) dist = box.halfSize.y;
-		if(dist < -box.halfSize.y) dist = -box.halfSize.y;
+		if(dist > box.getHalfSize().y) dist = box.getHalfSize().y;
+		if(dist < -box.getHalfSize().y) dist = -box.getHalfSize().y;
 		closestPt.y = dist;
 		
 		dist = relCentre.z;
-		if(dist > box.halfSize.z) dist = box.halfSize.z;
-		if(dist < -box.halfSize.z) dist = -box.halfSize.z;
+		if(dist > box.getHalfSize().z) dist = box.getHalfSize().z;
+		if(dist < -box.getHalfSize().z) dist = -box.getHalfSize().z;
 		closestPt.z = dist;
 		
 		Vector3f s = closestPt.sub(relCentre);
@@ -362,17 +364,17 @@ public class CollisionDetector
 		{
 			Vector3f vertexPos = new Vector3f(mults[i][0], mults[i][1], mults[i][2]);
 			
-			vertexPos = vertexPos.mul(box.halfSize);
+			vertexPos = vertexPos.mul(box.getHalfSize());
 			vertexPos = box.getTransform().getTransformation().transform(vertexPos);
 			
-			float vertexDistance = vertexPos.dot(plane.direction);
-			if(vertexDistance <= plane.offset)
+			float vertexDistance = vertexPos.dot(plane.getDirection());
+			if(vertexDistance <= plane.getOffset())
 			{
 				contact = data.nextContact();
-				contact.contactPoint = plane.direction.mul((vertexDistance - plane.offset));
+				contact.contactPoint = plane.getDirection().mul((vertexDistance - plane.getOffset()));
 				contact.contactPoint = contact.contactPoint.add(vertexPos);
-				contact.contactNormal = plane.direction;
-				contact.penetration = plane.offset - vertexDistance;
+				contact.contactNormal = plane.getDirection();
+				contact.penetration = plane.getOffset() - vertexDistance;
 				
 				contact.setBodyData(box.body, null, data.friction, data.restitution);
 				contactsUsed++;
@@ -384,68 +386,68 @@ public class CollisionDetector
 		return contactsUsed;
 	}
 	
-	public int AABBAndHalfSpace(AABB aabb, Plane plane, CollisionData data)
-	{
-		//System.out.println("Collide");
-		int axis = -1;
-		float center = 0;
-		float edge = 0;
-		float planepos = plane.offset;
-		Vector3f move = new Vector3f(0,0,0);
-		
-		if(plane.direction.x != 0)
-		{
-			axis = 0;
-			center = aabb.body.getPosition().x;
-			edge = aabb.halfSize.x;
-			move.x = 1;
-			//edge = center + aabb.halfSize.x * plane.direction.x * -1;
-			//planepos *= plane.direction.x;
-		}
-		else if(plane.direction.y != 0)
-		{
-			axis = 1;
-			center = aabb.body.getPosition().y;
-			edge = aabb.halfSize.y;
-			move.y = 1;
-			//planepos *= plane.direction.y;
-		}
-		else if(plane.direction.z != 0)
-		{
-			axis = 2;
-			center = aabb.body.getPosition().z;
-			edge = aabb.halfSize.z;
-			move.z = 1;
-			//edge = center + aabb.halfSize.z * plane.direction.z * -1;
-			//planepos *= plane.direction.z;
-		}
-		
-		if(axis == -1) return 0;
-		
-		float penetration = 0;
-		boolean right = false;
-		
-		if(center < planepos) right = true;
-		
-		if(right)
-		{
-			edge = center + edge;
-			penetration = edge - planepos;
-			if(penetration < 0) return 0;
-			move.mul(penetration);
-			aabb.body.getTransform().setPos(aabb.body.getPosition().sub(move));
-		}
-		else
-		{
-			edge = center - edge;
-			penetration = planepos - edge;
-			if(penetration < 0) return 0;
-			move.mul(penetration);
-			aabb.body.getTransform().setPos(aabb.body.getPosition().add(move));
-		}
-		
-		aabb.body.setVelocity(new Vector3f(0,0,0));
-		
-		return 1;
-	}
+//	public int AABBAndHalfSpace(AABB aabb, Plane plane, CollisionData data)
+//	{
+//		//System.out.println("Collide");
+//		int axis = -1;
+//		float center = 0;
+//		float edge = 0;
+//		float planepos = plane.getOffset();
+//		Vector3f move = new Vector3f(0,0,0);
+//		
+//		if(plane.getDirection().x != 0)
+//		{
+//			axis = 0;
+//			center = aabb.body.getPosition().x;
+//			edge = aabb.getHalfSize().x;
+//			move.x = 1;
+//			//edge = center + aabb.getHalfSize().x * plane.getDirection().x * -1;
+//			//planepos *= plane.getDirection().x;
+//		}
+//		else if(plane.getDirection().y != 0)
+//		{
+//			axis = 1;
+//			center = aabb.body.getPosition().y;
+//			edge = aabb.getHalfSize().y;
+//			move.y = 1;
+//			//planepos *= plane.getDirection().y;
+//		}
+//		else if(plane.getDirection().z != 0)
+//		{
+//			axis = 2;
+//			center = aabb.body.getPosition().z;
+//			edge = aabb.getHalfSize().z;
+//			move.z = 1;
+//			//edge = center + aabb.getHalfSize().z * plane.getDirection().z * -1;
+//			//planepos *= plane.getDirection().z;
+//		}
+//		
+//		if(axis == -1) return 0;
+//		
+//		float penetration = 0;
+//		boolean right = false;
+//		
+//		if(center < planepos) right = true;
+//		
+//		if(right)
+//		{
+//			edge = center + edge;
+//			penetration = edge - planepos;
+//			if(penetration < 0) return 0;
+//			move.mul(penetration);
+//			aabb.body.getTransform().setPos(aabb.body.getPosition().sub(move));
+//		}
+//		else
+//		{
+//			edge = center - edge;
+//			penetration = planepos - edge;
+//			if(penetration < 0) return 0;
+//			move.mul(penetration);
+//			aabb.body.getTransform().setPos(aabb.body.getPosition().add(move));
+//		}
+//		
+//		aabb.body.setVelocity(new Vector3f(0,0,0));
+//		
+//		return 1;
+//	}
 }

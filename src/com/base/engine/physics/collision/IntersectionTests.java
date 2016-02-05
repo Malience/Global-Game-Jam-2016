@@ -7,8 +7,8 @@ public class IntersectionTests
 {
 	public static boolean sphereAndHalfSpace(Sphere sphere, Plane plane)
 	{
-		float ballDistance = plane.direction.dot(sphere.getAxis(3)) - sphere.radius;
-		return ballDistance <= plane.offset;
+		float ballDistance = plane.getDirection().dot(sphere.getAxis(3)) - sphere.radius;
+		return ballDistance <= plane.getOffset();
 	}
 	
 	public static boolean sphereAndSphere(Sphere one, Sphere two)
@@ -43,18 +43,18 @@ public class IntersectionTests
 	
 	public static boolean boxAndHalfSpace(Box box, Plane plane)
 	{
-		float projectedRadius = transformToAxis(box, plane.direction);
+		float projectedRadius = transformToAxis(box, plane.getDirection());
 		
-		float boxDistance = plane.direction.dot(box.getAxis(3)) - projectedRadius;
-		return boxDistance <= plane.offset;
+		float boxDistance = plane.getDirection().dot(box.getAxis(3)) - projectedRadius;
+		return boxDistance <= plane.getOffset();
 	}
 	
 	public static float transformToAxis(Box box, Vector3f axis)
 	{
 		return
-				box.halfSize.x * Math.abs(axis.dot(box.getAxis(0))) +
-				box.halfSize.y * Math.abs(axis.dot(box.getAxis(1))) +
-				box.halfSize.z * Math.abs(axis.dot(box.getAxis(2)));
+				box.getHalfSize().x * Math.abs(axis.dot(box.getAxis(0))) +
+				box.getHalfSize().y * Math.abs(axis.dot(box.getAxis(1))) +
+				box.getHalfSize().z * Math.abs(axis.dot(box.getAxis(2)));
 	}
 	
 	public static boolean overlapOnAxis(Box one, Box two, Vector3f axis, Vector3f toCentre)

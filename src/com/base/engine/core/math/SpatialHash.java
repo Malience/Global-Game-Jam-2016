@@ -3,6 +3,7 @@ package com.base.engine.core.math;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.base.engine.core.GameObject;
 import com.base.engine.core.math.GameObjectContainer;
 
 public class SpatialHash 
@@ -320,6 +321,26 @@ public class SpatialHash
 				cell.remove(i);
 				return true;
 			}
+		return false;
+	}
+	
+	public boolean remove(GameObject object)
+	{
+		ArrayList<Point> cell = getContentsOfCellOf(new Point(object.getPosition()));
+		if(cell == null) return false;
+		Point p;
+		for(int i = 0; i < cell.size(); i++)
+		{
+			p = cell.get(i);
+			for(Object o : p.contents)
+			{
+				if(o == object)
+				{
+					cell.remove(i);
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	

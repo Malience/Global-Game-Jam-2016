@@ -8,6 +8,7 @@ import com.base.engine.core.World;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.physics.RigidBody.RigidBody;
 import com.base.engine.physics.RigidBody.ForceGenerators.Gravity;
+import com.base.engine.physics.RigidBody.ForceGenerators.Planet;
 import com.base.engine.physics.collision.CollisionData;
 import com.base.engine.physics.collision.CollisionDetector;
 import com.base.engine.physics.collision.Contact;
@@ -27,19 +28,21 @@ public class PhysicsEngine
 	int iterations;
 	boolean calculateIterations;
 	Gravity gravity;
+	Planet planet;
 	
 	public PhysicsEngine()
 	{
 		world = World.world;
 		detector = new CollisionDetector();
 		maxContacts = 50;
-		iterations = 3;
+		iterations = 10;
 		data = new CollisionData(maxContacts);
 		contacts = new Contact[maxContacts];
 		resolver = new ContactResolver(iterations);
 		calculateIterations = (iterations == 0);
 		bodies = new ArrayList<RigidBody>();
-		gravity = new Gravity(new Vector3f(0,0,0));
+		gravity = new Gravity(new Vector3f(0,-20f,0));
+		planet = new Planet(new Vector3f(-30,15,0), 20);
 	}
 	
 	public void startFrame()
@@ -48,7 +51,7 @@ public class PhysicsEngine
 		{
 			body.clearAccumulators();
 			body.calculateDerivedData();
-			gravity.updateForce(body, 0);
+			planet.updateForce(body, 0);
 		}
 	}
 	
@@ -69,6 +72,11 @@ public class PhysicsEngine
 		{
 			object.integrate(delta);
 		}
+	}
+	
+	public void updateForces(RigidBody body)
+	{
+		
 	}
 	
 	public void simulate(float delta)
@@ -104,5 +112,13 @@ public class PhysicsEngine
 	public void runPhysics(float delta)
 	{
 		
+	}
+	
+	public static void printInfo(RigidBody body)
+	{
+		System.out.println(body.toString() 
+				+ ": A" + body.getAcceleration() 
+				+ ": V" + body.getVelocity() 
+				+ ": R" + body.getRotation());
 	}
 }

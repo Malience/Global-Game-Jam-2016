@@ -80,6 +80,7 @@ public class Quaternion
 	//Basic Quaternion Methods
 	public float length(){return (float)Math.sqrt(x * x + y * y + z * z + w * w);}
 	public Quaternion normalized(){float length = length();return new Quaternion(x / length, y / length, z / length, w / length);}
+	public void normalize(){float length = length();x /= length; y /= length; z /= length; w /= length;}
 	public Quaternion conjugate(){return new Quaternion(-x, -y, -z, w);}
 	public float dot(Quaternion r){return x * r.getX() + y * r.getY() + z * r.getZ() + w * r.getW();}
 	
@@ -197,4 +198,6 @@ public class Quaternion
 
 	//Standard outputs
 	public boolean equals(Quaternion r){return x == r.getX() && y == r.getY() && z == r.getZ() && w == r.getW();}
+	//Basic Outputs
+	public String toString(){return "(" + x + " " + y + " " + z + " " + w + ")";}
 }

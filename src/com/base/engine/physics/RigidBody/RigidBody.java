@@ -43,6 +43,7 @@ public class RigidBody extends PhysicsComponent implements Physical
 		velocity = new Vector3f(0,0,0);
 		rotationVelocity = new Vector3f(0,0,0);
 		acceleration = new Vector3f(0,0,0);
+		lastFrameAcceleration = new Vector3f(0,0,0);
 		
 		transformMatrix = new Matrix4f();
 		inverseInertiaTensor = new Matrix3f();
@@ -242,12 +243,14 @@ public class RigidBody extends PhysicsComponent implements Physical
 	{
 		if (!isAwake) return 0;
 		
+		//System.out.println(rotationVelocity);
+		//System.out.println(parent.getTransform().getRot());
+		
 		parent.getTransform().setPos(parent.getTransform().getPos().add(velocity.mul(delta)));
 		
 		parent.getTransform().getRot().addScaledVector(rotationVelocity, delta);
 		
-		velocity = velocity.mul((float)Math.pow(linearDamping, delta));
-		rotationVelocity = rotationVelocity.mul((float)Math.pow(angularDamping, delta));
+		parent.getTransform().getRot().normalize();
 		
 		calculateDerivedData();
 		

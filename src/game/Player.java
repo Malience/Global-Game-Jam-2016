@@ -31,8 +31,8 @@ public class Player extends GameObject
 		camera = new Camera((float)Math.toRadians(70.0f), (float)Window.getWidth()/(float)Window.getHeight(), 0.01f, 1000.0f);
 		body = new RigidBody(5, 1, 0);
 		collider = new AABB();
-		//FreeMove move = new FreeMove(25);
-		LockedYMove move = new LockedYMove(20);
+		FreeMove move = new FreeMove(25);
+		//LockedYMove move = new LockedYMove(20);
 		finalmove = new MoveComponent(1, 5);
 		FreeLook look = new FreeLook(0.5f);
 		//StandardLook look = new StandardLook(0.5f);
@@ -46,8 +46,8 @@ public class Player extends GameObject
 		World.world.focus = this;
 		
 		this.addComponent(camera);
-		this.addComponent(body);
-		this.addComponent(collider);
+		//this.addComponent(body);
+		//this.addComponent(collider);
 		this.addComponent(move);
 		this.addComponent(look);
 		//this.addComponent(test);

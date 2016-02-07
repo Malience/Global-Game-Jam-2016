@@ -22,6 +22,7 @@ public class Vector3f
 	public Vector3f min(Vector3f r){return new Vector3f(x<r.x ? x : r.x, y<r.y ? y : r.y, z<r.z ? z : r.z);}
 	public float dot(Vector3f r){return x * r.x + y * r.y + z * r.z;}
 	public Vector3f cross(Vector3f r){return new Vector3f(y * r.z - z * r.y, z * r.x - x * r.z, x * r.y - y * r.x);}
+	public Vector3f projection(Vector3f onto){return onto.mul(onto.dot(this)/onto.length());}
 
 	//Basic Arithmetic Operations (Addition, Subtraction, Multiplication, Division)
 	public Vector3f add(Vector3f r){return new Vector3f(x + r.getX(), y + r.getY(), z + r.getZ());}

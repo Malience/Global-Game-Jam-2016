@@ -1,12 +1,12 @@
 package com.base.engine.core;
 
-import com.base.engine.core.math.GameObjectContainer;
+import java.util.ArrayList;
+
 import com.base.engine.components.GameComponent;
 import com.base.engine.components.attachments.ComponentAttachment;
+import com.base.engine.core.math.GameObjectContainer;
 import com.base.engine.core.math.Transform;
 import com.base.engine.core.math.Vector3f;
-
-import java.util.ArrayList;
 
 public class GameObject implements GameObjectContainer
 {

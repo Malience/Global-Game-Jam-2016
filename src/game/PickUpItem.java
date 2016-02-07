@@ -1,13 +1,13 @@
 package game;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
+
 import com.base.engine.components.GameComponent;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.Input;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.rendering.UI.UIText;
-
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
 
 public class PickUpItem extends GameComponent 
 {

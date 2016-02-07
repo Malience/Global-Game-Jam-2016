@@ -17,6 +17,7 @@ public interface GameObjectContainer
 			}
 			else 
 			{
+				@SuppressWarnings("rawtypes")
 				Class supclass = object.getClass().getSuperclass();
 				while(supclass.getSimpleName() != "Object")
 				{

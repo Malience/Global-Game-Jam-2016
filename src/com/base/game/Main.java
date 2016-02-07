@@ -2,8 +2,6 @@ package com.base.game;
 
 
 import com.base.engine.core.CoreEngine;
-import com.base.engine.core.math.Vector2f;
-import com.base.engine.rendering.Window;
 
 
 public class Main

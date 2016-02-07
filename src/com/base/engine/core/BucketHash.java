@@ -1,7 +1,5 @@
 package com.base.engine.core;
 
-import com.base.engine.components.attachments.ComponentAttachment;
-
 public class BucketHash 
 {
 	

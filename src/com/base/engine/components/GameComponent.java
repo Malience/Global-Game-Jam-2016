@@ -1,6 +1,6 @@
 package com.base.engine.components;
 
-import com.base.engine.components.attachments.*;
+import com.base.engine.components.attachments.ComponentAttachment;
 import com.base.engine.core.CoreEngine;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.math.Transform;

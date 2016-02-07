@@ -16,7 +16,6 @@ import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 
 import java.nio.FloatBuffer;
-import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL15;
 
@@ -24,7 +23,6 @@ import com.base.engine.core.Util;
 import com.base.engine.core.math.Vector2f;
 import com.base.engine.rendering.Shader;
 import com.base.engine.rendering.Texture;
-import com.base.engine.rendering.Vertex;
 
 public class UIElement 
 {

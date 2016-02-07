@@ -3,18 +3,12 @@ package game;
 import com.base.engine.components.Camera;
 import com.base.engine.components.FreeLook;
 import com.base.engine.components.FreeMove;
-import com.base.engine.components.GameComponent;
-import com.base.engine.components.LockedYMove;
 import com.base.engine.components.MoveComponent;
-import com.base.engine.components.SpotLight;
-import com.base.engine.components.StandardLook;
 import com.base.engine.core.GameObject;
 import com.base.engine.core.World;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.physics.RigidBody.RigidBody;
 import com.base.engine.physics.collision.AABB;
-import com.base.engine.physics.collision.Box;
-import com.base.engine.rendering.Attenuation;
 import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.rendering.Window;
 

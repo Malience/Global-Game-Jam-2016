@@ -1,6 +1,7 @@
 package com.base.engine.rendering.MeshLoading.ResourceManagement;
 
-import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
 
 import com.base.engine.core.ReferenceCounter;
 

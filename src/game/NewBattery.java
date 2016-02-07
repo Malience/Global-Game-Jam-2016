@@ -1,14 +1,14 @@
 package game;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_N;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_R;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_Y;
+
 import com.base.engine.components.GameComponent;
 import com.base.engine.components.attachments.Controlable;
 import com.base.engine.core.Input;
 import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.rendering.UI.UIText;
-
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_R;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_Y;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_N;
 
 public class NewBattery extends GameComponent implements Controlable
 {

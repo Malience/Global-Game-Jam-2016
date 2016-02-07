@@ -1,7 +1,5 @@
 package com.base.engine.rendering;
 
-import java.util.ArrayList;
-
 import com.base.engine.core.math.Vector2f;
 
 public class text2D 

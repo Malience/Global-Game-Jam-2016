@@ -2,7 +2,7 @@
 
 import java.util.ArrayList;
 
-import com.base.engine.components.attachments.*;
+import com.base.engine.components.attachments.ComponentAttachment;
 
 public class ComponentHash 
 {
@@ -20,6 +20,7 @@ public class ComponentHash
 	
 	public void add(ComponentAttachment ca)
 	{
+		@SuppressWarnings("rawtypes")
 		Class[] classes = ca.getClass().getInterfaces();
 		for(int i = 0; i < classes.length; i++)
 		{
@@ -45,6 +46,7 @@ public class ComponentHash
 	
 	public void remove(ComponentAttachment ca)
 	{
+		@SuppressWarnings("rawtypes")
 		Class[] classes = ca.getClass().getInterfaces();
 		for(int i = 0; i < classes.length; i++)
 		{
@@ -193,7 +195,7 @@ public class ComponentHash
 			String out = "[";
 			ArrayList<Node<E>> nodes = new ArrayList<Node<E>>();
 			first.getAll(nodes);
-			for(Node node : nodes)
+			for(Node<E> node : nodes)
 			{
 				out += node.toString();
 			}

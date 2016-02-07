@@ -30,6 +30,8 @@ public abstract class Game
 		world.add(object);
 	}
 
+	//TODO Improve Game
+	@SuppressWarnings("unused")
 	private GameObject getRootObject()
 	{
 		if(root == null)

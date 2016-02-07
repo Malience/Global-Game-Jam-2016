@@ -2,10 +2,9 @@ package com.base.engine.components;
 
 import com.base.engine.components.attachments.Renderable;
 import com.base.engine.components.attachments.Updatable;
-import com.base.engine.core.*;
+import com.base.engine.core.GameObject;
 import com.base.engine.core.math.Quaternion;
 import com.base.engine.core.math.Vector3f;
-import com.base.engine.physics.PhysicsEngine;
 import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.rendering.Shader;
 

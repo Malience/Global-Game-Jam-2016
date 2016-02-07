@@ -8,7 +8,7 @@ public class CollisionData
 	float tolerance;
 	public int contactCount;
 	float friction = 0;
-	float restitution = 1;
+	float restitution = .5f;
 	
 	public CollisionData(int max)
 	{

@@ -1,11 +1,8 @@
 package game;
 
-import com.base.engine.components.MeshRenderer;
-import com.base.engine.core.GameObject;
 import com.base.engine.core.World;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.rendering.Material;
-import com.base.engine.rendering.Mesh;
 import com.base.engine.rendering.Texture;
 
 public class MonkeyRoom extends Room 

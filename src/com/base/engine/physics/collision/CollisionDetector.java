@@ -2,75 +2,42 @@ package com.base.engine.physics.collision;
 
 import com.base.engine.core.math.Vector2f;
 import com.base.engine.core.math.Vector3f;
-import com.base.engine.physics.PhysicsEngine;
 
 public class CollisionDetector 
 {
 	public int checkCollision(Primitive one, Primitive two, CollisionData data)
 	{
-		Shape s1 = parseShape(one);
-		Shape s2 = parseShape(two);
+		if(!one.check() || !two.check()) return 1;
 		
-		if(s1 == Shape.Sphere && s2 == Shape.Sphere)
+		String s1 = one.getClass().getSimpleName();
+		String s2 = two.getClass().getSimpleName();
+		
+		if(s1.equals("Sphere") && s2.equals("Sphere"))
 		{
 			return sphereAndSphere((Sphere)one, (Sphere)two, data);
 		}
-		if(s1 == Shape.Sphere && s2 == Shape.Plane)
+		if(s1.equals("Sphere") && s2.equals("Plane"))
 		{
 			return sphereAndHalfSpace((Sphere)one, (Plane)two, data);
 		}
-		if(s1 == Shape.Plane && s2 == Shape.Sphere)
+		if(s1.equals("Plane") && s2.equals("Sphere"))
 		{
 			return sphereAndHalfSpace((Sphere)two, (Plane)one, data);
 		}
-		if(s1 == Shape.Box && s2 == Shape.Box)
+		if(s1.equals("Box") && s2.equals("Box"))
 		{
 			return boxAndBox((Box)one, (Box)two, data);
 		}
 			
-		if(s1 == Shape.Box && s2 == Shape.Plane)
+		if(s1.equals("Box") && s2.equals("Plane"))
 		{
 			return boxAndHalfSpace((Box)one, (Plane)two, data);
 		}
-		if(s1 == Shape.Plane && s2 == Shape.Box)
+		if(s1.equals("Plane") && s2.equals("Box"))
 		{
 			return boxAndHalfSpace((Box)two, (Plane)one, data);
 		}
-		
-//		if(s1 == Shape.AABB && s2 == Shape.Plane)
-//		{
-//			return AABBAndHalfSpace((AABB)one, (Plane)two, data);
-//		}
-//		if(s1 == Shape.Plane && s2 == Shape.AABB)
-//		{
-//			return AABBAndHalfSpace((AABB)two, (Plane)one, data);
-//		}
 		return 0;
-	}
-	
-	private Shape parseShape(Primitive p)
-	{
-		String name = p.getClass().getSimpleName();
-		switch(name)
-		{
-		case "Sphere":
-			return Shape.Sphere;
-		case "Plane":
-			return Shape.Plane;
-		case "Box":
-			return Shape.Box;
-		case "AABB":
-			return Shape.AABB;
-		}
-		return null;
-	}
-	
-	private enum Shape
-	{
-		Sphere,
-		Plane,
-		Box,
-		AABB;
 	}
 	
 	int sphereAndSphere(Sphere one, Sphere two, CollisionData data)

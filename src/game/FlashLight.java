@@ -105,6 +105,7 @@ public class FlashLight extends GameObject// implements Updatable
 			
 			hand.getTransform().setRot(this.getTransform().getRot());
 			hand.getTransform().rotate(new Vector3f(1,0,0), (float)Math.toRadians(-180f));
+			//light.getDirection().set(hand.getTransform().getRot().getForward().normal());
 			return 1;
 		}
 	}

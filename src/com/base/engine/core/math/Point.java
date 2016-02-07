@@ -1,8 +1,6 @@
 package com.base.engine.core.math;
 import java.util.ArrayList;
 
-import com.base.engine.core.math.GameObjectContainer;
-
 public class Point implements GameObjectContainer
 {
 	public float x, y, z;

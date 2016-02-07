@@ -1,16 +1,23 @@
 package com.base.engine.core;
 
 
-import static org.lwjgl.glfw.GLFW.*;
-import static com.base.engine.core.Input.*;
-import static com.base.engine.rendering.Window.*;
-import static org.lwjgl.opengl.GL11.*;
-
-import java.util.ArrayList;
+import static com.base.engine.rendering.Window.createMainWindow;
+import static com.base.engine.rendering.Window.dispose;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.opengl.GL11.GL_FALSE;
+import static org.lwjgl.opengl.GL11.GL_TRUE;
 
 import org.lwjgl.opengl.GL;
 
-import com.base.engine.components.attachments.Updatable;
 import com.base.engine.physics.PhysicsEngine;
 import com.base.engine.rendering.RenderingEngine;
 import com.base.engine.rendering.Window;
@@ -25,6 +32,8 @@ public class CoreEngine {
 	private int height;
 	private String name;
 	private double frameTime;
+	//TODO Edit mode
+	@SuppressWarnings("unused")
 	private boolean editMode;
 	
 	public CoreEngine(int width, int height, String name, double framerate)
@@ -124,9 +133,11 @@ public class CoreEngine {
 				
 				Input.update();
 				Input.input((float)frameTime);
-				Input.interact();
+				Interaction.gather();
+				Interaction.interact();
 				world.update((float)frameTime);
 				
+				//TODO: move physics engine into rendering area
 				//Physics Engine
 				physicsEngine.integrate((float)frameTime);
 				physicsEngine.simulate((float)frameTime);

@@ -1,24 +1,43 @@
 package com.base.engine.rendering;
 
-import com.base.engine.components.BaseLight;
-import com.base.engine.components.Camera;
-import com.base.engine.components.DirectionalLight;
-import com.base.engine.components.attachments.LightAttachment;
-import com.base.engine.components.attachments.Renderable;
-import com.base.engine.core.GameObject;
-import com.base.engine.core.World;
-import com.base.engine.core.math.Matrix4f;
-import com.base.engine.core.math.Transform;
-import com.base.engine.core.math.Vector3f;
-import com.base.engine.rendering.MeshLoading.ResourceManagement.MappedValues;
-import com.base.engine.rendering.UI.UIElement;
-import com.base.engine.rendering.UI.UIText;
+import static org.lwjgl.opengl.GL11.GL_BACK;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_CW;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
+import static org.lwjgl.opengl.GL11.GL_EQUAL;
+import static org.lwjgl.opengl.GL11.GL_LESS;
+import static org.lwjgl.opengl.GL11.GL_ONE;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_VERSION;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+import static org.lwjgl.opengl.GL11.glCullFace;
+import static org.lwjgl.opengl.GL11.glDepthFunc;
+import static org.lwjgl.opengl.GL11.glDepthMask;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glFrontFace;
+import static org.lwjgl.opengl.GL11.glGetString;
+import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL32.*;
+import com.base.engine.components.BaseLight;
+import com.base.engine.components.Camera;
+import com.base.engine.components.attachments.LightAttachment;
+import com.base.engine.components.attachments.Renderable;
+import com.base.engine.core.World;
+import com.base.engine.core.math.Transform;
+import com.base.engine.core.math.Vector3f;
+import com.base.engine.rendering.MeshLoading.ResourceManagement.MappedValues;
+import com.base.engine.rendering.UI.UIElement;
 
 public class RenderingEngine extends MappedValues
 {
@@ -166,7 +185,7 @@ public class RenderingEngine extends MappedValues
 	{
 		for(Renderable render : renders)
 		{
-			render.render(shader, this);
+			if(render.isRendering()) render.render(shader, this);
 		}
 	}
 	
@@ -212,8 +231,8 @@ public class RenderingEngine extends MappedValues
 		return mainCamera;
 	}
 
-	public void setMainCamera(Camera mainCamera)
+	public static void setMainCamera(Camera mc)
 	{
-		this.mainCamera = mainCamera;
+		mainCamera = mc;
 	}
 }

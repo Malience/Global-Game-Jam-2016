@@ -36,7 +36,7 @@ public class BallWaterfall extends GameObject
 		@Override
 		protected void trigger() 
 		{
-			float l = .2F;//r.nextFloat()%1 + .001f;
+			float l = r.nextFloat()%1 + .001f;
 			System.out.println(l);
 			SphereObject ball = new SphereObject(mass, l, adamping, radius);
 			ball.addComponent(new Decay(1));

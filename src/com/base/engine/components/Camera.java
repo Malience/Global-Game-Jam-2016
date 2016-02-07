@@ -1,6 +1,6 @@
 package com.base.engine.components;
 
-import com.base.engine.core.*;
+import com.base.engine.core.CoreEngine;
 import com.base.engine.core.math.Matrix4f;
 import com.base.engine.core.math.Vector3f;
 

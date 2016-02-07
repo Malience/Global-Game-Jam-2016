@@ -1,7 +1,7 @@
 package com.base.engine.rendering.MeshLoading.ResourceManagement;
 
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
-import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL20.glCreateProgram;
 
 import java.util.ArrayList;
 import java.util.HashMap;

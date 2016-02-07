@@ -34,8 +34,8 @@ public class PhysicsEngine
 	{
 		world = World.world;
 		detector = new CollisionDetector();
-		maxContacts = 50;
-		iterations = 10;
+		maxContacts = 1000;
+		iterations = 20;
 		data = new CollisionData(maxContacts);
 		contacts = new Contact[maxContacts];
 		resolver = new ContactResolver(iterations);
@@ -51,7 +51,7 @@ public class PhysicsEngine
 		{
 			body.clearAccumulators();
 			body.calculateDerivedData();
-			planet.updateForce(body, 0);
+			gravity.updateForce(body, 0);
 		}
 	}
 	

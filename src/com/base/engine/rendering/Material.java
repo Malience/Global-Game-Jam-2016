@@ -1,8 +1,8 @@
 package com.base.engine.rendering;
 
-import com.base.engine.rendering.MeshLoading.ResourceManagement.MappedValues;
-
 import java.util.HashMap;
+
+import com.base.engine.rendering.MeshLoading.ResourceManagement.MappedValues;
 
 public class Material extends MappedValues
 {

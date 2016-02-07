@@ -3,11 +3,16 @@ package com.base.engine.core;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.base.engine.components.attachments.*;
+import com.base.engine.components.attachments.Collidable;
+import com.base.engine.components.attachments.Controlable;
+import com.base.engine.components.attachments.Interactable;
+import com.base.engine.components.attachments.LightAttachment;
+import com.base.engine.components.attachments.Physical;
+import com.base.engine.components.attachments.Renderable;
+import com.base.engine.components.attachments.Updatable;
 import com.base.engine.core.math.Point;
 import com.base.engine.core.math.SpatialHash;
 import com.base.engine.core.math.Tuple;
-import com.base.engine.core.math.Vector3f;
 import com.base.game.TestGame;
 
 public class World 

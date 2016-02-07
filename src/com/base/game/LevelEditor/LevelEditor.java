@@ -1,7 +1,6 @@
 package com.base.game.LevelEditor;
 
 import com.base.engine.core.CoreEngine;
-import com.base.game.TestGame;
 
 
 public class LevelEditor

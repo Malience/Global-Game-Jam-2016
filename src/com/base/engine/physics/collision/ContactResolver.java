@@ -10,7 +10,8 @@ public class ContactResolver
 	protected float positionEpsilon;
 	public int velocityIterationsUsed;
 	public int positionIterationsUsed;
-	private boolean validSettings;
+	//TODO valid Settings
+	//private boolean validSettings;
 	
 	public ContactResolver(int iterations)
 	{

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.base.engine.core.GameObject;
-import com.base.engine.core.math.GameObjectContainer;
 
 public class SpatialHash 
 {
@@ -261,7 +260,6 @@ public class SpatialHash
 	
 	
 	
-	@SuppressWarnings("unchecked")
 	public <E> ArrayList<E> getAllOfType(String type)
 	{
 		ArrayList<Point> points = getAll();
@@ -273,7 +271,6 @@ public class SpatialHash
 		return out;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public <E> ArrayList<E> getAllOfType(E type)
 	{
 		ArrayList<Point> points = getAll();

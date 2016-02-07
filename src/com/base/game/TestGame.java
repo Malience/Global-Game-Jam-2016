@@ -1,30 +1,38 @@
 package com.base.game;
 
-import game.AccessItems;
-import game.BallWaterfall;
-import game.Battery;
-import game.Listener;
-import game.Map;
-import game.NewBattery;
-import game.Player;
-import game.PickUpItem;
-import game.PowerUp;
-import game.Room;
-import game.FlashLight;
-
-import com.base.engine.components.*;
-import com.base.engine.core.*;
+import com.base.engine.components.DirectionalLight;
+import com.base.engine.components.FreeLook;
+import com.base.engine.components.FreeMove;
+import com.base.engine.components.GameComponent;
+import com.base.engine.components.LookAtComponent;
+import com.base.engine.components.MeshRenderer;
+import com.base.engine.components.PointLight;
+import com.base.engine.components.SpotLight;
+import com.base.engine.core.Game;
+import com.base.engine.core.GameObject;
+import com.base.engine.core.World;
 import com.base.engine.core.math.Quaternion;
 import com.base.engine.core.math.Vector2f;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.physics.PremadeObjects.BoxObject;
 import com.base.engine.physics.PremadeObjects.PlaneObject;
 import com.base.engine.physics.PremadeObjects.SphereObject;
-import com.base.engine.physics.RigidBody.RigidBody;
-import com.base.engine.physics.collision.Box;
-import com.base.engine.physics.collision.Plane;
-import com.base.engine.physics.collision.Sphere;
-import com.base.engine.rendering.*;
+import com.base.engine.rendering.Attenuation;
+import com.base.engine.rendering.Material;
+import com.base.engine.rendering.Mesh;
+import com.base.engine.rendering.Texture;
+import com.base.engine.rendering.Vertex;
+
+import game.AccessItems;
+import game.BallWaterfall;
+import game.FlashLight;
+import game.InteractionTest2;
+import game.Listener;
+import game.Map;
+import game.NewBattery;
+import game.PickUpItem;
+import game.Player;
+import game.Room;
 
 public class TestGame extends Game
 {
@@ -132,29 +140,29 @@ public class TestGame extends Game
 		
 		directionalLight.getTransform().setRot(new Quaternion(new Vector3f(1,0,0), (float)Math.toRadians(-45)));
 		
-		BoxObject box1 = new BoxObject(5, .2f, 0);
-		BoxObject box2 = new BoxObject(5, .5f, .1f);
-		PlaneObject plane = new PlaneObject(new Vector3f(0,1,1), -11);
-		SphereObject sphere = new SphereObject(20, 1, 1, 1);
+		BoxObject box1 = new BoxObject(5, .2f, .0f);
+		BoxObject box2 = new BoxObject(5, .5f, .0f);
+		PlaneObject plane = new PlaneObject(new Vector3f(0,1,0), -11);
+		SphereObject sphere = new SphereObject(20, .5f, .5f, 1);
 		SphereObject sphere2 = new SphereObject(1, 1, 1, 1);
 		BallWaterfall waterfall = new BallWaterfall(20, 1, 1, 1, .2f);
 		
-		box1.getTransform().setPos(new Vector3f(-40,25,1));
+		box1.getTransform().setPos(new Vector3f(-25,25,1));
 		box2.getTransform().setPos(new Vector3f(-25,18,0));
 		plane.getTransform().setPos(new Vector3f(-25, 20, 0));
-		sphere.getTransform().setPos(new Vector3f(-30, 20, 0));
-		sphere2.getTransform().setPos(new Vector3f(-30, 20, 0));
+		sphere.getTransform().setPos(new Vector3f(-25, 20, 0));
+		sphere2.getTransform().setPos(new Vector3f(-25, 0, 1));
 		waterfall.getTransform().setPos(new Vector3f(-25, 20, 0));
-		
-		box1.getRigidBody().addVelocity(new Vector3f(0,0,15));
-		box2.getRigidBody().addVelocity(new Vector3f(5,15,0));
-		sphere.getRigidBody().addVelocity(new Vector3f(-20,0,0));
-		sphere2.getRigidBody().addVelocity(new Vector3f(20,0,0));
+		//
+		//box1.getRigidBody().addVelocity(new Vector3f(0,0,15));
+		//box2.getRigidBody().addVelocity(new Vector3f(5,15,0));
+		//sphere.getRigidBody().addVelocity(new Vector3f(-20,0,0));
+		//sphere2.getRigidBody().addVelocity(new Vector3f(20,0,0));
 		world.add(box1);
 		world.add(box2);
-		//world.add(plane);
-		world.add(sphere);
-		world.add(sphere2);
+		world.add(plane);
+		//world.add(sphere);
+		//world.add(sphere2);
 		//world.add(waterfall);
 		
 		
@@ -207,17 +215,21 @@ public class TestGame extends Game
 		gmonkey.getTransform().setScale(10);
 		
 		
-		MeshRenderer r1 = (MeshRenderer) sphere.getAllComponentsOf("Renderable").get(0);
-		r1.set(new Mesh("monkey3.obj"), m);
-		MeshRenderer r2 = (MeshRenderer) sphere2.getAllComponentsOf("Renderable").get(0);
-		r2.set(new Mesh("monkey3.obj"), m);
-		//sphere.addChild(gmonkey);
-		sphere.getTransform().setScale(10);
-		sphere.addComponent(new LookAtComponent(sphere2));
-		sphere2.getTransform().setScale(10);
-		sphere2.addComponent(new LookAtComponent(sphere));
-		//world.add(gmonkey);
+//		MeshRenderer r1 = (MeshRenderer) sphere.getAllComponentsOf("Renderable").get(0);
+//		r1.set(new Mesh("monkey3.obj"), m);
+//		MeshRenderer r2 = (MeshRenderer) sphere2.getAllComponentsOf("Renderable").get(0);
+//		r2.set(new Mesh("monkey3.obj"), m);
+//		//sphere.addChild(gmonkey);
+//		sphere.getTransform().setScale(10);
+//		sphere.addComponent(new LookAtComponent(sphere2));
+//		sphere2.getTransform().setScale(10);
+//		sphere2.addComponent(new LookAtComponent(sphere));
+//		//world.add(gmonkey);
 		
 		//addObject(new TestObject(0,0,0).convert());
+		
+		InteractionTest2 it = new InteractionTest2();
+		it.getTransform().setPos(new Vector3f(1.4f,0,4));
+		world.add(it);
 	}
 }

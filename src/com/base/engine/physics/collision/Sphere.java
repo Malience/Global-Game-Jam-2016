@@ -4,7 +4,7 @@ import com.base.engine.components.attachments.Collidable;
 
 public class Sphere extends Primitive implements Collidable
 {
-	float radius;
+	public float radius;
 	
 	public Sphere(float radius)
 	{

@@ -1,14 +1,17 @@
 package game;
 
-import java.io.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
 
-import javax.sound.sampled.*;
+import java.io.ByteArrayOutputStream;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.TargetDataLine;
 
 import com.base.engine.components.GameComponent;
 import com.base.engine.components.attachments.Controlable;
 import com.base.engine.core.Input;
-
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
 
 public class Listener extends GameComponent implements Controlable
 {

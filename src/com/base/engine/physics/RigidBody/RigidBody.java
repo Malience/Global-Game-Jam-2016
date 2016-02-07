@@ -6,7 +6,6 @@ import com.base.engine.core.GameObject;
 import com.base.engine.core.math.Matrix3f;
 import com.base.engine.core.math.Matrix4f;
 import com.base.engine.core.math.Quaternion;
-import com.base.engine.core.math.Transform;
 import com.base.engine.core.math.Vector3f;
 
 public class RigidBody extends PhysicsComponent implements Physical
@@ -48,11 +47,6 @@ public class RigidBody extends PhysicsComponent implements Physical
 		transformMatrix = new Matrix4f();
 		inverseInertiaTensor = new Matrix3f();
 		inverseInertiaTensorWorld = new Matrix3f();
-		Matrix3f inertiaTensor = new Matrix3f();
-		inertiaTensor.m[0][0] = 2*(mass)/12.0f;
-		inertiaTensor.m[1][1] = 2*(mass)/12.0f;
-		inertiaTensor.m[2][2] = 2*(mass)/12.0f;
-		setInertiaTensor(inertiaTensor);
 		
 		forceAccum = new Vector3f(0,0,0);
 		torqueAccum = new Vector3f(0,0,0);

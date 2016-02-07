@@ -1,19 +1,28 @@
 package com.base.engine.rendering;
 
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.lwjgl.opengl.GL15;
+
 import com.base.engine.core.Util;
 import com.base.engine.core.math.Vector3f;
 import com.base.engine.rendering.MeshLoading.IndexedModel;
 import com.base.engine.rendering.MeshLoading.OBJModel;
 import com.base.engine.rendering.MeshLoading.ResourceManagement.MeshResource;
-
-import org.lwjgl.opengl.GL15;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Mesh
 {
